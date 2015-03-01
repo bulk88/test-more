@@ -1,7 +1,127 @@
 <html>
-<head>
-</head>
-<body>
-<b>Placeholder</b>
-</body>
+    <head>
+        <style>
+            table {
+                border: 1px solid black;
+            }
+
+            th {
+                text-align: left;
+                padding-right: 15px;
+            }
+
+            th#top {
+                text-align: center;
+            }
+
+            td.time {
+            }
+
+            td.time.won {
+                border: 2px solid #30FF70;
+            }
+
+            td.time.lost {
+                border: 2px solid #FF0000;
+            }
+
+            td a {
+                padding-right: 6px;
+            }
+
+            tr.even {
+                background: #f0f0f0;
+            }
+
+            tr.odd {
+                background: #d0d0d0;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        Profiling done via NYTProf. Raw data is the .out file produced.
+
+        <p>
+
+        <table>
+            <tr id="top">
+                <th>Branch</th>
+                <th>Perl Build</th>
+                <th>Moose Build</th>
+                <th colspan=2>Profiling</th>
+                <th>Description</th>
+            </tr>
+
+            <tr class="even">
+                <th><a href="https://github.com/Test-More/test-more/tree/stable">stable</a></th>
+                <td class="time"></td>
+                <td class="time"></td>
+                <td><a href="/prof-stable/index.html">results</a></td>
+                <td><a href="/prof-stable.out">raw</a></td>
+                <td>Legacy code, no refactoring.</td>
+            </tr>
+
+            <tr class="odd">
+                <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
+                <td class="time"></td>
+                <td class="time"></td>
+                <td><a href="/prof-master/index.html">results</a></td>
+                <td><a href="/prof-master.out">raw</a></td>
+                <td>Test-Stream refactoring. This branch uses arrays as the base for most objects, constants are used to index into the arrays.</td>
+            </tr>
+
+            <tr class="even">
+                <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
+                <td class="time"></td>
+                <td class="time"></td>
+                <td><a href="/prof-hash_with_const_no_event/index.html">results</a></td>
+                <td><a href="/prof-hash_with_const_no_event.out">raw</a></td>
+                <td>Test-Stream refactoring. This branch uses arrays as the base for event objects, hashes for all others. Constants are used to index into the hashes and arrays.</td>
+            </tr>
+
+            <tr class="odd">
+                <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
+                <td class="time"></td>
+                <td class="time"></td>
+                <td><a href="/prof-hash_with_const/index.html">results</a></td>
+                <td><a href="/prof-hash_with_const.out">raw</a></td>
+                <td>Test-Stream refactoring. This branch uses hashes for nearly all objects. Constants are used to index into the hashes when speed matters.</td>
+            </tr>
+
+            <tr class="even">
+                <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
+                <td class="time"></td>
+                <td class="time"></td>
+                <td><a href="/prof-hash_no_constants/index.html">results</a></td>
+                <td><a href="/prof-hash_no_constants.out">raw</a></td>
+                <td>Test-Stream refactoring. This branch uses hashes for all objects, and little if any direct hash access</td>
+            </tr>
+
+        </table>
+
+        <p>
+
+        All times and profiling were done on the same machine:
+
+        <pre>
+Intel core I7-2670QM 2.20ghz
+12GB ram
+SSD drive
+Ubuntu server 14.10, fresh install
+
+perl-5.20.2 installed via perlbrew
+        </pre>
+
+        Perl Build times were taken from a build+test of perl-blead at commit '' with
+        the proper branch of Test-Simple merged in.
+
+        <p>
+
+        Moose build times were all run on the same perl-5.20.2 install. Moose and all
+        deps were installed first, then build times taken were using cpanm to reinstall
+        Moose with the correct Test-Simple installed.
+
+    </body>
 </html>
