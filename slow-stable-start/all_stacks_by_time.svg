@@ -1,0 +1,757 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1200" height="290" onload="init(evt)" viewBox="0 0 1200 290" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs >
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	.func_g:hover { stroke:black; stroke-width:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	var details;
+	function init(evt) { details = document.getElementById("details").firstChild; }
+	function s(info) { details.nodeValue = "sub " + info; }
+	function c() { details.nodeValue = ' '; }
+]]>
+</script>
+<rect x="0.0" y="0" width="1200.0" height="290.0" fill="url(#background)"  />
+<text text-anchor="middle" x="600" y="24" font-size="17" font-family="Verdana" fill="rgb(0,0,0)"  >Flame Graph</text>
+<text text-anchor="" x="10" y="273" font-size="12" font-family="Verdana" fill="rgb(0,0,0)" id="details" > </text>
+<g class="func_g" onmouseover="s('Exporter::Heavy::BEGIN@4 (236 microseconds, 0.07%)')" onmouseout="c()">
+<title>Exporter::Heavy::BEGIN@4 (236 microseconds, 0.07%)</title><a xlink:href="Heavy-pm-15-line.html#4" target="_top"><rect x="564.2" y="161" width="0.7" height="15.0" fill="rgb(225,176,14)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_try (11,417 microseconds, 3.15%)')" onmouseout="c()">
+<title>Test::Builder::_try (11,417 microseconds, 3.15%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1518" target="_top"><rect x="1111.8" y="81" width="37.2" height="15.0" fill="rgb(230,16,19)" rx="2" ry="2" />
+<text text-anchor="" x="1114.80120764207" y="91.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Tes..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::import (56 microseconds, 0.02%)')" onmouseout="c()">
+<title>warnings::import (56 microseconds, 0.02%)</title><a xlink:href="warnings-pm-3-line.html#993" target="_top"><rect x="1016.4" y="145" width="0.2" height="15.0" fill="rgb(251,25,33)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::unimport (163 microseconds, 0.05%)')" onmouseout="c()">
+<title>warnings::unimport (163 microseconds, 0.05%)</title><a xlink:href="warnings-pm-3-line.html#1011" target="_top"><rect x="562.1" y="145" width="0.5" height="15.0" fill="rgb(248,96,30)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::is_fh (60 microseconds, 0.02%)')" onmouseout="c()">
+<title>Test::Builder::is_fh (60 microseconds, 0.02%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1547" target="_top"><rect x="1151.8" y="65" width="0.2" height="15.0" fill="rgb(208,131,14)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::BEGIN@3 (1,755 microseconds, 0.48%)')" onmouseout="c()">
+<title>Test::More::BEGIN@3 (1,755 microseconds, 0.48%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#3" target="_top"><rect x="1154.9" y="209" width="5.7" height="15.0" fill="rgb(235,164,29)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::import_extra (128 microseconds, 0.04%)')" onmouseout="c()">
+<title>Test::More::import_extra (128 microseconds, 0.04%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#173" target="_top"><rect x="566.0" y="193" width="0.4" height="15.0" fill="rgb(246,47,42)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('main::BEGIN@4 (261,659 microseconds, 72.28%)')" onmouseout="c()">
+<title>main::BEGIN@4 (261,659 microseconds, 72.28%)</title><a xlink:href="home-foo-test-more-profiling-compile-pl-1-line.html#4" target="_top"><rect x="309.6" y="225" width="853.0" height="15.0" fill="rgb(245,3,29)" rx="2" ry="2" />
+<text text-anchor="" x="312.598554746461" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >main::BEGIN@4</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::new (41 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::new (41 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#121" target="_top"><rect x="24.9" y="193" width="0.1" height="15.0" fill="rgb(221,15,36)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('overloading::unimport (122 microseconds, 0.03%)')" onmouseout="c()">
+<title>overloading::unimport (122 microseconds, 0.03%)</title><a xlink:href="overloading-pm-17-line.html#37" target="_top"><rect x="105.7" y="113" width="0.4" height="15.0" fill="rgb(211,111,27)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@5 (177 microseconds, 0.05%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@5 (177 microseconds, 0.05%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#5" target="_top"><rect x="1093.7" y="177" width="0.6" height="15.0" fill="rgb(230,20,45)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::Module::import (42 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::Module::import (42 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-Module-pm-5-line.html#76" target="_top"><rect x="1153.7" y="193" width="0.2" height="15.0" fill="rgb(229,223,36)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::CORE:match (70 microseconds, 0.02%)')" onmouseout="c()">
+<title>Test::Builder::CORE:match (70 microseconds, 0.02%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#Test__Builder__CORE_match" target="_top"><rect x="32.5" y="161" width="0.2" height="15.0" fill="rgb(209,216,27)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (102 microseconds, 0.03%)')" onmouseout="c()">
+<title>strict::bits (102 microseconds, 0.03%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="1077.8" y="113" width="0.3" height="15.0" fill="rgb(209,108,36)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::expected_tests (35 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::expected_tests (35 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#577" target="_top"><rect x="24.1" y="193" width="0.2" height="15.0" fill="rgb(216,109,23)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::export (194 microseconds, 0.05%)')" onmouseout="c()">
+<title>Exporter::export (194 microseconds, 0.05%)</title><a xlink:href="Exporter-pm-12-line.html#24" target="_top"><rect x="499.3" y="177" width="0.6" height="15.0" fill="rgb(208,45,19)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::register::import (1,057 microseconds, 0.29%)')" onmouseout="c()">
+<title>warnings::register::import (1,057 microseconds, 0.29%)</title><a xlink:href="register-pm-9-line.html#37" target="_top"><rect x="106.4" y="113" width="3.5" height="15.0" fill="rgb(228,138,38)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::as_heavy (19,610 microseconds, 5.42%)')" onmouseout="c()">
+<title>Exporter::as_heavy (19,610 microseconds, 5.42%)</title><a xlink:href="Exporter-pm-12-line.html#15" target="_top"><rect x="501.0" y="177" width="63.9" height="15.0" fill="rgb(232,158,12)" rx="2" ry="2" />
+<text text-anchor="" x="503.998202454122" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Exporte..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::CORE:subst (35 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::CORE:subst (35 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#Test__Builder__CORE_subst" target="_top"><rect x="23.5" y="145" width="0.1" height="15.0" fill="rgb(218,102,23)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::unimport (158 microseconds, 0.04%)')" onmouseout="c()">
+<title>warnings::unimport (158 microseconds, 0.04%)</title><a xlink:href="warnings-pm-3-line.html#1011" target="_top"><rect x="967.7" y="161" width="0.6" height="15.0" fill="rgb(242,35,8)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::unimport (360 microseconds, 0.10%)')" onmouseout="c()">
+<title>strict::unimport (360 microseconds, 0.10%)</title><a xlink:href="strict-pm-2-line.html#47" target="_top"><rect x="1083.9" y="145" width="1.1" height="15.0" fill="rgb(214,72,24)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::Heavy::heavy_export_to_level (3,544 microseconds, 0.98%)')" onmouseout="c()">
+<title>Exporter::Heavy::heavy_export_to_level (3,544 microseconds, 0.98%)</title><a xlink:href="Heavy-pm-15-line.html#214" target="_top"><rect x="488.4" y="193" width="11.5" height="15.0" fill="rgb(232,216,6)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Config::BEGIN@10 (160 microseconds, 0.04%)')" onmouseout="c()">
+<title>Config::BEGIN@10 (160 microseconds, 0.04%)</title><a xlink:href="Config-pm-7-line.html#10" target="_top"><rect x="1016.0" y="161" width="0.6" height="15.0" fill="rgb(238,153,54)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@2248 (336 microseconds, 0.09%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@2248 (336 microseconds, 0.09%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2248" target="_top"><rect x="1090.6" y="177" width="1.1" height="15.0" fill="rgb(228,24,41)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('UNIVERSAL::VERSION (311 microseconds, 0.09%)')" onmouseout="c()">
+<title>UNIVERSAL::VERSION (311 microseconds, 0.09%)</title><a xlink:href="home-foo-test-more-profiling-compile-pl-1-line.html#UNIVERSAL__VERSION" target="_top"><rect x="1153.9" y="193" width="1.0" height="15.0" fill="rgb(208,213,52)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('vars::BEGIN@3 (216 microseconds, 0.06%)')" onmouseout="c()">
+<title>vars::BEGIN@3 (216 microseconds, 0.06%)</title><a xlink:href="vars-pm-8-line.html#3" target="_top"><rect x="1042.8" y="145" width="0.7" height="15.0" fill="rgb(207,100,19)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (89 microseconds, 0.02%)')" onmouseout="c()">
+<title>strict::bits (89 microseconds, 0.02%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="1084.7" y="129" width="0.3" height="15.0" fill="rgb(253,218,1)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::__ANON__[lib/Test/Builder.pm:917] (25,564 microseconds, 7.06%)')" onmouseout="c()">
+<title>Test::Builder::__ANON__[lib/Test/Builder.pm:917] (25,564 microseconds, 7.06%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#917" target="_top"><rect x="49.7" y="145" width="83.3" height="15.0" fill="rgb(237,31,31)" rx="2" ry="2" />
+<text text-anchor="" x="52.7087035446024" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::Buil..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('main::BEGIN@1 (13,729 microseconds, 3.79%)')" onmouseout="c()">
+<title>main::BEGIN@1 (13,729 microseconds, 3.79%)</title><a xlink:href="home-foo-test-more-profiling-compile-pl-1-line.html#1" target="_top"><rect x="136.8" y="225" width="44.7" height="15.0" fill="rgb(210,166,31)" rx="2" ry="2" />
+<text text-anchor="" x="139.767753385341" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >main..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::Module::builder (89 microseconds, 0.02%)')" onmouseout="c()">
+<title>Test::Builder::Module::builder (89 microseconds, 0.02%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-Module-pm-5-line.html#169" target="_top"><rect x="15.0" y="209" width="0.3" height="15.0" fill="rgb(244,152,17)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::caller (315 microseconds, 0.09%)')" onmouseout="c()">
+<title>Test::Builder::caller (315 microseconds, 0.09%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2367" target="_top"><rect x="135.6" y="161" width="1.1" height="15.0" fill="rgb(216,14,4)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('version::(bool (196 microseconds, 0.05%)')" onmouseout="c()">
+<title>version::(bool (196 microseconds, 0.05%)</title><a xlink:href="home-foo-test-more-profiling-compile-pl-1-line.html#version___bool" target="_top"><rect x="1089.0" y="161" width="0.7" height="15.0" fill="rgb(248,63,29)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::Module::BEGIN@3 (533 microseconds, 0.15%)')" onmouseout="c()">
+<title>Test::Builder::Module::BEGIN@3 (533 microseconds, 0.15%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-Module-pm-5-line.html#3" target="_top"><rect x="618.5" y="193" width="1.8" height="15.0" fill="rgb(252,41,46)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_ending (1,129 microseconds, 0.31%)')" onmouseout="c()">
+<title>Test::Builder::_ending (1,129 microseconds, 0.31%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2455" target="_top"><rect x="10.3" y="209" width="3.7" height="15.0" fill="rgb(205,93,30)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::_mkMask (141 microseconds, 0.04%)')" onmouseout="c()">
+<title>warnings::_mkMask (141 microseconds, 0.04%)</title><a xlink:href="warnings-pm-3-line.html#1124" target="_top"><rect x="1076.8" y="97" width="0.4" height="15.0" fill="rgb(213,61,49)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::CORE:regcomp (990 microseconds, 0.27%)')" onmouseout="c()">
+<title>strict::CORE:regcomp (990 microseconds, 0.27%)</title><a xlink:href="strict-pm-2-line.html#strict__CORE_regcomp" target="_top"><rect x="174.9" y="209" width="3.3" height="15.0" fill="rgb(244,207,15)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@3 (257 microseconds, 0.07%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@3 (257 microseconds, 0.07%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#3" target="_top"><rect x="1091.7" y="177" width="0.9" height="15.0" fill="rgb(208,147,38)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@962 (1,030 microseconds, 0.28%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@962 (1,030 microseconds, 0.28%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#962" target="_top"><rect x="1094.3" y="177" width="3.4" height="15.0" fill="rgb(215,102,2)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::output (33 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::output (33 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1862" target="_top"><rect x="23.7" y="161" width="0.1" height="15.0" fill="rgb(214,6,34)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('vars::BEGIN@8 (266 microseconds, 0.07%)')" onmouseout="c()">
+<title>vars::BEGIN@8 (266 microseconds, 0.07%)</title><a xlink:href="vars-pm-8-line.html#8" target="_top"><rect x="1077.2" y="145" width="0.9" height="15.0" fill="rgb(206,204,38)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::export_to_level (19,939 microseconds, 5.51%)')" onmouseout="c()">
+<title>Exporter::export_to_level (19,939 microseconds, 5.51%)</title><a xlink:href="Exporter-pm-12-line.html#80" target="_top"><rect x="499.9" y="193" width="65.0" height="15.0" fill="rgb(220,44,17)" rx="2" ry="2" />
+<text text-anchor="" x="502.927029427864" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Exporte..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::import (1,031 microseconds, 0.28%)')" onmouseout="c()">
+<title>strict::import (1,031 microseconds, 0.28%)</title><a xlink:href="strict-pm-2-line.html#42" target="_top"><rect x="178.2" y="209" width="3.3" height="15.0" fill="rgb(235,156,44)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::find_TODO (423 microseconds, 0.12%)')" onmouseout="c()">
+<title>Test::Builder::find_TODO (423 microseconds, 0.12%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2242" target="_top"><rect x="135.3" y="177" width="1.4" height="15.0" fill="rgb(244,145,13)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (160 microseconds, 0.04%)')" onmouseout="c()">
+<title>strict::bits (160 microseconds, 0.04%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="1086.0" y="129" width="0.5" height="15.0" fill="rgb(230,107,49)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::is_fh (190 microseconds, 0.05%)')" onmouseout="c()">
+<title>Test::Builder::is_fh (190 microseconds, 0.05%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1547" target="_top"><rect x="1150.7" y="65" width="0.6" height="15.0" fill="rgb(254,127,50)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::CORE:match (45 microseconds, 0.01%)')" onmouseout="c()">
+<title>warnings::CORE:match (45 microseconds, 0.01%)</title><a xlink:href="warnings-pm-3-line.html#warnings__CORE_match" target="_top"><rect x="306.7" y="209" width="0.2" height="15.0" fill="rgb(222,150,28)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('UNIVERSAL::VERSION (416 microseconds, 0.11%)')" onmouseout="c()">
+<title>UNIVERSAL::VERSION (416 microseconds, 0.11%)</title><a xlink:href="home-foo-test-more-profiling-compile-pl-1-line.html#UNIVERSAL__VERSION" target="_top"><rect x="1152.4" y="177" width="1.3" height="15.0" fill="rgb(224,0,23)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::__ANON__[lib/Test/Builder.pm:933] (62 microseconds, 0.02%)')" onmouseout="c()">
+<title>Test::Builder::__ANON__[lib/Test/Builder.pm:933] (62 microseconds, 0.02%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#933" target="_top"><rect x="48.0" y="129" width="0.2" height="15.0" fill="rgb(213,171,34)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@1471 (349 microseconds, 0.10%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@1471 (349 microseconds, 0.10%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1471" target="_top"><rect x="968.3" y="177" width="1.1" height="15.0" fill="rgb(254,71,10)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::import (290 microseconds, 0.08%)')" onmouseout="c()">
+<title>strict::import (290 microseconds, 0.08%)</title><a xlink:href="strict-pm-2-line.html#42" target="_top"><rect x="1161.0" y="193" width="1.0" height="15.0" fill="rgb(214,123,50)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::output (377 microseconds, 0.10%)')" onmouseout="c()">
+<title>Test::Builder::output (377 microseconds, 0.10%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1862" target="_top"><rect x="1150.1" y="97" width="1.2" height="15.0" fill="rgb(247,43,11)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::failure_output (168 microseconds, 0.05%)')" onmouseout="c()">
+<title>Test::Builder::failure_output (168 microseconds, 0.05%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1871" target="_top"><rect x="1149.5" y="97" width="0.6" height="15.0" fill="rgb(224,112,49)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::Heavy::CORE:subst (251 microseconds, 0.07%)')" onmouseout="c()">
+<title>Exporter::Heavy::CORE:subst (251 microseconds, 0.07%)</title><a xlink:href="Heavy-pm-15-line.html#Exporter__Heavy__CORE_subst" target="_top"><rect x="498.5" y="161" width="0.8" height="15.0" fill="rgb(224,162,30)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::import (62 microseconds, 0.02%)')" onmouseout="c()">
+<title>warnings::import (62 microseconds, 0.02%)</title><a xlink:href="warnings-pm-3-line.html#993" target="_top"><rect x="1094.1" y="161" width="0.2" height="15.0" fill="rgb(207,49,21)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@1282 (472 microseconds, 0.13%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@1282 (472 microseconds, 0.13%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1282" target="_top"><rect x="966.7" y="177" width="1.6" height="15.0" fill="rgb(231,57,30)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_copy_io_layers (11,826 microseconds, 3.27%)')" onmouseout="c()">
+<title>Test::Builder::_copy_io_layers (11,826 microseconds, 3.27%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1964" target="_top"><rect x="1110.5" y="97" width="38.5" height="15.0" fill="rgb(243,225,4)" rx="2" ry="2" />
+<text text-anchor="" x="1113.46957592805" y="107.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Tes..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (74 microseconds, 0.02%)')" onmouseout="c()">
+<title>strict::bits (74 microseconds, 0.02%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="564.7" y="129" width="0.2" height="15.0" fill="rgb(241,128,51)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::Module::BEGIN@5 (163,648 microseconds, 45.21%)')" onmouseout="c()">
+<title>Test::Builder::Module::BEGIN@5 (163,648 microseconds, 45.21%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-Module-pm-5-line.html#5" target="_top"><rect x="620.3" y="193" width="533.4" height="15.0" fill="rgb(219,115,0)" rx="2" ry="2" />
+<text text-anchor="" x="623.258943173092" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::Builder::Module::BEGIN@5</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::unimport (154 microseconds, 0.04%)')" onmouseout="c()">
+<title>warnings::unimport (154 microseconds, 0.04%)</title><a xlink:href="warnings-pm-3-line.html#1011" target="_top"><rect x="567.1" y="193" width="0.5" height="15.0" fill="rgb(217,175,32)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_is_object (648 microseconds, 0.18%)')" onmouseout="c()">
+<title>Test::Builder::_is_object (648 microseconds, 0.18%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#930" target="_top"><rect x="46.1" y="161" width="2.1" height="15.0" fill="rgb(238,111,27)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::import (237 microseconds, 0.07%)')" onmouseout="c()">
+<title>strict::import (237 microseconds, 0.07%)</title><a xlink:href="strict-pm-2-line.html#42" target="_top"><rect x="1093.0" y="161" width="0.7" height="15.0" fill="rgb(213,98,18)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_new_fh (297 microseconds, 0.08%)')" onmouseout="c()">
+<title>Test::Builder::_new_fh (297 microseconds, 0.08%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1889" target="_top"><rect x="1150.3" y="81" width="1.0" height="15.0" fill="rgb(220,153,34)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::END (1,229 microseconds, 0.34%)')" onmouseout="c()">
+<title>Test::Builder::END (1,229 microseconds, 0.34%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2588" target="_top"><rect x="10.0" y="225" width="4.0" height="15.0" fill="rgb(205,143,21)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::is_fh (38 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::is_fh (38 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1547" target="_top"><rect x="1149.9" y="65" width="0.2" height="15.0" fill="rgb(226,141,22)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::Heavy::heavy_export (3,125 microseconds, 0.86%)')" onmouseout="c()">
+<title>Exporter::Heavy::heavy_export (3,125 microseconds, 0.86%)</title><a xlink:href="Heavy-pm-15-line.html#39" target="_top"><rect x="489.1" y="177" width="10.2" height="15.0" fill="rgb(206,135,24)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::__ANON__[lib/Test/Builder.pm:1665] (37 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::__ANON__[lib/Test/Builder.pm:1665] (37 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1658" target="_top"><rect x="13.7" y="193" width="0.1" height="15.0" fill="rgb(253,40,47)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Config::FETCH (64 microseconds, 0.02%)')" onmouseout="c()">
+<title>Config::FETCH (64 microseconds, 0.02%)</title><a xlink:href="Config-pm-7-line.html#66" target="_top"><rect x="974.7" y="161" width="0.2" height="15.0" fill="rgb(231,116,3)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::reset (16,565 microseconds, 4.58%)')" onmouseout="c()">
+<title>Test::Builder::reset (16,565 microseconds, 4.58%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#432" target="_top"><rect x="1098.4" y="145" width="54.0" height="15.0" fill="rgb(249,5,28)" rx="2" ry="2" />
+<text text-anchor="" x="1101.36297366932" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (159 microseconds, 0.04%)')" onmouseout="c()">
+<title>strict::bits (159 microseconds, 0.04%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="619.7" y="161" width="0.6" height="15.0" fill="rgb(236,5,42)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::_mkMask (92 microseconds, 0.03%)')" onmouseout="c()">
+<title>warnings::_mkMask (92 microseconds, 0.03%)</title><a xlink:href="warnings-pm-3-line.html#1124" target="_top"><rect x="109.6" y="81" width="0.3" height="15.0" fill="rgb(243,64,39)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::unimport (135 microseconds, 0.04%)')" onmouseout="c()">
+<title>strict::unimport (135 microseconds, 0.04%)</title><a xlink:href="strict-pm-2-line.html#47" target="_top"><rect x="564.5" y="145" width="0.4" height="15.0" fill="rgb(208,181,33)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::new (112 microseconds, 0.03%)')" onmouseout="c()">
+<title>Test::Builder::new (112 microseconds, 0.03%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#121" target="_top"><rect x="565.4" y="177" width="0.4" height="15.0" fill="rgb(218,184,18)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('vars::import (1,650 microseconds, 0.46%)')" onmouseout="c()">
+<title>vars::import (1,650 microseconds, 0.46%)</title><a xlink:href="vars-pm-8-line.html#10" target="_top"><rect x="1078.1" y="145" width="5.4" height="15.0" fill="rgb(250,161,45)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::import (86 microseconds, 0.02%)')" onmouseout="c()">
+<title>warnings::import (86 microseconds, 0.02%)</title><a xlink:href="warnings-pm-3-line.html#993" target="_top"><rect x="1162.3" y="193" width="0.3" height="15.0" fill="rgb(250,92,42)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::CORE:print (3,106 microseconds, 0.86%)')" onmouseout="c()">
+<title>Test::Builder::CORE:print (3,106 microseconds, 0.86%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#Test__Builder__CORE_print" target="_top"><rect x="32.7" y="161" width="10.2" height="15.0" fill="rgb(247,184,34)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::BEGIN@1313 (358 microseconds, 0.10%)')" onmouseout="c()">
+<title>Test::More::BEGIN@1313 (358 microseconds, 0.10%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#1313" target="_top"><rect x="566.4" y="209" width="1.2" height="15.0" fill="rgb(243,163,6)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::unimport (167 microseconds, 0.05%)')" onmouseout="c()">
+<title>warnings::unimport (167 microseconds, 0.05%)</title><a xlink:href="warnings-pm-3-line.html#1011" target="_top"><rect x="968.9" y="161" width="0.5" height="15.0" fill="rgb(206,99,28)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::new (16,780 microseconds, 4.64%)')" onmouseout="c()">
+<title>Test::Builder::new (16,780 microseconds, 4.64%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#121" target="_top"><rect x="1097.7" y="177" width="54.7" height="15.0" fill="rgb(235,8,35)" rx="2" ry="2" />
+<text text-anchor="" x="1100.66048496829" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::Module::builder (200 microseconds, 0.06%)')" onmouseout="c()">
+<title>Test::Builder::Module::builder (200 microseconds, 0.06%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-Module-pm-5-line.html#169" target="_top"><rect x="565.2" y="193" width="0.6" height="15.0" fill="rgb(242,38,10)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::register_categories (957 microseconds, 0.26%)')" onmouseout="c()">
+<title>warnings::register_categories (957 microseconds, 0.26%)</title><a xlink:href="warnings-pm-3-line.html#1133" target="_top"><rect x="106.7" y="97" width="3.2" height="15.0" fill="rgb(226,162,11)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::Module::import (24,638 microseconds, 6.81%)')" onmouseout="c()">
+<title>Test::Builder::Module::import (24,638 microseconds, 6.81%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-Module-pm-5-line.html#76" target="_top"><rect x="486.1" y="209" width="80.3" height="15.0" fill="rgb(224,161,48)" rx="2" ry="2" />
+<text text-anchor="" x="489.109027781471" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::Buil..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::find_TODO (455 microseconds, 0.13%)')" onmouseout="c()">
+<title>Test::Builder::find_TODO (455 microseconds, 0.13%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2242" target="_top"><rect x="133.5" y="177" width="1.5" height="15.0" fill="rgb(218,34,50)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::BEGIN@23 (179,651 microseconds, 49.63%)')" onmouseout="c()">
+<title>Test::More::BEGIN@23 (179,651 microseconds, 49.63%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#23" target="_top"><rect x="569.2" y="209" width="585.7" height="15.0" fill="rgb(212,148,48)" rx="2" ry="2" />
+<text text-anchor="" x="572.244246302347" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::More::BEGIN@23</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Config::import (668 microseconds, 0.18%)')" onmouseout="c()">
+<title>Config::import (668 microseconds, 0.18%)</title><a xlink:href="Config-pm-7-line.html#40" target="_top"><rect x="1086.9" y="161" width="2.1" height="15.0" fill="rgb(238,1,15)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (164 microseconds, 0.05%)')" onmouseout="c()">
+<title>strict::bits (164 microseconds, 0.05%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="1093.2" y="145" width="0.5" height="15.0" fill="rgb(246,13,6)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_print (4,116 microseconds, 1.14%)')" onmouseout="c()">
+<title>Test::Builder::_print (4,116 microseconds, 1.14%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1802" target="_top"><rect x="30.2" y="193" width="13.4" height="15.0" fill="rgb(238,74,42)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::level (46 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::level (46 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1590" target="_top"><rect x="134.8" y="145" width="0.2" height="15.0" fill="rgb(224,41,15)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@18 (1,389 microseconds, 0.38%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@18 (1,389 microseconds, 0.38%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#18" target="_top"><rect x="970.4" y="177" width="4.5" height="15.0" fill="rgb(242,142,6)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (135 microseconds, 0.04%)')" onmouseout="c()">
+<title>strict::bits (135 microseconds, 0.04%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="1161.5" y="177" width="0.5" height="15.0" fill="rgb(236,189,46)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::register_categories (1,783 microseconds, 0.49%)')" onmouseout="c()">
+<title>warnings::register_categories (1,783 microseconds, 0.49%)</title><a xlink:href="warnings-pm-3-line.html#1133" target="_top"><rect x="1071.4" y="113" width="5.8" height="15.0" fill="rgb(210,229,18)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::unimport (178 microseconds, 0.05%)')" onmouseout="c()">
+<title>strict::unimport (178 microseconds, 0.05%)</title><a xlink:href="strict-pm-2-line.html#47" target="_top"><rect x="969.8" y="161" width="0.6" height="15.0" fill="rgb(207,202,27)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('overload::BEGIN@114 (276 microseconds, 0.08%)')" onmouseout="c()">
+<title>overload::BEGIN@114 (276 microseconds, 0.08%)</title><a xlink:href="overload-pm-16-line.html#114" target="_top"><rect x="105.2" y="129" width="0.9" height="15.0" fill="rgb(248,38,21)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (853 microseconds, 0.24%)')" onmouseout="c()">
+<title>strict::bits (853 microseconds, 0.24%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="178.7" y="193" width="2.8" height="15.0" fill="rgb(211,229,15)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_open_testhandles (13,324 microseconds, 3.68%)')" onmouseout="c()">
+<title>Test::Builder::_open_testhandles (13,324 microseconds, 3.68%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1946" target="_top"><rect x="1105.6" y="113" width="43.4" height="15.0" fill="rgb(236,119,12)" rx="2" ry="2" />
+<text text-anchor="" x="1108.58475310442" y="123.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::CORE:subst (218 microseconds, 0.06%)')" onmouseout="c()">
+<title>Exporter::CORE:subst (218 microseconds, 0.06%)</title><a xlink:href="Exporter-pm-12-line.html#Exporter__CORE_subst" target="_top"><rect x="560.9" y="161" width="0.7" height="15.0" fill="rgb(209,84,3)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@19 (35,509 microseconds, 9.81%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@19 (35,509 microseconds, 9.81%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#19" target="_top"><rect x="974.9" y="177" width="115.7" height="15.0" fill="rgb(245,11,45)" rx="2" ry="2" />
+<text text-anchor="" x="977.886322801662" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::Builder::..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::unimport (864 microseconds, 0.24%)')" onmouseout="c()">
+<title>warnings::unimport (864 microseconds, 0.24%)</title><a xlink:href="warnings-pm-3-line.html#1011" target="_top"><rect x="1094.8" y="161" width="2.9" height="15.0" fill="rgb(254,59,51)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (155 microseconds, 0.04%)')" onmouseout="c()">
+<title>strict::bits (155 microseconds, 0.04%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="563.6" y="129" width="0.6" height="15.0" fill="rgb(221,96,43)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_unoverload (27,322 microseconds, 7.55%)')" onmouseout="c()">
+<title>Test::Builder::_unoverload (27,322 microseconds, 7.55%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#913" target="_top"><rect x="44.0" y="177" width="89.0" height="15.0" fill="rgb(213,161,25)" rx="2" ry="2" />
+<text text-anchor="" x="46.9776344713701" y="187.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::Build..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_my_exit (44 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::_my_exit (44 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2443" target="_top"><rect x="13.9" y="193" width="0.1" height="15.0" fill="rgb(231,180,44)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_new_fh (96 microseconds, 0.03%)')" onmouseout="c()">
+<title>Test::Builder::_new_fh (96 microseconds, 0.03%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1889" target="_top"><rect x="1149.7" y="81" width="0.4" height="15.0" fill="rgb(249,215,39)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::ok (34,276 microseconds, 9.47%)')" onmouseout="c()">
+<title>Test::Builder::ok (34,276 microseconds, 9.47%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#809" target="_top"><rect x="25.0" y="209" width="111.8" height="15.0" fill="rgb(216,16,34)" rx="2" ry="2" />
+<text text-anchor="" x="28.0361920295726" y="219.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::Builder:..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::Heavy::BEGIN@3 (470 microseconds, 0.13%)')" onmouseout="c()">
+<title>Exporter::Heavy::BEGIN@3 (470 microseconds, 0.13%)</title><a xlink:href="Heavy-pm-15-line.html#3" target="_top"><rect x="562.6" y="161" width="1.6" height="15.0" fill="rgb(218,112,34)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('main::BEGIN@2 (39,289 microseconds, 10.85%)')" onmouseout="c()">
+<title>main::BEGIN@2 (39,289 microseconds, 10.85%)</title><a xlink:href="home-foo-test-more-profiling-compile-pl-1-line.html#2" target="_top"><rect x="181.5" y="225" width="128.1" height="15.0" fill="rgb(215,16,10)" rx="2" ry="2" />
+<text text-anchor="" x="184.522640267276" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >main::BEGIN@2</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (96 microseconds, 0.03%)')" onmouseout="c()">
+<title>strict::bits (96 microseconds, 0.03%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="970.0" y="145" width="0.4" height="15.0" fill="rgb(215,198,19)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::bits (109 microseconds, 0.03%)')" onmouseout="c()">
+<title>strict::bits (109 microseconds, 0.03%)</title><a xlink:href="strict-pm-2-line.html#23" target="_top"><rect x="1091.4" y="145" width="0.3" height="15.0" fill="rgb(241,2,27)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_apply_layers (1,496 microseconds, 0.41%)')" onmouseout="c()">
+<title>Test::Builder::_apply_layers (1,496 microseconds, 0.41%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1979" target="_top"><rect x="1144.1" y="49" width="4.9" height="15.0" fill="rgb(243,28,40)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::unimport (138 microseconds, 0.04%)')" onmouseout="c()">
+<title>warnings::unimport (138 microseconds, 0.04%)</title><a xlink:href="warnings-pm-3-line.html#1011" target="_top"><rect x="568.8" y="193" width="0.4" height="15.0" fill="rgb(219,157,42)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_try (430 microseconds, 0.12%)')" onmouseout="c()">
+<title>Test::Builder::_try (430 microseconds, 0.12%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1518" target="_top"><rect x="46.8" y="145" width="1.4" height="15.0" fill="rgb(248,76,42)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('vars::BEGIN@7 (10,356 microseconds, 2.86%)')" onmouseout="c()">
+<title>vars::BEGIN@7 (10,356 microseconds, 2.86%)</title><a xlink:href="vars-pm-8-line.html#7" target="_top"><rect x="1043.5" y="145" width="33.7" height="15.0" fill="rgb(252,95,8)" rx="2" ry="2" />
+<text text-anchor="" x="1046.47790633578" y="155.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >var..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@10 (120 microseconds, 0.03%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@10 (120 microseconds, 0.03%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#10" target="_top"><rect x="966.3" y="177" width="0.4" height="15.0" fill="rgb(208,200,3)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_print_to_fh (1,913 microseconds, 0.53%)')" onmouseout="c()">
+<title>Test::Builder::_print_to_fh (1,913 microseconds, 0.53%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1807" target="_top"><rect x="17.5" y="161" width="6.2" height="15.0" fill="rgb(240,60,32)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_new_fh (127 microseconds, 0.04%)')" onmouseout="c()">
+<title>Test::Builder::_new_fh (127 microseconds, 0.04%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1889" target="_top"><rect x="1151.6" y="81" width="0.4" height="15.0" fill="rgb(205,139,34)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::create (16,684 microseconds, 4.61%)')" onmouseout="c()">
+<title>Test::Builder::create (16,684 microseconds, 4.61%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#141" target="_top"><rect x="1098.0" y="161" width="54.4" height="15.0" fill="rgb(209,105,28)" rx="2" ry="2" />
+<text text-anchor="" x="1100.97375255144" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::is_passing (37 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::is_passing (37 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2109" target="_top"><rect x="1152.2" y="129" width="0.2" height="15.0" fill="rgb(219,99,53)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('overload::BEGIN@144 (1,167 microseconds, 0.32%)')" onmouseout="c()">
+<title>overload::BEGIN@144 (1,167 microseconds, 0.32%)</title><a xlink:href="overload-pm-16-line.html#144" target="_top"><rect x="106.1" y="129" width="3.8" height="15.0" fill="rgb(217,223,15)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_share_keys (80 microseconds, 0.02%)')" onmouseout="c()">
+<title>Test::Builder::_share_keys (80 microseconds, 0.02%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#479" target="_top"><rect x="1152.0" y="129" width="0.2" height="15.0" fill="rgb(243,81,1)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::unimport (121 microseconds, 0.03%)')" onmouseout="c()">
+<title>warnings::unimport (121 microseconds, 0.03%)</title><a xlink:href="warnings-pm-3-line.html#1011" target="_top"><rect x="568.0" y="193" width="0.4" height="15.0" fill="rgb(233,222,10)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_dup_stdhandles (15,495 microseconds, 4.28%)')" onmouseout="c()">
+<title>Test::Builder::_dup_stdhandles (15,495 microseconds, 4.28%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1929" target="_top"><rect x="1101.5" y="129" width="50.5" height="15.0" fill="rgb(246,12,2)" rx="2" ry="2" />
+<text text-anchor="" x="1104.46826711063" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test:..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::CORE:regcomp (230 microseconds, 0.06%)')" onmouseout="c()">
+<title>warnings::CORE:regcomp (230 microseconds, 0.06%)</title><a xlink:href="warnings-pm-3-line.html#warnings__CORE_regcomp" target="_top"><rect x="306.9" y="209" width="0.7" height="15.0" fill="rgb(222,18,40)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_output_plan (2,192 microseconds, 0.61%)')" onmouseout="c()">
+<title>Test::Builder::_output_plan (2,192 microseconds, 0.61%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#634" target="_top"><rect x="16.7" y="193" width="7.1" height="15.0" fill="rgb(247,31,36)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::CORE:print (1,390 microseconds, 0.38%)')" onmouseout="c()">
+<title>Test::Builder::CORE:print (1,390 microseconds, 0.38%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#Test__Builder__CORE_print" target="_top"><rect x="19.0" y="145" width="4.5" height="15.0" fill="rgb(234,127,12)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::__ANON__[lib/Test/Builder.pm:1973] (5,953 microseconds, 1.64%)')" onmouseout="c()">
+<title>Test::Builder::__ANON__[lib/Test/Builder.pm:1973] (5,953 microseconds, 1.64%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1968" target="_top"><rect x="1129.6" y="65" width="19.4" height="15.0" fill="rgb(216,1,44)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('vars::CORE:match (339 microseconds, 0.09%)')" onmouseout="c()">
+<title>vars::CORE:match (339 microseconds, 0.09%)</title><a xlink:href="vars-pm-8-line.html#vars__CORE_match" target="_top"><rect x="1082.4" y="129" width="1.1" height="15.0" fill="rgb(229,45,13)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::BEGIN@4 (418 microseconds, 0.12%)')" onmouseout="c()">
+<title>Test::More::BEGIN@4 (418 microseconds, 0.12%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#4" target="_top"><rect x="1160.6" y="209" width="1.4" height="15.0" fill="rgb(253,23,39)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::exported_to (36 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::exported_to (36 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#779" target="_top"><rect x="565.8" y="193" width="0.1" height="15.0" fill="rgb(246,152,23)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::in_todo (592 microseconds, 0.16%)')" onmouseout="c()">
+<title>Test::Builder::in_todo (592 microseconds, 0.16%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2262" target="_top"><rect x="133.0" y="193" width="2.0" height="15.0" fill="rgb(217,2,35)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::todo (520 microseconds, 0.14%)')" onmouseout="c()">
+<title>Test::Builder::todo (520 microseconds, 0.14%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2215" target="_top"><rect x="135.0" y="193" width="1.7" height="15.0" fill="rgb(218,122,49)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@1667 (294 microseconds, 0.08%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@1667 (294 microseconds, 0.08%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1667" target="_top"><rect x="969.4" y="177" width="1.0" height="15.0" fill="rgb(215,105,4)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('overloading::BEGIN@2 (315 microseconds, 0.09%)')" onmouseout="c()">
+<title>overloading::BEGIN@2 (315 microseconds, 0.09%)</title><a xlink:href="overloading-pm-17-line.html#2" target="_top"><rect x="130.9" y="113" width="1.1" height="15.0" fill="rgb(230,126,28)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Config::BEGIN@9 (444 microseconds, 0.12%)')" onmouseout="c()">
+<title>Config::BEGIN@9 (444 microseconds, 0.12%)</title><a xlink:href="Config-pm-7-line.html#9" target="_top"><rect x="1085.0" y="161" width="1.5" height="15.0" fill="rgb(209,103,28)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Config::BEGIN@47 (476 microseconds, 0.13%)')" onmouseout="c()">
+<title>Config::BEGIN@47 (476 microseconds, 0.13%)</title><a xlink:href="Config-pm-7-line.html#47" target="_top"><rect x="1083.5" y="161" width="1.5" height="15.0" fill="rgb(237,175,45)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::new (91 microseconds, 0.03%)')" onmouseout="c()">
+<title>Test::Builder::new (91 microseconds, 0.03%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#121" target="_top"><rect x="14.0" y="225" width="0.3" height="15.0" fill="rgb(227,220,42)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_autoflush (758 microseconds, 0.21%)')" onmouseout="c()">
+<title>Test::Builder::_autoflush (758 microseconds, 0.21%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1918" target="_top"><rect x="1103.1" y="113" width="2.5" height="15.0" fill="rgb(250,167,53)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::BEGIN@4 (354 microseconds, 0.10%)')" onmouseout="c()">
+<title>Test::Builder::BEGIN@4 (354 microseconds, 0.10%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#4" target="_top"><rect x="1092.6" y="177" width="1.1" height="15.0" fill="rgb(253,67,13)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::ok (34,514 microseconds, 9.53%)')" onmouseout="c()">
+<title>Test::More::ok (34,514 microseconds, 9.53%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#290" target="_top"><rect x="24.3" y="225" width="112.5" height="15.0" fill="rgb(222,87,31)" rx="2" ry="2" />
+<text text-anchor="" x="27.2587277363209" y="235.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::More::ok</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Config::TIEHASH (119 microseconds, 0.03%)')" onmouseout="c()">
+<title>Config::TIEHASH (119 microseconds, 0.03%)</title><a xlink:href="Config-pm-7-line.html#73" target="_top"><rect x="1086.5" y="161" width="0.4" height="15.0" fill="rgb(252,45,28)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::todo_output (213 microseconds, 0.06%)')" onmouseout="c()">
+<title>Test::Builder::todo_output (213 microseconds, 0.06%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1880" target="_top"><rect x="1151.3" y="97" width="0.7" height="15.0" fill="rgb(217,42,40)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::has_plan (60 microseconds, 0.02%)')" onmouseout="c()">
+<title>Test::Builder::has_plan (60 microseconds, 0.02%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#737" target="_top"><rect x="30.0" y="177" width="0.2" height="15.0" fill="rgb(229,132,12)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('overload::BEGIN@83 (7,111 microseconds, 1.96%)')" onmouseout="c()">
+<title>overload::BEGIN@83 (7,111 microseconds, 1.96%)</title><a xlink:href="overload-pm-16-line.html#83" target="_top"><rect x="109.9" y="129" width="23.1" height="15.0" fill="rgb(245,135,34)" rx="2" ry="2" />
+<text text-anchor="" x="112.859665298772" y="139.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >o..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::BEGIN@1679 (272 microseconds, 0.08%)')" onmouseout="c()">
+<title>Test::More::BEGIN@1679 (272 microseconds, 0.08%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#1679" target="_top"><rect x="568.4" y="209" width="0.8" height="15.0" fill="rgb(253,219,30)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::import (237 microseconds, 0.07%)')" onmouseout="c()">
+<title>strict::import (237 microseconds, 0.07%)</title><a xlink:href="strict-pm-2-line.html#42" target="_top"><rect x="563.4" y="145" width="0.8" height="15.0" fill="rgb(232,31,46)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::CORE:select (307 microseconds, 0.08%)')" onmouseout="c()">
+<title>Test::Builder::CORE:select (307 microseconds, 0.08%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#Test__Builder__CORE_select" target="_top"><rect x="1104.6" y="97" width="1.0" height="15.0" fill="rgb(228,200,20)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::Module::builder (96 microseconds, 0.03%)')" onmouseout="c()">
+<title>Test::Builder::Module::builder (96 microseconds, 0.03%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-Module-pm-5-line.html#169" target="_top"><rect x="24.7" y="209" width="0.3" height="15.0" fill="rgb(241,19,24)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::output (64 microseconds, 0.02%)')" onmouseout="c()">
+<title>Test::Builder::output (64 microseconds, 0.02%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1862" target="_top"><rect x="43.4" y="177" width="0.2" height="15.0" fill="rgb(223,68,4)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::done_testing (2,760 microseconds, 0.76%)')" onmouseout="c()">
+<title>Test::Builder::done_testing (2,760 microseconds, 0.76%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#686" target="_top"><rect x="15.3" y="209" width="9.0" height="15.0" fill="rgb(246,15,37)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::Module::_strip_imports (72 microseconds, 0.02%)')" onmouseout="c()">
+<title>Test::Builder::Module::_strip_imports (72 microseconds, 0.02%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-Module-pm-5-line.html#96" target="_top"><rect x="564.9" y="193" width="0.3" height="15.0" fill="rgb(245,105,17)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::reset_outputs (908 microseconds, 0.25%)')" onmouseout="c()">
+<title>Test::Builder::reset_outputs (908 microseconds, 0.25%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1995" target="_top"><rect x="1149.0" y="113" width="3.0" height="15.0" fill="rgb(220,65,7)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::CORE:match (592 microseconds, 0.16%)')" onmouseout="c()">
+<title>strict::CORE:match (592 microseconds, 0.16%)</title><a xlink:href="strict-pm-2-line.html#strict__CORE_match" target="_top"><rect x="173.0" y="209" width="1.9" height="15.0" fill="rgb(235,196,22)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::current_test (106 microseconds, 0.03%)')" onmouseout="c()">
+<title>Test::Builder::current_test (106 microseconds, 0.03%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2061" target="_top"><rect x="23.8" y="193" width="0.3" height="15.0" fill="rgb(226,184,17)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_print (2,060 microseconds, 0.57%)')" onmouseout="c()">
+<title>Test::Builder::_print (2,060 microseconds, 0.57%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1802" target="_top"><rect x="17.1" y="177" width="6.7" height="15.0" fill="rgb(245,130,35)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::as_heavy (128 microseconds, 0.04%)')" onmouseout="c()">
+<title>Exporter::as_heavy (128 microseconds, 0.04%)</title><a xlink:href="Exporter-pm-12-line.html#15" target="_top"><rect x="499.5" y="161" width="0.4" height="15.0" fill="rgb(211,31,52)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::import (95 microseconds, 0.03%)')" onmouseout="c()">
+<title>warnings::import (95 microseconds, 0.03%)</title><a xlink:href="warnings-pm-3-line.html#993" target="_top"><rect x="131.7" y="97" width="0.3" height="15.0" fill="rgb(231,22,51)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::import (248 microseconds, 0.07%)')" onmouseout="c()">
+<title>strict::import (248 microseconds, 0.07%)</title><a xlink:href="strict-pm-2-line.html#42" target="_top"><rect x="619.5" y="177" width="0.8" height="15.0" fill="rgb(235,126,12)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::import (166 microseconds, 0.05%)')" onmouseout="c()">
+<title>strict::import (166 microseconds, 0.05%)</title><a xlink:href="strict-pm-2-line.html#42" target="_top"><rect x="1077.6" y="129" width="0.5" height="15.0" fill="rgb(251,124,23)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::BEGIN@5 (185 microseconds, 0.05%)')" onmouseout="c()">
+<title>Test::More::BEGIN@5 (185 microseconds, 0.05%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#5" target="_top"><rect x="1162.0" y="209" width="0.6" height="15.0" fill="rgb(250,206,2)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::CORE:binmode (954 microseconds, 0.26%)')" onmouseout="c()">
+<title>Test::Builder::CORE:binmode (954 microseconds, 0.26%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#Test__Builder__CORE_binmode" target="_top"><rect x="1145.9" y="33" width="3.1" height="15.0" fill="rgb(217,100,25)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::CORE:open (1,085 microseconds, 0.30%)')" onmouseout="c()">
+<title>Test::Builder::CORE:open (1,085 microseconds, 0.30%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#Test__Builder__CORE_open" target="_top"><rect x="1106.9" y="97" width="3.6" height="15.0" fill="rgb(251,181,46)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::use_numbers (32 microseconds, 0.01%)')" onmouseout="c()">
+<title>Test::Builder::use_numbers (32 microseconds, 0.01%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1622" target="_top"><rect x="136.7" y="193" width="0.1" height="15.0" fill="rgb(251,172,14)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::import (244 microseconds, 0.07%)')" onmouseout="c()">
+<title>strict::import (244 microseconds, 0.07%)</title><a xlink:href="strict-pm-2-line.html#42" target="_top"><rect x="1085.7" y="145" width="0.8" height="15.0" fill="rgb(226,27,25)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Config::BEGIN@11 (20,528 microseconds, 5.67%)')" onmouseout="c()">
+<title>Config::BEGIN@11 (20,528 microseconds, 5.67%)</title><a xlink:href="Config-pm-7-line.html#11" target="_top"><rect x="1016.6" y="161" width="66.9" height="15.0" fill="rgb(253,193,30)" rx="2" ry="2" />
+<text text-anchor="" x="1019.56395059416" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Config::..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('overloading::unimport (331 microseconds, 0.09%)')" onmouseout="c()">
+<title>overloading::unimport (331 microseconds, 0.09%)</title><a xlink:href="overloading-pm-17-line.html#37" target="_top"><rect x="132.0" y="113" width="1.0" height="15.0" fill="rgb(232,41,1)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::caller (319 microseconds, 0.09%)')" onmouseout="c()">
+<title>Test::Builder::caller (319 microseconds, 0.09%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#2367" target="_top"><rect x="133.9" y="161" width="1.1" height="15.0" fill="rgb(228,175,28)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('strict::unimport (206 microseconds, 0.06%)')" onmouseout="c()">
+<title>strict::unimport (206 microseconds, 0.06%)</title><a xlink:href="strict-pm-2-line.html#47" target="_top"><rect x="1091.1" y="161" width="0.6" height="15.0" fill="rgb(239,89,40)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::register::import (2,283 microseconds, 0.63%)')" onmouseout="c()">
+<title>warnings::register::import (2,283 microseconds, 0.63%)</title><a xlink:href="register-pm-9-line.html#37" target="_top"><rect x="1069.8" y="129" width="7.4" height="15.0" fill="rgb(214,226,3)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('all (361,984 microseconds, 100%)')" onmouseout="c()">
+<title>all (361,984 microseconds, 100%)</title><rect x="10.0" y="241" width="1180.0" height="15.0" fill="rgb(240,197,46)" rx="2" ry="2" />
+<text text-anchor="" x="13" y="251.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  ></text>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_print_to_fh (3,910 microseconds, 1.08%)')" onmouseout="c()">
+<title>Test::Builder::_print_to_fh (3,910 microseconds, 1.08%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1807" target="_top"><rect x="30.6" y="177" width="12.8" height="15.0" fill="rgb(241,56,46)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_unoverload_str (27,445 microseconds, 7.58%)')" onmouseout="c()">
+<title>Test::Builder::_unoverload_str (27,445 microseconds, 7.58%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#936" target="_top"><rect x="43.6" y="193" width="89.4" height="15.0" fill="rgb(235,83,38)" rx="2" ry="2" />
+<text text-anchor="" x="46.5743961775535" y="203.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::Build..</text>
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::done_testing (3,054 microseconds, 0.84%)')" onmouseout="c()">
+<title>Test::More::done_testing (3,054 microseconds, 0.84%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#218" target="_top"><rect x="14.3" y="225" width="10.0" height="15.0" fill="rgb(242,99,41)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Exporter::Heavy::BEGIN@202 (313 microseconds, 0.09%)')" onmouseout="c()">
+<title>Exporter::Heavy::BEGIN@202 (313 microseconds, 0.09%)</title><a xlink:href="Heavy-pm-15-line.html#202" target="_top"><rect x="561.6" y="161" width="1.0" height="15.0" fill="rgb(223,117,4)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('warnings::import (602 microseconds, 0.17%)')" onmouseout="c()">
+<title>warnings::import (602 microseconds, 0.17%)</title><a xlink:href="warnings-pm-3-line.html#993" target="_top"><rect x="307.6" y="209" width="2.0" height="15.0" fill="rgb(208,118,46)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::CORE:subst (124 microseconds, 0.03%)')" onmouseout="c()">
+<title>Test::Builder::CORE:subst (124 microseconds, 0.03%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#Test__Builder__CORE_subst" target="_top"><rect x="42.9" y="161" width="0.4" height="15.0" fill="rgb(221,199,28)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('PerlIO::get_layers (387 microseconds, 0.11%)')" onmouseout="c()">
+<title>PerlIO::get_layers (387 microseconds, 0.11%)</title><a xlink:href="PerlIO-pm-11-line.html#PerlIO__get_layers" target="_top"><rect x="1142.9" y="49" width="1.2" height="15.0" fill="rgb(251,87,3)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_check_is_passing_plan (157 microseconds, 0.04%)')" onmouseout="c()">
+<title>Test::Builder::_check_is_passing_plan (157 microseconds, 0.04%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#903" target="_top"><rect x="29.6" y="193" width="0.6" height="15.0" fill="rgb(251,79,33)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('version::(cmp (294 microseconds, 0.08%)')" onmouseout="c()">
+<title>version::(cmp (294 microseconds, 0.08%)</title><a xlink:href="home-foo-test-more-profiling-compile-pl-1-line.html#version___cmp" target="_top"><rect x="1089.7" y="161" width="0.9" height="15.0" fill="rgb(238,58,29)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::More::BEGIN@1390 (235 microseconds, 0.06%)')" onmouseout="c()">
+<title>Test::More::BEGIN@1390 (235 microseconds, 0.06%)</title><a xlink:href="home-foo-test-more-lib-Test-More-pm-4-line.html#1390" target="_top"><rect x="567.6" y="209" width="0.8" height="15.0" fill="rgb(233,157,30)" rx="2" ry="2" />
+</a>
+</g>
+<g class="func_g" onmouseover="s('Test::Builder::_try (26,030 microseconds, 7.19%)')" onmouseout="c()">
+<title>Test::Builder::_try (26,030 microseconds, 7.19%)</title><a xlink:href="home-foo-test-more-lib-Test-Builder-pm-6-line.html#1518" target="_top"><rect x="48.2" y="161" width="84.8" height="15.0" fill="rgb(210,13,28)" rx="2" ry="2" />
+<text text-anchor="" x="51.1880029458521" y="171.5" font-size="12" font-family="Verdana" fill="rgb(0,0,0)"  >Test::Buil..</text>
+</a>
+</g>
+</svg>
