@@ -10,7 +10,7 @@
                 padding-right: 15px;
             }
 
-            tr#top th {
+            tr.top th {
                 text-align: center;
             }
 
@@ -36,173 +36,347 @@
             tr.odd {
                 background: #d0d0d0;
             }
+
+            tr.specs td {
+                padding: 10px;
+            }
         </style>
     </head>
 
     <body>
 
-        Profiling done via NYTProf. Raw data is the .out file produced.
 
-        <p>
+<h1>Test-Stream OO internals optimization metrics</h1>
 
-        <table>
-            <tr id="top">
-                <th>Branch</th>
-                <th>Perl Build</th>
-                <th>Moose Build</th>
-                <th colspan="2">Profiling</th>
-                <th>Description</th>
-            </tr>
+<h2>Why does this matter?</h2>
 
-            <tr class="even">
-                <th><a href="https://github.com/Test-More/test-more/tree/stable">stable</a></th>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th></tr>
-                        <tr><td>762s</td><td>7.07</td><td>3.77</td><td>407.45</td><td>41.38</td></tr>
-                    </table>
-                </td>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th><th>CPU</th></tr>
-                        <tr><td>93s</td><td>2.99</td><td>1.04</td><td>86.41</td><td>5.00</td><td>95.44</td></tr>
-                    </table>
-                </td>
-                <td>
-                    <a href="nytprof-stable-long/index.html">long</a>
-                    <table><tr><th>Time</th></tr><tr><td>36.1s</td></tr></table>
-                </td>
-                <td>
-                    <a href="nytprof-stable-start/index.html">start</a>
-                    <table><tr><th>Time</th></tr><tr><td>58.8ms</td></tr></table>
-                </td>
-                <td>Legacy code, no refactoring.</td>
-            </tr>
+This topic first came up here:
+https://rt.perl.org/Public/Bug/Display.html?id=122538#txn-1304852  when it was
+noticed that the new development on Test-Simple resulted in ~300% increase in
+cpu usage running tests. This was bad on any machine, but had the most
+noticable effect on older systems and architectures that p5p is still commited
+to supporting.
 
-            <tr class="odd">
-                <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th></tr>
-                        <tr><td>783s</td><td>7.31</td><td>3.70</td><td>446.10</td><td>43.37</td></tr>
-                    </table>
-                </td>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th><th>CPU</th></tr>
-                        <tr><td>104s</td><td>3.04</td><td>1.09</td><td>95.50</td><td>5.96</td><td>105.59</td></tr>
-                    </table>
-                </td>
-                <td>
-                    <a href="nytprof-master-long/index.html">long</a>
-                    <table><tr><th>Time</th></tr><tr><td>31.3s</td></tr></table>
-                </td>
-                <td>
-                    <a href="nytprof-master-start/index.html">start</a>
-                    <table><tr><th>Time</th></tr><tr><td>116ms</td></tr></table>
-                </td>
-                <td>Test-Stream refactoring. This branch uses arrays as the base for most objects, constants are used to index into the arrays.</td>
-            </tr>
+<p>
 
-            <tr class="even">
-                <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th></tr>
-                        <tr><td>780s</td><td>7.55</td><td>3.67</td><td>441.83</td><td>44.25</td></tr>
-                    </table>
-                </td>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th><th>CPU</th></tr>
-                        <tr><td>104s</td><td>3.20</td><td>1.03</td><td>96.67</td><td>5.75</td><td>106.65</td></tr>
-                    </table>
-                </td>
-                <td>
-                    <a href="nytprof-hwcne-long/index.html">long</a>
-                    <table><tr><th>Time</th></tr><tr><td>32.7s</td></tr></table>
-                </td>
-                <td>
-                    <a href="nytprof-hwcne-start/index.html">start</a>
-                    <table><tr><th>Time</th></tr><tr><td>108ms</td></tr></table>
-                </td>
-                <td>Test-Stream refactoring. This branch uses arrays as the base for event objects, hashes for all others. Constants are used to index into the hashes and arrays.</td>
-            </tr>
+The two biggest performance drains found by profiling were the stack-tracign
+debugging code, and the time spent in object method calls.
 
-            <tr class="odd">
-                <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th></tr>
-                        <tr><td>784s</td><td>8.12</td><td>3.80</td><td>446.05</td><td>44.08</td></tr>
-                    </table>
-                </td>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th><th>CPU</th></tr>
-                        <tr><td>105s</td><td>3.23</td><td>1.04</td><td>96.74</td><td>5.93</td><td>106.94</td></tr>
-                    </table>
-                </td>
-                <td>
-                    <a href="nytprof-hwc-long/index.html">long</a>
-                    <table><tr><th>Time</th></tr><tr><td>37.4s</td></tr></table>
-                </td>
-                <td>
-                    <a href="nytprof-hwc-start/index.html">start</a>
-                    <table><tr><th>Time</th></tr><tr><td>117ms</td></tr></table>
-                </td>
-                <td>Test-Stream refactoring. This branch uses hashes for nearly all objects. Constants are used to index into the hashes when speed matters.</td>
-            </tr>
+<p>
 
-            <tr class="even">
-                <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th></tr>
-                        <tr><td>798s</td><td>7.90</td><td>3.92</td><td>455.30</td><td>44.27</td></tr>
-                    </table>
-                </td>
-                <td class="time">
-                    <table>
-                        <tr><th>Wall</th><th>usr</th><th>sys</th><th>cusr</th><th>csys</th><th>CPU</th></tr>
-                        <tr><td>103s</td><td>3.22</td><td>1.05</td><td>95.56</td><td>5.86</td><td>105.69</td></tr>
-                    </table>
-                </td>
-                <td>
-                    <a href="nytprof-hnc-long/index.html">long</a>
-                    <table><tr><th>Time</th></tr><tr><td>47.6s</td></tr></table>
-                </td>
-                <td>
-                    <a href="nytprof-hnc-start/index.html">start</a>
-                    <table><tr><th>Time</th></tr><tr><td>113ms</td></tr></table>
-                </td>
-                <td>Test-Stream refactoring. This branch uses hashes for all objects, and little if any direct hash access</td>
-            </tr>
+The biggest cause of performance issues was the design decision to do a
+complete stack trace every time an event was triggered. This decision was made
+to improve error reporting and debugging. This design decision was scrapped in
+favor of the context model, which provided most of the same benfit, witohut the
+huge performance loss.
+<dl>
+    <dt>Trace Model (scrapped)</dt>
+    <dd>
+        <a href="https://github.com/Test-More/test-more/blob/6eaa457e8fe673906d0e24146827c6f6e9785d77/lib/Test/Builder/Trace.pm#L45">Test::Builder::Trace</a>
+    </dd>
+    <dt>Context Model (Current)</dt>
+    <dd>
+        <a href="https://github.com/Test-More/test-more/blob/master/lib/Test/Stream/Context.pm">Test::Stream::Context</a>
+    </dd>
+</dl>
 
-        </table>
+<p>
 
-        <p>
+According to profiling, the second biggest place time was spent was on OOP. I
+ultimately settled on a system that uses array based objects with constants for
+directly accessing the correct index when writing code internal to an object.
+Methods are generated for use by code outside the module itself.
 
-        All times and profiling were done on the same machine:
+<p>
 
-        <pre>
-Intel core I7-2670QM 2.20ghz
-12GB ram
-SSD drive
-Ubuntu server 14.10, fresh install
+I worked on solving both problems at once, I did this to avoid writing the
+entire thing with one object system then needing to adapt it. Unfortunately
+this resulted in no intermediate profilable steps with numbers I could provide.
+It also meant it was not possible to tell what performance was gained by the
+object system changes vs the other changes. I did use profiling to tune things
+as I went, but this was done on test scripts, and I no longer have the data
+used to validate my decisions. <b>I realize this is bad.</b>
 
+<p>
+
+Since there has been some question about the Array based design I decided some
+hard numbers were needed. What I have done is I have created 3 new branches (in
+addition to 'master', and the legacy code in 'stable'). These new branches are
+all make use of all the optimizations I have in master, except where noted.
+Using these branches it is possible to get both benchmarks and profiling data
+for comparing hash based objects and array based objects.
+
+<p>
+
+It is important to note that there are many other optimizations present in
+these branches that were not present in my original work. It is possible, maybe
+even likely, that these additonal optimizations may reduce the differences made
+betweebn these branches. The biggest to note is the change from accessors that
+are both getter and setter using shift for $self and copying from @_ for other
+arguments to seperate getters/setters that access @_ directly.
+
+<table>
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/stable">stable</a></th>
+        <td>Legacy code, no refactoring.</td>
+    </tr>
+
+    <tr class="odd">
+        <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
+        <td>Test-Stream refactoring. This branch uses arrays as the base for most objects, constants are used to index into the arrays.</td>
+    </tr>
+
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
+        <td>Test-Stream refactoring. This branch uses arrays as the base for event objects, hashes for all others. Constants are used to index into the hashes and arrays.</td>
+    </tr>
+
+    <tr class="odd">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
+        <td>Test-Stream refactoring. This branch uses hashes for nearly all objects. Constants are used to index into the hashes when speed matters.</td>
+    </tr>
+
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
+        <td>Test-Stream refactoring. This branch uses hashes for all objects, and little if any direct hash access (no constants are generated)</td>
+    </tr>
+</table>
+<p>
+
+<h2>Numbers and Data</ht>
+
+<h3>Profiling</h3>
+
+All profiling done via NYTProf. For each repo we used these scripts:
+
+<dl>
+    <dt><a href="https://github.com/Test-More/test-more/blob/master/profiling/compile.pl">compile.pl</a></dt>
+    <dd>This one simply loads Test::Builder, produces a single result, then exits properly.</dd>
+    <dt><a href="https://github.com/Test-More/test-more/blob/master/profiling/long-run.pl">long-run.pl</a></dt>
+    <dd>This one runs a gauntlet of tests in a loop to generate many events</dd>
+</dl>
+
+Profiling was one on 2 systems, one very modern, and an emulated system
+intended to represent the many slow machines people have to work with every
+day. The slow machine factor is very important to many people who maintain perl
+itself, and it would be wrong to ignore it.
+
+<table class="machines">
+    <tr class="specs">
+        <td>
+            <pre>
+Intel core I7-2670QM 2.20ghz, 12GB ram, SSD drive
+Ubuntu server 14.10 (amd64), fresh install
 perl-5.20.2 installed via perlbrew
-        </pre>
+            </pre>
+        </td>
+        <td>
+            <pre>
+Emulated Pentium MMX, 256mb ram, Image stored on an SSD drive
+Ubuntu server 14.10 (i386), fresh install
+perl-5.20.2 installed via perlbrew
+            </pre>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr class="top">
+                    <th>Branch</th>
+                    <th>Compile</th>
+                    <th>Long Run</th>
+                </tr>
 
-        Perl Build times were taken from a build+test of perl-blead at commit
-        479ae48e22f1160cf86508685822bf7e53e5816b with the proper branch of
-        Test-Simple merged in.
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/stable">stable</a></th>
+                    <td><a href="nytprof-stable-start/index.html">58.8ms</a></td>
+                    <td><a href="nytprof-stable-long/index.html">36.1s</a></td>
+                </tr>
+
+                <tr class="odd">
+                    <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
+                    <td><a href="nytprof-master-start/index.html">116ms</a></td>
+                    <td><a href="nytprof-master-long/index.html">31.3s</a></td>
+                </tr>
+
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
+                    <td><a href="nytprof-hwcne-start/index.html">108ms</a></td>
+                    <td><a href="nytprof-hwcne-long/index.html">32.7s</a></td>
+                </tr>
+
+                <tr class="odd">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
+                    <td><a href="nytprof-hwc-start/index.html">117ms</a></td>
+                    <td><a href="nytprof-hwc-long/index.html">37.4s</a></td>
+                </tr>
+
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
+                    <td><a href="nytprof-hnc-start/index.html">113ms</a></td>
+                    <td><a href="nytprof-hnc-long/index.html">47.6s</a></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr class="top">
+                    <th>Branch</th>
+                    <th>Compile</th>
+                    <th>Long Run</th>
+                </tr>
+
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/stable">stable</a></th>
+                    <td><a href="nytprof-stable-start-slow/index.html">Xms</a></td>
+                    <td><a href="nytprof-stable-long-slow/index.html">Xs</a></td>
+                </tr>
+
+                <tr class="odd">
+                    <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
+                    <td><a href="nytprof-master-start-slow/index.html">Xms</a></td>
+                    <td><a href="nytprof-master-long-slow/index.html">Xs</a></td>
+                </tr>
+
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
+                    <td><a href="nytprof-hwcne-start-slow/index.html">Xms</a></td>
+                    <td><a href="nytprof-hwcne-long-slow/index.html">Xs</a></td>
+                </tr>
+
+                <tr class="odd">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
+                    <td><a href="nytprof-hwc-start-slow/index.html">Xms</a></td>
+                    <td><a href="nytprof-hwc-long-slow/index.html">Xs</a></td>
+                </tr>
+
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
+                    <td><a href="nytprof-hnc-start-slow/index.html">Xms</a></td>
+                    <td><a href="nytprof-hnc-long-slow/index.html">Xs</a></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
         <p>
 
-        Moose build times were all run on the same perl-5.20.2 install. Moose and all
-        deps were installed first, then build times taken were using cpanm to reinstall
-        Moose with the correct Test-Simple installed.
+<h3>Benchmarks</h3>
 
+These are the benchmarks for building perl blead.
+
+<table class="machines">
+    <tr class="specs">
+        <td>
+            <pre>
+Intel core I7-2670QM 2.20ghz, 12GB ram, SSD drive
+Ubuntu server 14.10 (amd64), fresh install
+Parent Commit: 8593d8e7bf09e8da95a3fb5cce4041e0577208a6
+            </pre>
+        </td>
+        <td>
+            <pre>
+Emulated Pentium MMX, 256mb ram, Image stored on an SSD drive
+Ubuntu server 14.10 (i386), fresh install
+Parent Commit: 813d2eb17164751c312a69e7c7c56dc71aad1ff1
+            </pre>
+        </td>
+    </tr>
+    <tr>
+        <td>
+<table>
+    <tr id="top">
+        <th>Branch</th>
+        <th>Results</th>
+    </tr>
+
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/stable">stable</a></th>
+        <td class="time">
+<pre>
+</pre>
+        </td>
+    </tr>
+
+    <tr class="odd">
+        <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
+        <td class="time">
+<pre>818s: 53.49 usr 6.88 sys + 437.52 cusr 44.32 csys = 542.21 CPU</pre>
+        </td>
+    </tr>
+
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
+        <td class="time">
+<pre>839s: 53.75 usr 6.94 sys + 450.69 cusr 44.67 csys = 556.05 CPU
+</pre>
+        </td>
+    </tr>
+
+    <tr class="odd">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
+        <td class="time">
+<pre>
+</pre>
+        </td>
+    </tr>
+
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
+        <td class="time">
+<pre>
+</pre>
+        </td>
+    </tr>
+</table>
+        </td>
+        <td>
+<table>
+    <tr id="top">
+        <th>Branch</th>
+        <th>Results</th>
+    </tr>
+
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/stable">stable</a></th>
+        <td class="time">
+<pre>
+</pre>
+        </td>
+    </tr>
+
+    <tr class="odd">
+        <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
+        <td class="time">
+<pre>6748s: 825.30 usr 68.24 sys + 5037.28 cusr 361.81 csys = 6292.63 CPU</pre>
+        </td>
+    </tr>
+
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
+        <td class="time">
+<pre>6799s: 856.83 usr 68.38 sys + 5051.50 cusr 363.55 csys = 6340.26 CPU</pre>
+        </td>
+    </tr>
+
+    <tr class="odd">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
+        <td class="time">
+<pre>
+</pre>
+        </td>
+    </tr>
+
+    <tr class="even">
+        <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
+        <td class="time">
+<pre>
+</pre>
+        </td>
+    </tr>
+</table>
+        </td>
+    </tr>
     </body>
 </html>
