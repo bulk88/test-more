@@ -1,0 +1,39 @@
+digraph {
+graph [overlap=false]
+node [shape=doublecircle];
+"Test::Builder" -> "strict";
+"main" -> "Test::Builder::Module";
+"strict" -> "strict";
+"Exporter::Heavy" -> "Exporter";
+"overload" -> "warnings::register";
+"Test::Builder::Module" -> "UNIVERSAL";
+"warnings::register" -> "warnings::register";
+"Config" -> "strict";
+"Exporter::Heavy" -> "warnings";
+"Test::Builder::Module" -> "strict";
+"main" -> "main";
+"Test::Builder" -> "warnings";
+"Test::Builder::Module" -> "Test::Builder::Module";
+"Test::Builder::Module" -> "Test::Builder";
+"Test::More" -> "strict";
+"Exporter" -> "Exporter";
+"Test::More" -> "warnings";
+"Test::Builder::Module" -> "Test::More";
+"Test::Builder" -> "version";
+"Exporter" -> "Exporter::Heavy";
+"Test::Builder" -> "overload";
+"Test::More" -> "Test::Builder";
+"Test::Builder" -> "PerlIO";
+"Test::More" -> "Test::Builder::Module";
+"main" -> "strict";
+"main" -> "warnings";
+"Test::Builder" -> "Test::Builder";
+"main" -> "Test::Builder";
+"Exporter::Heavy" -> "strict";
+"Exporter::Heavy" -> "Exporter::Heavy";
+"Test::Builder::Module" -> "Exporter";
+"Test::Builder::Module" -> "Exporter::Heavy";
+"Test::Builder" -> "Config";
+"Test::More" -> "UNIVERSAL";
+"main" -> "Test::More";
+}

@@ -169,19 +169,18 @@ itself, and it would be wrong to ignore it.
             <pre>
 Intel core I7-2670QM 2.20ghz, 12GB ram, SSD drive
 Ubuntu server 14.10 (amd64), fresh install
-perl-5.20.2 installed via perlbrew
             </pre>
         </td>
         <td>
             <pre>
 Emulated Pentium MMX, 256mb ram, Image stored on an SSD drive
 Ubuntu server 14.10 (i386), fresh install
-perl-5.20.2 installed via perlbrew
             </pre>
         </td>
     </tr>
     <tr>
         <td>
+            perl-5.20.2 installed via perlbrew
             <table>
                 <tr class="top">
                     <th>Branch</th>
@@ -219,8 +218,50 @@ perl-5.20.2 installed via perlbrew
                     <td><a href="nytprof-hnc-long/index.html">47.6s</a></td>
                 </tr>
             </table>
+
+            <br>
+            perl-5.10.1 installed via perlbrew
+            <table>
+                <tr class="top">
+                    <th>Branch</th>
+                    <th>Compile</th>
+                    <th>Long Run</th>
+                </tr>
+
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/stable">stable</a></th>
+                    <td><a href="stable-510-start/index.html">42.5ms</a></td>
+                    <td><a href="stable-510-long/index.html">38.9s</a></td>
+                </tr>
+
+                <tr class="odd">
+                    <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
+                    <td><a href="master-510-start/index.html">77.5ms</a></td>
+                    <td><a href="master-510-long/index.html">31.9s</a></td>
+                </tr>
+
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
+                    <td><a href="hash_with_const_no_event-510-start/index.html">87.6ms</a></td>
+                    <td><a href="hash_with_const_no_event-510-long/index.html">32.7s</a></td>
+                </tr>
+
+                <tr class="odd">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
+                    <td><a href="hash_with_const-510-start/index.html">91.9ms</a></td>
+                    <td><a href="hash_with_const-510-long/index.html">38.2s</a></td>
+                </tr>
+
+                <tr class="even">
+                    <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
+                    <td><a href="hash_no_constants-510-start/index.html">90.4ms</a></td>
+                    <td><a href="hash_no_constants-510-long/index.html">50.8s</a></td>
+                </tr>
+            </table>
+
         </td>
-        <td>
+        <td valign="top">
+            perl-5.20.2 installed via perlbrew
             <table>
                 <tr class="top">
                     <th>Branch</th>

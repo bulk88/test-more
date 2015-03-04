@@ -1,0 +1,307 @@
+digraph {
+graph [overlap=false]
+subgraph cluster_warnings_register {
+	label="warnings::register";
+	"warnings::register::import";
+	"warnings::register::mkMask";
+}
+subgraph cluster_strict {
+	label="strict";
+	"strict::CORE:match";
+	"strict::unimport";
+	"strict::bits";
+	"strict::import";
+	"strict::CORE:regcomp";
+}
+subgraph cluster_Test_More {
+	label="Test::More";
+	"Test::More::BEGIN@1313";
+	"Test::More::ok";
+	"Test::More::BEGIN@5";
+	"Test::More::BEGIN@4";
+	"Test::More::BEGIN@1390";
+	"Test::More::done_testing";
+	"Test::More::BEGIN@1679";
+	"Test::More::BEGIN@3";
+	"Test::More::BEGIN@23";
+	"Test::More::import_extra";
+}
+subgraph cluster_UNIVERSAL {
+	label="UNIVERSAL";
+	"UNIVERSAL::VERSION";
+}
+subgraph cluster_Config {
+	label="Config";
+	"Config::FETCH";
+	"Config::TIEHASH";
+	"Config::BEGIN@35";
+	"Config::import";
+	"Config::BEGIN@9";
+}
+subgraph cluster_PerlIO {
+	label="PerlIO";
+	"PerlIO::get_layers";
+}
+subgraph cluster_warnings {
+	label="warnings";
+	"warnings::CORE:match";
+	"warnings::import";
+	"warnings::unimport";
+	"warnings::CORE:regcomp";
+}
+subgraph cluster_main {
+	label="main";
+	"main::BEGIN@4";
+	"main::BEGIN@2";
+	"main::RUNTIME";
+	"main::BEGIN@1";
+}
+subgraph cluster_Test_Builder_Module {
+	label="Test::Builder::Module";
+	"Test::Builder::Module::BEGIN@3";
+	"Test::Builder::Module::builder";
+	"Test::Builder::Module::_strip_imports";
+	"Test::Builder::Module::import";
+	"Test::Builder::Module::BEGIN@5";
+}
+subgraph cluster_Test_Builder {
+	label="Test::Builder";
+	"Test::Builder::is_fh";
+	"Test::Builder::failure_output";
+	"Test::Builder::__ANON__[lib/Test/Builder.pm:1665]";
+	"Test::Builder::ok";
+	"Test::Builder::_share_keys";
+	"Test::Builder::CORE:select";
+	"Test::Builder::_ending";
+	"Test::Builder::_is_object";
+	"Test::Builder::CORE:open";
+	"Test::Builder::END";
+	"Test::Builder::BEGIN@3";
+	"Test::Builder::expected_tests";
+	"Test::Builder::__ANON__[lib/Test/Builder.pm:67]";
+	"Test::Builder::caller";
+	"Test::Builder::_print";
+	"Test::Builder::_dup_stdhandles";
+	"Test::Builder::_apply_layers";
+	"Test::Builder::BEGIN@1282";
+	"Test::Builder::BEGIN@19";
+	"Test::Builder::_check_is_passing_plan";
+	"Test::Builder::current_test";
+	"Test::Builder::reset_outputs";
+	"Test::Builder::_autoflush";
+	"Test::Builder::use_numbers";
+	"Test::Builder::BEGIN@18";
+	"Test::Builder::_open_testhandles";
+	"Test::Builder::BEGIN@1667";
+	"Test::Builder::_copy_io_layers";
+	"Test::Builder::CORE:match";
+	"Test::Builder::BEGIN@4";
+	"Test::Builder::_print_to_fh";
+	"Test::Builder::plan";
+	"Test::Builder::__ANON__[lib/Test/Builder.pm:917]";
+	"Test::Builder::has_plan";
+	"Test::Builder::BEGIN@2248";
+	"Test::Builder::done_testing";
+	"Test::Builder::_my_exit";
+	"Test::Builder::_try";
+	"Test::Builder::in_todo";
+	"Test::Builder::todo_output";
+	"Test::Builder::is_passing";
+	"Test::Builder::BEGIN@10";
+	"Test::Builder::BEGIN@1471";
+	"Test::Builder::_unoverload";
+	"Test::Builder::_new_fh";
+	"Test::Builder::CORE:binmode";
+	"Test::Builder::exported_to";
+	"Test::Builder::_output_plan";
+	"Test::Builder::BEGIN@962";
+	"Test::Builder::find_TODO";
+	"Test::Builder::level";
+	"Test::Builder::CORE:print";
+	"Test::Builder::__ANON__[lib/Test/Builder.pm:933]";
+	"Test::Builder::BEGIN@5";
+	"Test::Builder::_unoverload_str";
+	"Test::Builder::__ANON__[lib/Test/Builder.pm:66]";
+	"Test::Builder::__ANON__[lib/Test/Builder.pm:1973]";
+	"Test::Builder::todo";
+	"Test::Builder::create";
+	"Test::Builder::CORE:subst";
+	"Test::Builder::_indent";
+	"Test::Builder::reset";
+	"Test::Builder::output";
+	"Test::Builder::new";
+}
+subgraph cluster_Exporter_Heavy {
+	label="Exporter::Heavy";
+	"Exporter::Heavy::CORE:subst";
+	"Exporter::Heavy::heavy_export";
+	"Exporter::Heavy::heavy_export_to_level";
+	"Exporter::Heavy::BEGIN@200";
+	"Exporter::Heavy::BEGIN@3";
+	"Exporter::Heavy::BEGIN@4";
+}
+subgraph cluster_Exporter {
+	label="Exporter";
+	"Exporter::export_to_level";
+	"Exporter::export";
+	"Exporter::as_heavy";
+	"Exporter::CORE:subst";
+}
+subgraph cluster_overload {
+	label="overload";
+	"overload::BEGIN@139";
+}
+subgraph cluster_version {
+	label="version";
+	"version::(bool";
+	"version::(cmp";
+}
+"Test::Builder::done_testing" -> "Test::Builder::current_test";
+"Test::Builder::Module::import" -> "Test::More::import_extra";
+"Test::Builder::_dup_stdhandles" -> "Test::Builder::reset_outputs";
+"Exporter::as_heavy" -> "Exporter::Heavy::BEGIN@3";
+"Test::More::BEGIN@23" -> "Test::Builder::Module::BEGIN@5";
+"main::BEGIN@4" -> "Test::More::BEGIN@1679";
+"Test::Builder::BEGIN@19" -> "version::(bool";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@19";
+"Exporter::export" -> "Exporter::as_heavy";
+"Exporter::export_to_level" -> "Exporter::as_heavy";
+"main::RUNTIME" -> "main::BEGIN@1";
+"Test::Builder::ok" -> "Test::Builder::_check_is_passing_plan";
+"main::BEGIN@2" -> "warnings::CORE:match";
+"Test::More::BEGIN@5" -> "warnings::import";
+"Test::Builder::BEGIN@5" -> "warnings::import";
+"main::BEGIN@2" -> "warnings::import";
+"Test::Builder::BEGIN@19" -> "Config::BEGIN@35";
+"Exporter::as_heavy" -> "Exporter::Heavy::BEGIN@4";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@1667";
+"Exporter::as_heavy" -> "Exporter::CORE:subst";
+"Test::More::done_testing" -> "Test::Builder::Module::builder";
+"Test::More::ok" -> "Test::Builder::Module::builder";
+"Test::Builder::Module::import" -> "Test::Builder::Module::builder";
+"Test::More::BEGIN@23" -> "UNIVERSAL::VERSION";
+"Test::Builder::Module::BEGIN@5" -> "UNIVERSAL::VERSION";
+"Test::Builder::_dup_stdhandles" -> "Test::Builder::_open_testhandles";
+"main::RUNTIME" -> "Test::More::ok";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@18";
+"Test::Builder::ok" -> "Test::Builder::use_numbers";
+"Test::Builder::_dup_stdhandles" -> "Test::Builder::_autoflush";
+"Test::Builder::done_testing" -> "Test::Builder::expected_tests";
+"main::BEGIN@1" -> "strict::CORE:regcomp";
+"main::RUNTIME" -> "Test::Builder::END";
+"Test::Builder::_open_testhandles" -> "Test::Builder::CORE:open";
+"main::BEGIN@4" -> "Test::More::BEGIN@23";
+"Test::Builder::_unoverload" -> "Test::Builder::_is_object";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@3";
+"Test::More::ok" -> "Test::Builder::ok";
+"Test::Builder::reset" -> "Test::Builder::_share_keys";
+"Test::Builder::_autoflush" -> "Test::Builder::CORE:select";
+"Test::Builder::BEGIN@19" -> "Config::BEGIN@9";
+"Test::Builder::END" -> "Test::Builder::_ending";
+"Exporter::Heavy::heavy_export_to_level" -> "Exporter::export";
+"overload::BEGIN@139" -> "warnings::register::import";
+"Test::Builder::_new_fh" -> "Test::Builder::is_fh";
+"Test::Builder::_ending" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:1665]";
+"Test::Builder::reset_outputs" -> "Test::Builder::failure_output";
+"warnings::register::import" -> "warnings::register::mkMask";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@1282";
+"strict::unimport" -> "strict::bits";
+"main::BEGIN@1" -> "strict::bits";
+"Test::Builder::__ANON__[lib/Test/Builder.pm:1973]" -> "Test::Builder::_apply_layers";
+"Test::Builder::reset" -> "Test::Builder::_dup_stdhandles";
+"Test::Builder::__ANON__[lib/Test/Builder.pm:1973]" -> "PerlIO::get_layers";
+"Test::Builder::ok" -> "Test::Builder::_print";
+"Test::Builder::_output_plan" -> "Test::Builder::_print";
+"Test::Builder::Module::import" -> "Test::Builder::Module::_strip_imports";
+"main::BEGIN@4" -> "Test::More::BEGIN@1390";
+"Test::Builder::find_TODO" -> "Test::Builder::caller";
+"Test::More::BEGIN@23" -> "Test::Builder::Module::BEGIN@3";
+"main::BEGIN@4" -> "Test::More::BEGIN@5";
+"Test::More::BEGIN@23" -> "Test::Builder::Module::import";
+"main::BEGIN@4" -> "Test::Builder::Module::import";
+"Test::Builder::ok" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:67]";
+"Test::Builder::current_test" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:67]";
+"Test::Builder::BEGIN@18" -> "Config::FETCH";
+"Test::Builder::__ANON__[lib/Test/Builder.pm:917]" -> "overload::BEGIN@139";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@5";
+"Test::Builder::ok" -> "Test::Builder::_unoverload_str";
+"Test::Builder::reset" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:66]";
+"Test::Builder::_share_keys" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:66]";
+"Test::Builder::_ending" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:66]";
+"Test::Builder::ok" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:66]";
+"Test::Builder::_try" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:933]";
+"Test::Builder::ok" -> "Test::Builder::todo";
+"Test::Builder::_try" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:1973]";
+"main::RUNTIME" -> "main::BEGIN@4";
+"Test::Builder::in_todo" -> "Test::Builder::find_TODO";
+"Test::Builder::todo" -> "Test::Builder::find_TODO";
+"Test::Builder::BEGIN@19" -> "version::(cmp";
+"Test::Builder::_print_to_fh" -> "Test::Builder::CORE:print";
+"Test::Builder::caller" -> "Test::Builder::level";
+"Test::Builder::Module::import" -> "Test::Builder::exported_to";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@962";
+"Test::Builder::done_testing" -> "Test::Builder::_output_plan";
+"Test::Builder::_unoverload_str" -> "Test::Builder::_unoverload";
+"Test::Builder::failure_output" -> "Test::Builder::_new_fh";
+"Test::Builder::output" -> "Test::Builder::_new_fh";
+"Test::Builder::todo_output" -> "Test::Builder::_new_fh";
+"main::BEGIN@4" -> "Test::More::BEGIN@1313";
+"Test::Builder::_apply_layers" -> "Test::Builder::CORE:binmode";
+"Test::Builder::Module::import" -> "Exporter::Heavy::heavy_export_to_level";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::new";
+"Test::Builder::Module::builder" -> "Test::Builder::new";
+"main::RUNTIME" -> "Test::Builder::new";
+"Exporter::Heavy::heavy_export" -> "Exporter::Heavy::CORE:subst";
+"Test::Builder::_print_to_fh" -> "Test::Builder::_indent";
+"Test::Builder::BEGIN@1282" -> "warnings::unimport";
+"Exporter::Heavy::BEGIN@200" -> "warnings::unimport";
+"Test::Builder::BEGIN@962" -> "warnings::unimport";
+"Test::More::BEGIN@1390" -> "warnings::unimport";
+"Test::Builder::BEGIN@1471" -> "warnings::unimport";
+"Test::More::BEGIN@1679" -> "warnings::unimport";
+"Test::More::BEGIN@1313" -> "warnings::unimport";
+"Test::Builder::create" -> "Test::Builder::reset";
+"Test::Builder::_print" -> "Test::Builder::output";
+"Test::Builder::reset_outputs" -> "Test::Builder::output";
+"Test::Builder::Module::import" -> "Exporter::export_to_level";
+"main::RUNTIME" -> "Test::More::done_testing";
+"Test::Builder::_print_to_fh" -> "Test::Builder::CORE:subst";
+"Test::Builder::BEGIN@19" -> "Config::import";
+"Exporter::Heavy::heavy_export_to_level" -> "Exporter::Heavy::heavy_export";
+"Test::Builder::new" -> "Test::Builder::create";
+"Test::Builder::BEGIN@2248" -> "strict::unimport";
+"Config::BEGIN@35" -> "strict::unimport";
+"Test::Builder::BEGIN@1667" -> "strict::unimport";
+"Exporter::Heavy::BEGIN@4" -> "strict::unimport";
+"main::BEGIN@1" -> "strict::CORE:match";
+"main::RUNTIME" -> "main::BEGIN@2";
+"Test::Builder::_check_is_passing_plan" -> "Test::Builder::has_plan";
+"Test::Builder::_try" -> "Test::Builder::__ANON__[lib/Test/Builder.pm:917]";
+"Test::Builder::Module::import" -> "Test::Builder::plan";
+"main::BEGIN@4" -> "Test::More::BEGIN@3";
+"Test::Builder::_print" -> "Test::Builder::_print_to_fh";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@4";
+"main::BEGIN@4" -> "Test::More::BEGIN@4";
+"Test::Builder::_open_testhandles" -> "Test::Builder::_copy_io_layers";
+"Test::Builder::_print_to_fh" -> "Test::Builder::CORE:match";
+"main::BEGIN@2" -> "warnings::CORE:regcomp";
+"Test::Builder::BEGIN@4" -> "strict::import";
+"Config::BEGIN@9" -> "strict::import";
+"Exporter::Heavy::BEGIN@3" -> "strict::import";
+"Test::Builder::Module::BEGIN@3" -> "strict::import";
+"Test::More::BEGIN@4" -> "strict::import";
+"main::BEGIN@1" -> "strict::import";
+"Exporter::as_heavy" -> "Exporter::Heavy::BEGIN@200";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@10";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@1471";
+"Test::Builder::ok" -> "Test::Builder::in_todo";
+"Test::Builder::reset" -> "Test::Builder::is_passing";
+"Test::Builder::BEGIN@19" -> "Config::TIEHASH";
+"Test::Builder::reset_outputs" -> "Test::Builder::todo_output";
+"Test::Builder::_ending" -> "Test::Builder::_my_exit";
+"Test::Builder::_copy_io_layers" -> "Test::Builder::_try";
+"Test::Builder::_is_object" -> "Test::Builder::_try";
+"Test::Builder::_unoverload" -> "Test::Builder::_try";
+"Test::More::done_testing" -> "Test::Builder::done_testing";
+"Test::Builder::Module::BEGIN@5" -> "Test::Builder::BEGIN@2248";
+}
