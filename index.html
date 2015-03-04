@@ -51,11 +51,11 @@
 <h2>Why does this matter?</h2>
 
 This topic first came up here:
-https://rt.perl.org/Public/Bug/Display.html?id=122538#txn-1304852  when it was
-noticed that the new development on Test-Simple resulted in ~300% increase in
-cpu usage running tests. This was bad on any machine, but had the most
-noticable effect on older systems and architectures that p5p is still commited
-to supporting.
+<a href="https://rt.perl.org/Public/Bug/Display.html?id=122538#txn-1304852">perlbug #122538</a>
+when it was noticed that the new development on Test-Simple resulted in ~300%
+increase in cpu usage running tests. This was bad on any machine, but had the
+most noticable effect on older systems and architectures that p5p is still
+commited to supporting.
 
 <p>
 
@@ -111,7 +111,7 @@ for comparing hash based objects and array based objects.
 It is important to note that there are many other optimizations present in
 these branches that were not present in my original work. It is possible, maybe
 even likely, that these additonal optimizations may reduce the differences made
-betweebn these branches. The biggest to note is the change from accessors that
+between these branches. The biggest to note is the change from accessors that
 are both getter and setter using shift for $self and copying from @_ for other
 arguments to seperate getters/setters that access @_ directly.
 
@@ -302,31 +302,28 @@ Parent Commit: 813d2eb17164751c312a69e7c7c56dc71aad1ff1
     <tr class="odd">
         <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
         <td class="time">
-<pre>13m38s: 53.49 usr 6.88 sys + 437.52 cusr 44.32 csys = 542.21 CPU</pre>
+            <pre>13m38s: 53.49 usr 6.88 sys + 437.52 cusr 44.32 csys = 542.21 CPU</pre>
         </td>
     </tr>
 
     <tr class="even">
         <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
         <td class="time">
-<pre>13m59s: 53.75 usr 6.94 sys + 450.69 cusr 44.67 csys = 556.05 CPU
-</pre>
+            <pre>13m59s: 53.75 usr 6.94 sys + 450.69 cusr 44.67 csys = 556.05 CPU</pre>
         </td>
     </tr>
 
     <tr class="odd">
         <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
         <td class="time">
-<pre>
-</pre>
+            <pre>13m45s: 54.31 usr 6.90 sys + 44.21 cusr 44.30 csys = 549.72 CPU</pre>
         </td>
     </tr>
 
     <tr class="even">
         <th><a href="https://github.com/Test-More/test-more/tree/hash_no_constants">hash_no_constants</a></th>
         <td class="time">
-<pre>
-</pre>
+            <pre>13m59s: 53.86 usr 6.70 sys + 451.72 cusr 44.50 csys = 556.70 CPU</pre>
         </td>
     </tr>
 </table>
@@ -349,22 +346,21 @@ Parent Commit: 813d2eb17164751c312a69e7c7c56dc71aad1ff1
     <tr class="odd">
         <th><a href="https://github.com/Test-More/test-more/tree/master">master</a></th>
         <td class="time">
-<pre>1h52m28s: 825.30 usr 68.24 sys + 5037.28 cusr 361.81 csys = 6292.63 CPU</pre>
+            <pre>1h52m28s: 825.30 usr 68.24 sys + 5037.28 cusr 361.81 csys = 6292.63 CPU</pre>
         </td>
     </tr>
 
     <tr class="even">
         <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const_no_event">hash_with_const_no_event</a></th>
         <td class="time">
-<pre>1h53m19s: 856.83 usr 68.38 sys + 5051.50 cusr 363.55 csys = 6340.26 CPU</pre>
+            <pre>1h53m19s: 856.83 usr 68.38 sys + 5051.50 cusr 363.55 csys = 6340.26 CPU</pre>
         </td>
     </tr>
 
     <tr class="odd">
         <th><a href="https://github.com/Test-More/test-more/tree/hash_with_const">hash_with_const</a></th>
         <td class="time">
-<pre>
-</pre>
+            <pre>2h00m26s: 793.38 usr 68.75 sys + 5526.94 cusr 379.85 csys = 6768.92 CPU</pre>
         </td>
     </tr>
 
