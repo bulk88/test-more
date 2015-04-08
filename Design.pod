@@ -231,7 +231,7 @@ Pros:
 
 =over 4
 
-=item Minimal boilderplate
+=item Minimal boilerplate
 
 =item Very easy
 
