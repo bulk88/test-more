@@ -1,1 +1,427 @@
-initial
+=pod
+
+=head1 DESCRIPTION
+
+This document is a collection of design ideas for a Test::Builder revamp. Each
+section explains a design at a high level, with the goal of receiving review
+feedback. Many of these sections are based on the Test::Stream dev releases,
+which if nothing else can act as a proof of concept. None of these designs
+should be considered unchangeable. Saying "Test::Stream does it this way" is
+not a reason to reject alternative ideas.
+
+Each section covers a specific problem and solution. For each section I have
+added implementation proposals as well. In many cases I have already tried 1 or
+more of these proposals in Test::Stream. Once again this is to get the
+conversation started, not to lock anything in. Please comment on this document
+on github, and issue pull requests to modify, add, or remove sections.
+
+The Test::Stream implementation WILL NOT dictate the document, but rather this
+document will dictate the final revamp implementation. When sections of this
+document become finalized, I will attempt to update Test::Stream to reflect the
+document. If Test::Stream cannot be updated due to a fundamental design
+difference then it will have to be thrown out.
+
+=head2 Document Format
+
+If possible please follow this format for each section.
+
+    =head1 Short Title
+
+    =head2 Problem Statement
+
+    =head2 Specification
+
+    =head2 Implementation Proposals
+
+    =head3 Proposal Description
+
+    details
+
+    Pros: ...
+    Cons: ...
+
+    =head 3 Alternate Proposal
+
+    details
+
+    Pros: ...
+    Cons: ...
+
+Please also try to limit implementation proposal code to be just enough to
+convey the idea. The code should be flexible and adaptable to backcompat needs
+and reality.
+
+=head1 The Object Model
+
+=head2 Problem Statement
+
+Legacy Test::Builder had a bad habbit of breaking encapsulation, and even
+encouraging external tools to do the same. Moving forward we want to use proper
+encapsulation. That said, we need to keep an eye on performance. Object
+methods, specially when implemented poorly are significantly slower that direct
+element access. To worry too much about that in advance would be premature,
+however the Test::Stream prototype already showed that we do need to concern
+ourselves with it as performance quickly becomes an issue when we do not.
+
+We cannot use Moose, or any other non-core object system. This was dicated as
+far back as the Test::Builder2 prototypes. We need something simple, and
+bundled. We do not want to duplicate constructor code in every object. We want
+all objects to be consistent in both constructors and accessors.
+
+=head2 Specification
+
+The object system should give us a constructor, and allow us to specify
+attributes by name. The object system must be dead simple, we have no intention
+of duplicating Moose or its functionality.
+
+=over 4
+
+=item Ability to generate accessors
+
+=item Ability to generate constructors
+
+=item Ability to subclass
+
+=item Ability to safely bypass accessor overhead internally
+
+=item Generated methods must be fast
+
+=back
+
+=head2 Implementation Proposals
+
+=head3 HashBase
+
+B<Note> This is used by the Test::Stream implementation.
+
+    use HashBase(
+        accessors => [qw/foo bar baz/],
+        base      => 'My::Base::Class',
+    );
+
+    my $self = __PACKAGE__->new(foo => 1);    # Constructor
+    my $val = $self->foo;                     # Reader
+    $self->set_foo($val);                     # Writer
+    $val = $self->{+FOO};                     # Safe internal direct hash read
+    $self->{+FOO};                            # Safe internal direct hash write
+
+=over 4
+
+=item generates seperate read/write accessors for each attribute
+
+Seperate reader and writer methods are faster that a combined read/write
+accessor. Seperate methods also make intentions more clear.
+
+Generates accessors are very minimal:
+
+    sub reader { $_[0]->{ATTRIBUTE} };
+    sub writer { $_[0]->{ATTRIBUTE} = $_[1] };
+
+=item generates a very basic constructor
+
+Constructor takes a list of key/value pairs and blesses a hashref with the
+pairs. There may be some extra safety checks to ensure all keys passed in are
+valid attributes.
+
+=item exports constants for each attribute that can be used internally to safely access elements directly
+
+    $val = $self->{+FOO};
+    $self->{+FOO};
+
+This is perfectly reasonable internally to an object. The constants avoid typo
+mistakes, and we avoid the overhead of method calls. External code should use
+methods to avoid breaking encapsulation.
+
+=item Uses a simple meta-object that saves you from common mistakes
+
+The meta-object prevents you from adding duplicate attributes, allows
+subclasses to inherit attribute constants, and makes the constructor faster
+when it validates the attributes you specify.
+
+=back
+
+=head1 The 'Context' Model
+
+=head2 Problem Statement
+
+When an assertion such as C<ok(1)> is written in a test file, the immediate
+context should be captured and conveyed to anything further along in the stack.
+Any information that needs to be captured at the time of assertion to be used
+later should be part of the context object. Some examples:
+
+=over 4
+
+=item Caller info (File, Line, etc)
+
+=item State of the 'TODO' setting
+
+=item Process and Thread IDs
+
+=item Tool used (Test::More::ok())
+
+=back
+
+Unfortunately it is not always possible to pass the context object directly
+from call to call. The main example is when wrapping other tools in a helper:
+
+    sub my_ok {
+        my ($x, $y) = @_;
+        ok($x, 'x is good');
+        ok($y, 'y is good');
+    }
+
+C<ok()> does not accept a context argument, and altering it at this point is
+unlikely. We could write a replacement function that does accept a context, but
+it is unlikely to be adopted, if it is even noticed. Legacy Test::Builder used
+the C<$Level> variable for situations like this. Unfortunately most people did
+not know about the level variable, or how to use it properly. There are also
+some situations where C<$Level> is not sufficient.
+
+=head2 Specification
+
+The context should be a structure that holds a snapshot of the important data.
+This structure should be obtainable at any point by any tool that needs it. If
+an existing snapshot is present it should be returned. If no snapshot is
+present one should be generated. Consumers of the snapshot must not be required
+to take a stack trace of their own as they do with C<$Level>.
+
+For simplicity context should be obtained using a function called C<context()>
+that does not require any parameters. When a context already exists it should
+be returned. When none exists a new one will be generated and returned. To
+establish the context, the entry sub for any tool should obtain the context
+first thing.
+
+=head2 Implementation Proposals
+
+=head3 Weak reference
+
+B<Note:> This is the implementation Test::Stream currently uses.
+
+Psuedo-perl:
+
+    sub snapshot {
+        my $self = shift;
+        return ...shallow copy of context...
+    }
+
+    my $CONTEXT;
+    sub context {
+        return $CONTEXT if $CONTEXT;
+        my $ctx = ...generate...
+        $CONTEXT = $ctx;
+        weaken($CONTEXT);
+        return $ctx;
+    }
+
+Consumer:
+
+    sub my_ok {
+        my $ctx = context();
+        my ($x, $y) = @_;
+        ok($x, 'x is good');
+        ok($y, 'y is good');
+    }
+
+In this implementation, the first tool to ask for a context generates it. Any
+later tools find the existing context. When each tool completes, the context
+ref is uses goes away. When the root tool completes the final context reference
+will be collected and C<$CONTEXT> is automatically set to undef.
+
+Pros:
+
+=over 4
+
+=item Minimal boilderplate
+
+=item Very easy
+
+=item Context is reset for you when done
+
+=back
+
+Cons:
+
+=over 4
+
+=item Storing the context in a perminent location causes a leak.
+
+This can be mitigated with a C<snapshot()> method that returns a shallow copy
+of the context. However it is very important that nobody store the original
+context perminently.
+
+=back
+
+=head3 Manual release
+
+Psuedo-perl:
+
+    sub snapshot {
+        my $self = shift;
+        return ...shallow copy of context...
+    }
+
+    my $CONTEXT;
+
+    sub release {
+        my $self = shift;
+        $CONTEXT = undef if $CONTEXT == $self;
+    }
+
+    sub context {
+        return $CONTEXT->snapshot if $CONTEXT;
+        my $ctx = ...generate...
+        $CONTEXT = $ctx;
+        return $ctx;
+    }
+
+Consumer:
+
+    sub my_ok {
+        my $ctx = context();
+        my ($x, $y) = @_;
+        ok($x, 'x is good');
+        ok($y, 'y is good');
+        $ctx->release;
+    }
+
+In this implementation, the first tool to request a context generates it, and
+gets the original. Any future consumers get a copy of the snapshot. Each tool
+calls 'release' on the context it has when it is done with it. For snapshots
+the release method is a no-op. For the original context the release method will
+actually release it.
+
+Pros:
+
+=over 4
+
+=item No weak ref magic
+
+=back
+
+Cons:
+
+=over 4
+
+=item Must remember to release the context, which may be hard in complex tools
+
+=item Lots of extra method calls
+
+=item Can leak easily
+
+=back
+
+=head3 Scoped
+
+Psuedo-perl:
+
+    my $CONTEXT;
+    sub context(&) {
+        my $code = shift;
+        my $unset = 0;
+        unless($CONTEXT) {
+            $unset = 1;
+            $CONTEXT = ...Generate...;
+        }
+        local $@;
+        my $lives = eval {
+            $code->($CONTEXT);
+            1;
+        };
+        my $error = $@;
+        $CONTEXT = undef if $unset;
+        die $error unless $lives;
+    }
+
+Consumer:
+
+    sub my_ok {
+        my ($x, $y) = @_;
+        context {
+            ok($x, 'x is good');
+            ok($y, 'y is good');
+        };
+    }
+
+Pros:
+
+=over 4
+
+=item Easy to understand
+
+=item No magic
+
+=item No way to leak
+
+=item Doesn't matter what people do with their refs, or how long they keep them
+
+=back
+
+Cons:
+
+=over 4
+
+=item Annoying to keep wrapping everything
+
+=item Cluttered stack traces
+
+=item Many extra sub calls (slow)
+
+=back
+
+=head1 The 'Event Hub' Model
+
+=head2 Problem Statement
+
+=head2 Specification
+
+=head2 Implementation Proposals
+
+=head1 Managing TAP encoding
+
+=head2 Problem Statement
+
+=head2 Specification
+
+=head2 Implementation Proposals
+
+=head1 Subtests
+
+=head2 Problem Statement
+
+=head2 Specification
+
+=head2 Implementation Proposals
+
+=head1 The concurrency model
+
+=head2 Problem Statement
+
+=head2 Specification
+
+=head2 Implementation Proposals
+
+=head1 Test Testing Tools
+
+=head2 Problem Statement
+
+=head2 Specification
+
+=head2 Implementation Proposals
+
+=head1 Post-Test "magic"
+
+=head2 Problem Statement
+
+=head2 Specification
+
+=head2 Implementation Proposals
+
+=head1 Backwards compatibility
+
+=head2 Problem Statement
+
+=head2 Specification
+
+=head2 Implementation Proposals
+
+=cut
