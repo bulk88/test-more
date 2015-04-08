@@ -51,6 +51,10 @@ Please also try to limit implementation proposal code to be just enough to
 convey the idea. The code should be flexible and adaptable to backcompat needs
 and reality.
 
+
+
+
+
 =head1 The Object Model
 
 =head2 Problem Statement
@@ -139,6 +143,10 @@ subclasses to inherit attribute constants, and makes the constructor faster
 when it validates the attributes you specify.
 
 =back
+
+
+
+
 
 =head1 The 'Context' Model
 
@@ -337,6 +345,7 @@ Consumer:
     sub my_ok {
         my ($x, $y) = @_;
         context {
+            my $ctx = shift; # if you want it
             ok($x, 'x is good');
             ok($y, 'y is good');
         };
@@ -368,6 +377,9 @@ Cons:
 
 =back
 
+
+
+
 =head1 The 'Event Hub' Model
 
 =head2 Problem Statement
@@ -375,6 +387,10 @@ Cons:
 =head2 Specification
 
 =head2 Implementation Proposals
+
+
+
+
 
 =head1 Managing TAP encoding
 
@@ -384,6 +400,10 @@ Cons:
 
 =head2 Implementation Proposals
 
+
+
+
+
 =head1 Subtests
 
 =head2 Problem Statement
@@ -391,6 +411,10 @@ Cons:
 =head2 Specification
 
 =head2 Implementation Proposals
+
+
+
+
 
 =head1 The concurrency model
 
@@ -400,6 +424,10 @@ Cons:
 
 =head2 Implementation Proposals
 
+
+
+
+
 =head1 Test Testing Tools
 
 =head2 Problem Statement
@@ -407,6 +435,10 @@ Cons:
 =head2 Specification
 
 =head2 Implementation Proposals
+
+
+
+
 
 =head1 Post-Test "magic"
 
@@ -416,6 +448,10 @@ Cons:
 
 =head2 Implementation Proposals
 
+
+
+
+
 =head1 Backwards compatibility
 
 =head2 Problem Statement
@@ -424,4 +460,41 @@ Cons:
 
 =head2 Implementation Proposals
 
-=cut
+
+
+
+
+=head1 AUTHORS, CONTRIBUTORS AND REVIEWERS
+
+The following people have all contributed to this document in some way, even if
+only for review.
+
+=over 4
+
+=item Chad Granum (EXODIST) E<lt>exodist@cpan.orgE<gt>
+
+=back
+
+=head1 SOURCE
+
+The source code repository for Test::More can be found at
+F<http://github.com/Test-More/test-more/>.
+
+=head1 MAINTAINER
+
+=over 4
+
+=item Chad Granum E<lt>exodist@cpan.orgE<gt>
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright 2014 Chad Granum E<lt>exodist7@gmail.comE<gt>.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+See F<http://www.perl.com/perl/misc/Artistic.html>
+
+=back
