@@ -5,38 +5,11 @@ use 5.008001;
 use Config;
 use ExtUtils::MakeMaker;
 
-my $PACKAGE = 'Test::Simple';
+my $PACKAGE = 'Test::Stream';
 ($PACKAGE_FILE = $PACKAGE) =~ s|::|/|g;
-my $LAST_API_CHANGE    = 0.48;
-my $LAST_THREAD_CHANGE = 0.48;
 
 eval "require $PACKAGE";
 my $PACKAGE_VERSION = ${$PACKAGE.'::VERSION'};
-
-unless ($@) { # Make sure we did find the module.
-    if( $PACKAGE_VERSION < $LAST_API_CHANGE ) {
-        printf <<"CHANGE_WARN", $LAST_API_CHANGE;
-
-NOTE: There have been API changes between this version and any older
-than version %s!  Please see the Changes file for details.
-
-CHANGE_WARN
-
-        sleep 5;
-    }
-    if( $Config{useithreads} && $PACKAGE_VERSION < $LAST_THREAD_CHANGE ) {
-        printf <<"THREAD_WARN", $LAST_THREAD_CHANGE;
-
-NOTE: The behavior of Test::More and threads has changed between this
-version and any older than version %s!  Please see the Changes file
-for details.
-
-THREAD_WARN
-
-        sleep 5;
-    }
-
-}
 
 my $mm_ver = $ExtUtils::MakeMaker::VERSION;
 if ($mm_ver =~ /_/) { # dev version
@@ -58,7 +31,7 @@ WriteMakefile(
 
     VERSION_FROM    => "lib/$PACKAGE_FILE.pm",
     ABSTRACT_FROM   => "lib/$PACKAGE_FILE.pm",
-    AUTHOR          => 'Michael G Schwern <schwern@pobox.com>',
+    AUTHOR          => 'Chad Granum <exodist7@gmail.com>',
 
     ($mm_ver >= 6.31 ? (LICENSE => 'perl') : ()),
 
@@ -80,32 +53,6 @@ WriteMakefile(
             bugtracker  =>      'http://github.com/Test-More/test-more/issues/',
             repository  =>      'http://github.com/Test-More/test-more/',
             MailingList =>      'http://lists.perl.org/list/perl-qa.html',
-        },
-
-        x_breaks => {
-            # entries here declared like conflicts (see CPAN::Meta::Spec): the
-            # version range describes the versions of the module that are
-            # *incompatible* with our Test::More.
-            'Test::Aggregate'           => '<= 0.371',  # still broken: see RT#100035
-            'Test::Bomb'                => '<= 0.007',  # still broken: see GH#449
-            'Test::Builder:Clutch'      => '<= 0.06',
-            'Test::Classy'              => '<= 0.09',
-            'Test::DBIx::Class::Schema' => '<= 1.0.6',  # still broken: see GH#481
-            'Test::FITesque'            => '<= 0.03',   # still broken: see GH485
-            'Test::FileReferenced'      => '<= 0.02',   # still broken: see RT#100501
-            'Test::Flatten'             => '<= 0.11',   # still broken: see GH#498
-            'Test::Kit'                 => '<= 2.12',
-            'Test::Kwalitee'            => '<= 1.18',
-            'Test::Modern'              => '<= 0.011',
-            'Test::Module::Used'        => '<= 0.2.4',
-            'Test::Moose'               => '<= 2.1209',
-            'Test::Moose::More'         => '<= 0.024',
-            'Test::More::Prefix'        => '<= 0.003',  # still broken: see RT#90361
-            'Test::ParallelSubtest'     => '<= 0.05',   # still broken: see RT#100757
-            'Test::Pretty'              => '<= 0.30',   # still broken: see GH#505
-            'Test::SharedFork'          => '<= 0.28',
-            'Test::Spec'                => '<= 0.47', # still broken: see RT#100034
-            'Test::Wrapper'             => '<= 0.3.0',  # still broken: see GH#489
         },
     }))
 );

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test::Stream::More;
 
 my @warnings;
 local $SIG{__WARN__} = sub { push @warnings, $_[0] };

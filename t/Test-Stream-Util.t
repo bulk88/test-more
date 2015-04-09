@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Test::Stream;
-use Test::More;
+use Test::Stream::More;
 use Scalar::Util qw/dualvar/;
 
 use ok 'Test::Stream::Util', qw{

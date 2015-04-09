@@ -1,14 +1,14 @@
-package Test::More::DeepCheck::Strict;
+package Test::Stream::More::DeepCheck::Strict;
 use strict;
 use warnings;
 
 use Scalar::Util qw/reftype/;
-use Test::More::Tools;
+use Test::Stream::More::Tools;
 use Test::Stream::Carp qw/cluck confess/;
 use Test::Stream::Util qw/try unoverload_str is_regex/;
 
 use Test::Stream::HashBase(
-    base => 'Test::More::DeepCheck',
+    base => 'Test::Stream::More::DeepCheck',
 );
 
 sub preface { "Structures begin differing at:\n" }
@@ -80,7 +80,6 @@ sub check_set {
 
 sub _deep_check {
     my $self = shift;
-    confess "XXX" unless ref $self;
     my($e1, $e2) = @_;
 
     unoverload_str( \$e1, \$e2 );
@@ -222,17 +221,17 @@ __END__
 
 =head1 NAME
 
-Test::More::DeepCheck::Strict - Where is_deeply() is implemented.
+Test::Stream::More::DeepCheck::Strict - Where is_deeply() is implemented.
 
 =head1 DESCRIPTION
 
-This is the package where the code for C<is_deeply()> from L<Test::More> lives.
+This is the package where the code for C<is_deeply()> from L<Test::Stream::More> lives.
 This code was refactored into this form, but should remain 100% compatible with
 the old implementation. If you find an incompatability please report it.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream::More can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER
@@ -282,7 +281,7 @@ See F<http://www.perl.com/perl/misc/Artistic.html>
 
 =item Test::Simple
 
-=item Test::More
+=item Test::Stream::More
 
 =item Test::Builder
 

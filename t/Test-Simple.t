@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::Simple tests => 1;
+use Test::Stream::Simple tests => 1;
 use Test::Stream::Tester;
 
 events_are (

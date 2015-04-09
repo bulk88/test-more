@@ -3,14 +3,15 @@ use warnings;
 use B;
 
 use Test::Stream;
+use Test::Stream::Legacy;
 use Test::MostlyLike;
-use Test::More tests => 3;
+use Test::Stream::More tests => 3;
 use Test::Builder; # Not loaded by default in modern mode
 my $orig = Test::Builder->can('diag');
 
 {
     package MyModernTester;
-    use Test::More;
+    use Test::Stream::More;
     use Test::Stream;
     use Test::MostlyLike;
     use Test::Stream::Tester qw/intercept/;
@@ -47,7 +48,7 @@ my $orig = Test::Builder->can('diag');
 
 {
     package MyModernTester2;
-    use Test::More;
+    use Test::Stream::More;
     use Test::Stream;
     use Test::MostlyLike;
     use Test::Stream::Tester qw/intercept/;
@@ -84,7 +85,7 @@ my $orig = Test::Builder->can('diag');
 
 {
     package MyLegacyTester;
-    use Test::More;
+    use Test::Stream::More;
     use Test::Stream::Tester qw/intercept/;
 
     no warnings 'redefine';

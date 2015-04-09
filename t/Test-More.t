@@ -1,11 +1,12 @@
 use strict;
 use warnings;
 
-use ok 'Test::More';
+use Test::Stream::Legacy;
+use ok 'Test::Stream::More';
 
 {
     package Foo;
-    use Test::More import => ['!explain'];
+    use Test::Stream::More import => ['!explain'];
 }
 
 {
@@ -17,7 +18,7 @@ use ok 'Test::More';
 
 {
     package Baz;
-    use Test::More;
+    use Test::Stream::More;
     use_ok( 'Data::Dumper' );
     can_ok( __PACKAGE__, 'Dumper' );
     Dumper({foo => 'bar'});

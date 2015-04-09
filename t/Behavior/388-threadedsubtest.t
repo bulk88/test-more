@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use Test::CanThread qw/AUTHOR_TESTING/;
-use Test::More;
+use Test::Stream::More;
 
 subtest my_subtest => sub {
     my $file = __FILE__;

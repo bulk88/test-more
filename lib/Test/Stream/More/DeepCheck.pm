@@ -1,4 +1,4 @@
-package Test::More::DeepCheck;
+package Test::Stream::More::DeepCheck;
 use strict;
 use warnings;
 
@@ -113,12 +113,12 @@ __END__
 
 =head1 NAME
 
-Test::More::DeepCheck - Base class or is_deeply() and mostly_like()
+Test::Stream::More::DeepCheck - Base class or is_deeply() and mostly_like()
 implementations.
 
 =head1 DESCRIPTION
 
-This is the base class for deep check functions provided by L<Test::More> and
+This is the base class for deep check functions provided by L<Test::Stream::More> and
 L<Test::MostlyLike>. This class contains all the debugging and diagnostics
 code shared betweent he 2 tools.
 
@@ -127,7 +127,7 @@ you find any bugs or incompatabilities please report them.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream::More can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER
@@ -177,7 +177,7 @@ See F<http://www.perl.com/perl/misc/Artistic.html>
 
 =item Test::Simple
 
-=item Test::More
+=item Test::Stream::More
 
 =item Test::Builder
 

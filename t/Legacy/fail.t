@@ -1,15 +1,10 @@
 #!perl -w
+use Test::Stream::Legacy;
 
 # Simple test of what failure output looks like
 
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ('../lib', 'Legacy/lib');
-    }
-    else {
-        unshift @INC, 't/Legacy/lib';
-    }
+    unshift @INC, 't/Legacy/lib';
 }
 
 use strict;

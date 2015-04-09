@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test::Stream::More;
 use lib 'lib';
 
 BEGIN {
@@ -12,7 +12,7 @@ BEGIN {
         accessors => [qw/foo bar baz/],
     );
 
-    use Test::More;
+    use Test::Stream::More;
     is(FOO, 'foo', "FOO CONSTANT");
     is(BAR, 'bar', "BAR CONSTANT");
     is(BAZ, 'baz', "BAZ CONSTANT");
@@ -30,7 +30,7 @@ BEGIN {
         base      => 'My::HBase',
     );
 
-    use Test::More;
+    use Test::Stream::More;
     is(FOO,   'foo',   "FOO CONSTANT");
     is(BAR,   'bar',   "BAR CONSTANT");
     is(BAZ,   'baz',   "BAZ CONSTANT");
@@ -54,14 +54,14 @@ BEGIN {
 {
     package Consumer;
     use My::HBase qw/BAR/;
-    use Test::More;
+    use Test::Stream::More;
 
     is(BAR, 'bar', "Can import contants");
 
-    my $bad = eval { Test::Stream::HashBase->import( base => 'Test::More' ); 1 };
+    my $bad = eval { Test::Stream::HashBase->import( base => 'Test::Stream' ); 1 };
     my $error = $@;
     ok(!$bad, "Threw exception");
-    like($error, qr/Base class 'Test::More' is not a subclass of Test::Stream::HashBase/, "Expected error");
+    like($error, qr/Base class 'Test::Stream' is not a subclass of Test::Stream::HashBase/, "Expected error");
 }
 
 isa_ok('My::HBase', 'Test::Stream::HashBase');

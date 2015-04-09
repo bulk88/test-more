@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-
+use Test::Stream::Legacy;
 use Test::More tests => 3;
 use Test::Builder::Tester;
 

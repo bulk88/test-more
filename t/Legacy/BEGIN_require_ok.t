@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 # Fixed a problem with BEGIN { use_ok or require_ok } silently failing when there's no
 # plan set.  [rt.cpan.org 28345]  Thanks Adriano Ferreira and Yitzchak.
@@ -6,13 +7,7 @@
 use strict;
 
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ('../lib', 'lib');
-    }
-    else {
-        unshift @INC, 't/lib';
-    }
+    unshift @INC, 't/lib';
 }
 
 use Test::More;

@@ -7,7 +7,7 @@ use Test::Stream::Exporter;
 default_exports qw/mostly_like/;
 Test::Stream::Exporter->cleanup;
 
-use Test::More::DeepCheck::Tolerant;
+use Test::Stream::More::DeepCheck::Tolerant;
 
 sub mostly_like {
     my ($got, $want, $name) = @_;
@@ -28,7 +28,7 @@ WARNING
         return 0;
     }
 
-    my ($ok, @diag) = Test::More::DeepCheck::Tolerant->check($got, $want);
+    my ($ok, @diag) = Test::Stream::More::DeepCheck::Tolerant->check($got, $want);
     $ctx->ok($ok, $name, \@diag);
     return $ok;
 }

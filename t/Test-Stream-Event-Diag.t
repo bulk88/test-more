@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Test::Stream;
-use Test::More;
+use Test::Stream::More;
 use Test::Stream::Tester qw/intercept/;
 
 use ok 'Test::Stream::Event::Diag';

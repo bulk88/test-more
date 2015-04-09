@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 # A subtest without a plan implicitly calls "done_testing"
 

@@ -1,20 +1,20 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ('../lib', 'Legacy/lib');
-    }
-    else {
-        unshift @INC, 't/Legacy/lib';
-    }
+    unshift @INC, 't/Legacy/lib';
 }
+
+
+
+
+
+
 
 # There was a bug with like() involving a qr// not failing properly.
 # This tests against that.
 
 use strict;
-
 
 # Can't use Test.pm, that's a 5.005 thing.
 package My::Test;

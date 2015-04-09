@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 # Test todo subtests.
 #
@@ -7,13 +8,7 @@
 # within the subtest should not become todo tests themselves.
 
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ( '../lib', 'lib' );
-    }
-    else {
-        unshift @INC, 't/lib';
-    }
+    unshift @INC, 't/lib';
 }
 
 use strict;

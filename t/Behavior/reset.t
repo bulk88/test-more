@@ -1,10 +1,12 @@
 use strict;
 use warnings;
-use Test::More;
+use Test::Stream;
+use Test::Stream::Legacy;
 use Test::Stream::Tester;
+use Test::Stream::More;
+use Test::Builder;
 
 my $tb = Test::Builder->new;
-
 
 events_are(
     intercept {

@@ -299,10 +299,13 @@ sub send_event {
 
     # Uhg.. support legacy monkeypatching
     # If this is still here in 2020 I will be a sad panda.
-    return Test::Builder->new->monkeypatch_event($event, %args)
-        if $INC{'Test/Builder.pm'}
-        && $Test::Builder::EVENTS{$event}
-        && $Test::Builder::ORIG{lc($event)} != Test::Builder->can(lc($event));
+    if ($INC{'Test/Builder.pm'} && $Test::Builder::EVENTS{$event}) {
+        my $orig = $Test::Builder::ORIG{lc($event)};
+        my $curr; { no strict 'refs'; $curr = \&{"Test::Builder::" . lc($event)} }
+
+        return Test::Builder->new->monkeypatch_event($event, %args)
+            if $orig != $curr;
+    }
 
     my $e = $self->build_event($event, %args, CALL => [caller(0)]);
     $self->hub->send($e);
@@ -403,7 +406,8 @@ sub subtest {
 
 sub done_testing {
     return $_[0]->hub->done_testing(@_)
-        unless $INC{'Test/Builder.pm'} && $Test::Builder::ORIG{done_testing} != \&Test::Builder::done_testing;
+        unless $INC{'Test/Builder.pm'}
+            && $Test::Builder::ORIG{done_testing} != \&Test::Builder::done_testing;
 
     local $Test::Builder::CTX = shift;
     my $out = Test::Builder->new->done_testing(@_);

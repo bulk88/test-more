@@ -1,12 +1,12 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test::Stream::More;
 
 {
     package My::Exporter;
     use Test::Stream::Exporter;
-    use Test::More;
+    use Test::Stream::More;
 
     export         a => sub { 'a' };
     default_export b => sub { 'b' };

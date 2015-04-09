@@ -1,14 +1,9 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 use strict;
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ('../lib', 'Legacy/lib');
-    }
-    else {
-        unshift @INC, 't/Legacy/lib';
-    }
+    unshift @INC, 't/Legacy/lib';
 }
 
 use Test::Builder;

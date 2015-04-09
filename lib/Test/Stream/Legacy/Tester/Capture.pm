@@ -1,6 +1,9 @@
-package Test::Tester::Capture;
 use strict;
 use warnings;
+
+package Test::Stream::Legacy::Tester::Capture;
+package
+    Test::Tester::Capture;
 
 use base 'Test::Builder';
 
@@ -55,7 +58,7 @@ __END__
 
 =head1 NAME
 
-Test::Tester::Capture - Capture module for TesT::Tester
+Test::Tester::Capture - Capture module for Test::Tester
 
 =head1 DESCRIPTION
 

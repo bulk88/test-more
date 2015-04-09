@@ -3,14 +3,15 @@ use warnings;
 use B;
 
 use Test::Stream;
+use Test::Stream::Legacy;
 use Test::MostlyLike;
-use Test::More tests => 3;
+use Test::Stream::More tests => 3;
 use Test::Builder; # Not loaded by default in modern mode
 my $orig = Test::Builder->can('note');
 
 {
     package MyModernTester;
-    use Test::More;
+    use Test::Stream::More;
     use Test::Stream;
     use Test::MostlyLike;
 
@@ -44,7 +45,7 @@ my $orig = Test::Builder->can('note');
 
 {
     package MyModernTester2;
-    use Test::More;
+    use Test::Stream::More;
     use Test::Stream;
     use Test::MostlyLike;
 
@@ -78,7 +79,7 @@ my $orig = Test::Builder->can('note');
 
 {
     package MyLegacyTester;
-    use Test::More;
+    use Test::Stream::More;
 
     no warnings 'redefine';
     local *Test::Builder::note = sub {

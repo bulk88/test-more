@@ -1,4 +1,5 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 # What happens when a subtest dies?
 

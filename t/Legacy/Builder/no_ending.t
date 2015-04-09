@@ -1,11 +1,5 @@
+use Test::Stream::Legacy;
 use Test::Builder;
-
-BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = '../lib';
-    }
-}
 
 BEGIN {
     my $t = Test::Builder->new;

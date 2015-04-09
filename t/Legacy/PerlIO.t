@@ -1,3 +1,4 @@
+use Test::Stream::Legacy;
 use Test::More;
 require PerlIO;
 

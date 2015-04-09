@@ -1,4 +1,4 @@
-package Test::More::Tools;
+package Test::Stream::More::Tools;
 use strict;
 use warnings;
 
@@ -339,21 +339,21 @@ __END__
 
 =head1 NAME
 
-Test::More::Tools - Generic form of tools from Test::More.
+Test::Stream::More::Tools - Generic form of tools from Test::Stream::More.
 
 =head1 DESCRIPTION
 
-People used to call L<Test::More> tools within other testing tools. This mostly
+People used to call L<Test::Stream::More> tools within other testing tools. This mostly
 works, but it generates events for each call. This package gives you access to
 the implementations directly, without generating events for you. This allows
 you to create a composite tool without generating extra events.
 
 =head1 SYNOPSIS
 
-    use Test::More::Tools qw/tmt/;
+    use Test::Stream::More::Tools qw/tmt/;
     use Test::Stream::Toolset qw/context/;
 
-    # This is how Test::More::is is implemented
+    # This is how Test::Stream::More::is is implemented
     sub my_is {
         my ($got, $want, $name) = @_;
 
@@ -370,7 +370,7 @@ you to create a composite tool without generating extra events.
 
 =item $pkg = tmt()
 
-Simply returns the string 'Test::More::Tools';
+Simply returns the string 'Test::Stream::More::Tools';
 
 =back
 
@@ -409,7 +409,7 @@ Regex compare. C<$op> may be C<=~> or C<!~>.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream::More can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER
@@ -459,7 +459,7 @@ See F<http://www.perl.com/perl/misc/Artistic.html>
 
 =item Test::Simple
 
-=item Test::More
+=item Test::Stream::More
 
 =item Test::Builder
 

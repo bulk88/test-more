@@ -1,5 +1,6 @@
 use strict;
 
+use Test::Stream::Legacy;
 use Test::Tester;
 
 use Data::Dumper qw(Dumper);

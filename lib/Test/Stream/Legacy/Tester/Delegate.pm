@@ -1,8 +1,11 @@
 use strict;
 use warnings;
-package Test::Tester::Delegate;
+package Test::Stream::Legacy::Tester::Delegate;
+package
+    Test::Tester::Delegate;
 
-warn "Test::Tester::Delegate is deprecated";
+use Carp qw/croak/;
+croak __PACKAGE__ . " is not supported under Test::Stream";
 
 1;
 

@@ -3,7 +3,7 @@ use warnings;
 
 use Test::Stream;
 use Test::MostlyLike;
-use Test::More;
+use Test::Stream::More;
 
 use ok 'Test::Stream::IOSets';
 

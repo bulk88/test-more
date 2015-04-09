@@ -1,14 +1,11 @@
-package Test::Builder;
+package Test::Stream::Legacy::Builder;
+package
+    Test::Builder;
 
-use 5.008001;
 use strict;
 use warnings;
 
-our $VERSION = '1.301001_100';
-$VERSION = eval $VERSION;    ## no critic (BuiltinFunctions::ProhibitStringyEval)
-
-
-use Test::Stream 1.301001 ();
+use Test::Stream;
 use Test::Stream::Hub;
 use Test::Stream::Toolset;
 use Test::Stream::Context;
@@ -18,7 +15,9 @@ use Test::Stream::Meta qw/MODERN/;
 use Test::Stream::Util qw/try protect unoverload_str is_regex/;
 use Scalar::Util qw/blessed reftype/;
 
-use Test::More::Tools;
+use Test::Stream::More::Tools;
+
+#push @Test::Builder::ISA => 'Test::Builder';
 
 BEGIN {
     my $meta = Test::Stream::Meta->is_tester('main');
@@ -54,6 +53,7 @@ sub depth { $_[0]->{depth} || 0 }
 sub _ending {
     my $self = shift;
     my ($ctx) = @_;
+    return unless $self->{hub};
     require Test::Stream::ExitMagic;
     $self->{hub}->set_no_ending(0);
     Test::Stream::ExitMagic->new->do_magic($self->{hub}, $ctx);
@@ -67,7 +67,7 @@ sub _ending {
 sub new {
     my $class  = shift;
     my %params = @_;
-    $Test ||= $class->create(shared_hub => 1);
+    $Test ||= $class->create(shared_hub => 1, init => 1);
 
     return $Test;
 }
@@ -609,7 +609,7 @@ sub reset {
     $self->{use_shared} = 1 if $params{shared_hub};
 
     if ($self->{use_shared}) {
-        Test::Stream->shared->_reset;
+        Test::Stream->shared->_reset unless $params{init};
         Test::Stream->shared->state->set_legacy([]);
     }
     else {
@@ -1031,6 +1031,7 @@ sub _is_dualvar {
 # }}} Legacy support, do not use #
 ##################################
 
+
 1;
 
 __END__
@@ -1316,7 +1317,7 @@ This is a way to check if the test suite is currently passing or failing.
 =head2 EVENT GENERATORS
 
 See L<Test::Stream::Context>, L<Test::Stream::Toolset>, and
-L<Test::More::Tools>. Calling the methods below is not advised.
+L<Test::Stream::More::Tools>. Calling the methods below is not advised.
 
 =over 4
 
@@ -1487,7 +1488,7 @@ Test::MyWidget.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream::More can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER

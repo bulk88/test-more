@@ -1,11 +1,12 @@
 use strict;
 use warnings;
-use Test::More;
+use Test::Stream;
+use Test::Stream::More;
 use List::Util qw/first/;
 
 plan skip_all => "Only tested when releasing" unless $ENV{AUTHOR_TESTING};
 
-my $ver = $Test::More::VERSION;
+my $ver = $Test::Stream::VERSION;
 $ver =~ s/^(\d+\.\d{6}).*$/$1/;
 
 my $changes = first { -f $_ } './Changes', '../Changes';

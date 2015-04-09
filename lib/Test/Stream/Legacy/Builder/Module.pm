@@ -1,15 +1,14 @@
-package Test::Builder::Module;
-
 use strict;
 
-use Test::Stream 1.301001 ();
-use Test::Builder 0.99;
+package Test::Stream::Legacy::Builder::Module;
+package
+    Test::Builder::Module;
+
+use Test::Stream;
+use Test::Builder;
 
 require Exporter;
 our @ISA = qw(Exporter);
-
-our $VERSION = '1.301001_100';
-$VERSION = eval $VERSION;      ## no critic (BuiltinFunctions::ProhibitStringyEval)
 
 =pod
 

@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use Test::Stream::Legacy;
 
 use Test::CanThread qw/AUTHOR_TESTING/;
 use Test::More;

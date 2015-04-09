@@ -1,16 +1,11 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 # Test Test::More::subtest(), focusing on correct line numbers in
 # failed test diagnostics.
 
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ( '../lib', 'lib' );
-    }
-    else {
-        unshift @INC, 't/lib';
-    }
+    unshift @INC, 't/lib';
 }
 
 use strict;

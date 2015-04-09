@@ -1,14 +1,7 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 # plan() used to export functions by mistake [rt.cpan.org 8385]
-
-BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = '../lib';
-    }
-}
-
 
 use Test::More ();
 Test::More::plan(tests => 1);

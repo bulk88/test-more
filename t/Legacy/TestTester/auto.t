@@ -1,14 +1,10 @@
 use strict;
 use warnings;
 
+use Test::Stream::Legacy;
+
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ('../lib', 'Legacy/lib');
-    }
-    else {
-        unshift @INC, 't/Legacy/lib';
-    }
+    unshift @INC, 't/Legacy/lib';
 }
 
 use Test::Tester tests => 4;

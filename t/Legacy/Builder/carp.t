@@ -1,14 +1,7 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-
-BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = '../lib';
-    }
-}
-
+use Test::Stream::Legacy;
 
 use Test::More tests => 3;
 use Test::Builder;

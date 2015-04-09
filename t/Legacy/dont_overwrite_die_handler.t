@@ -1,12 +1,6 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 use Config; # To prevent conflict with some strawberry-portable versions
-
-BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = '../lib';
-    }
-}
 
 # Make sure this is in place before Test::More is loaded.
 my $handler_called;

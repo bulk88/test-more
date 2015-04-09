@@ -2,7 +2,7 @@ use strict;
 use warnings;
 
 use Test::Stream;
-use Test::More;
+use Test::Stream::More;
 use Scalar::Util qw/blessed/;
 
 # This will replace the main Test::Stream::Hub object for the scope of the coderef.

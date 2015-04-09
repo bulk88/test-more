@@ -1,8 +1,10 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test::Stream::More;
 use Test::Stream::Meta qw/init_tester/;
+use Test::Stream::Legacy;
+use Test::Builder;
 my $META;
 BEGIN { $META = init_tester('main') }
 

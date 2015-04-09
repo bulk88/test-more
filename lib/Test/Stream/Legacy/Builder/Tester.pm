@@ -1,11 +1,11 @@
-package Test::Builder::Tester;
-
 use strict;
-our $VERSION = '1.301001_100';
-$VERSION = eval $VERSION;    ## no critic (BuiltinFunctions::ProhibitStringyEval)
 
-use Test::Stream 1.301001 ();
-use Test::Builder 1.301001;
+package Test::Stream::Legacy::Builder::Tester;
+package
+    Test::Builder::Tester;
+
+use Test::Stream;
+use Test::Builder;
 use Symbol;
 use Test::Stream::Carp qw/croak/;
 use Test::Stream::Context qw/context/;
@@ -575,7 +575,9 @@ and/or modify it under the same terms as Perl itself.
 ####################################################################
 # Helper class that is used to remember expected and received data
 
-package Test::Builder::Tester::Tie;
+package Test::Stream::Legacy::Builder::Tester::Tie;
+package
+    Test::Builder::Tester::Tie;
 
 ##
 # add line(s) to be expected

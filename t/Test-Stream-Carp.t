@@ -27,7 +27,7 @@ BEGIN {
     };
 }
 
-use Test::More;
+use Test::Stream::More;
 
 BEGIN {
     my $r = ok(!$INC{'Carp.pm'}, "Carp is not loaded when we start");

@@ -5,7 +5,7 @@ no utf8;
 # line 5 "encoding_tést.t"
 
 use Test::Stream qw/context tap_encoding/;
-use Test::More;
+use Test::Stream::More;
 use Test::Stream::Tester;
 
 BEGIN {

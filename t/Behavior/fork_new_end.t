@@ -1,15 +1,10 @@
 use strict;
 use warnings;
 
-BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = '../lib';
-    }
-}
-
+use Test::Stream::Legacy;
 use Test::CanThread qw/AUTHOR_TESTING/;
-use Test::More tests => 4;
+use Test::Stream::More tests => 4;
+use Test::Builder;
 
 ok(1, "outside before");
 

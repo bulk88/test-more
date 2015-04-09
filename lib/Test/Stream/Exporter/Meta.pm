@@ -122,6 +122,13 @@ sub get {
     return $EXPORT_META{$pkg};
 }
 
+sub alias {
+    my $class = shift;
+    my ($existing, $new) = @_;
+    my $meta = $class->new($existing);
+    $EXPORT_META{$new} = $meta;
+}
+
 1;
 
 __END__

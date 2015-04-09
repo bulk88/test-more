@@ -1,13 +1,10 @@
-package Test::More;
+package Test::Stream::More;
 
 use 5.008001;
 use strict;
 use warnings;
 
-our $VERSION = '1.301001_100';
-$VERSION = eval $VERSION;    ## no critic (BuiltinFunctions::ProhibitStringyEval)
-
-use Test::Stream 1.301001 ();
+use Test::Stream();
 use Test::Stream::Util qw/protect try spoof/;
 use Test::Stream::Toolset qw/is_tester init_tester context before_import/;
 use Test::Stream::Subtest qw/subtest/;
@@ -15,10 +12,8 @@ use Test::Stream::Subtest qw/subtest/;
 use Test::Stream::Carp qw/croak carp/;
 use Scalar::Util qw/blessed/;
 
-use Test::More::Tools;
-use Test::More::DeepCheck::Strict;
-
-use Test::Builder;
+use Test::Stream::More::Tools;
+use Test::Stream::More::DeepCheck::Strict;
 
 use Test::Stream::Exporter qw/
     default_export default_exports export_to export_to_level
@@ -52,6 +47,25 @@ Test::Stream::Exporter->cleanup;
 {
     no warnings 'once';
     $Test::Builder::Level ||= 1;
+}
+
+if ($INC{'ok.pm'}) {
+    carp "Test::use::ok (ok.pm) is already loaded, but Test::Stream::Legacy is not, 'use ok' will not work properly in Test::Stream this way"
+        unless $INC{'Test/Stream/Legacy.pm'};
+}
+else {
+    $INC{'ok.pm'} = __FILE__;
+    sub ok::import {
+        shift;
+
+        if (@_) {
+            goto &Test::Stream::More::pass if $_[0] eq 'ok';
+            goto &Test::Stream::More::use_ok;
+        }
+
+        my (undef, $file, $line) = caller();
+        ($file =~ /^\(eval/) or die "Not enough arguments for 'use ok' at $file line $line\n";
+    }
 }
 
 sub import {
@@ -286,7 +300,7 @@ WARNING
         return 0;
     }
 
-    my ($ok, @diag) = Test::More::DeepCheck::Strict->check($got, $want);
+    my ($ok, @diag) = Test::Stream::More::DeepCheck::Strict->check($got, $want);
     $ctx->ok($ok, $name, \@diag);
     return $ok;
 }
@@ -294,21 +308,21 @@ WARNING
 sub eq_array {
     my ($got, $want, $name) = @_;
     my $ctx = context();
-    my ($ok, @diag) = Test::More::DeepCheck::Strict->check_array($got, $want);
+    my ($ok, @diag) = Test::Stream::More::DeepCheck::Strict->check_array($got, $want);
     return $ok;
 }
 
 sub eq_hash {
     my ($got, $want, $name) = @_;
     my $ctx = context();
-    my ($ok, @diag) = Test::More::DeepCheck::Strict->check_hash($got, $want);
+    my ($ok, @diag) = Test::Stream::More::DeepCheck::Strict->check_hash($got, $want);
     return $ok;
 }
 
 sub eq_set {
     my ($got, $want, $name) = @_;
     my $ctx = context();
-    my ($ok, @diag) = Test::More::DeepCheck::Strict->check_set($got, $want);
+    my ($ok, @diag) = Test::Stream::More::DeepCheck::Strict->check_set($got, $want);
     return $ok;
 }
 
@@ -399,16 +413,16 @@ __END__
 
 =head1 NAME
 
-Test::More - The defacto standard in unit testing tools.
+Test::Stream::More - The defacto standard in unit testing tools.
 
 =head1 SYNOPSIS
 
-    # Using Test::Stream BEFORE using Test::More removes expensive legacy
+    # Using Test::Stream BEFORE using Test::Stream::More removes expensive legacy
     # support. This Also provides context(), cull(), and tap_encoding()
     use Test::Stream;
 
     # Load after Test::Stream to get the benefits of removed legacy
-    use Test::More;
+    use Test::Stream::More;
 
     use ok 'Some::Module';
 
@@ -483,15 +497,15 @@ Before anything else, you need a testing plan.  This basically declares
 how many tests your script is going to run to protect against premature
 failure.
 
-The preferred way to do this is to declare a plan when you C<use Test::More>.
+The preferred way to do this is to declare a plan when you C<use Test::Stream::More>.
 
-  use Test::More tests => 23;
+  use Test::Stream::More tests => 23;
 
 There are cases when you will not know beforehand how many tests your
 script is going to run.  In this case, you can declare your tests at
 the end.
 
-  use Test::More;
+  use Test::Stream::More;
 
   ... run your tests ...
 
@@ -503,27 +517,27 @@ $number_of_tests_run.
 
 In some cases, you'll want to completely skip an entire testing script.
 
-  use Test::More skip_all => $skip_reason;
+  use Test::Stream::More skip_all => $skip_reason;
 
 Your script will declare a skip with the reason why you skipped and
 exit immediately with a zero (success).  See L<Test::Harness> for
 details.
 
-If you want to control what functions Test::More will export, you
+If you want to control what functions Test::Stream::More will export, you
 have to use the 'import' option.  For example, to import everything
 but 'fail', you'd do:
 
-  use Test::More tests => 23, import => ['!fail'];
+  use Test::Stream::More tests => 23, import => ['!fail'];
 
 Alternatively, you can use the C<plan()> function.  Useful for when you
 have to calculate the number of tests.
 
-  use Test::More;
+  use Test::Stream::More;
   plan tests => keys %Stuff * 3;
 
 or for deciding between running the tests at all:
 
-  use Test::More;
+  use Test::Stream::More;
   if( $^O eq 'MacOS' ) {
       plan skip_all => 'Test irrelevant on MacOS';
   }
@@ -552,11 +566,11 @@ This is safer than and replaces the "no_plan" plan.
 
 =head2 Test::Stream
 
-If Test::Stream is loaded before Test::More then it will prevent the insertion
+If Test::Stream is loaded before Test::Stream::More then it will prevent the insertion
 of some legacy support shims, saving you memory and improving performance.
 
     use Test::Stream;
-    use Test::More;
+    use Test::Stream::More;
 
 You can also use it to make forking work:
 
@@ -567,7 +581,7 @@ You can also use it to make forking work:
 You can now control the encoding of your TAP output using Test::Stream.
 
     use Test::Stream; # imports tap_encoding
-    use Test::More;
+    use Test::Stream::More;
 
     tap_encoding 'utf8';
 
@@ -610,7 +624,7 @@ The following is an example of code.
 
   use utf8;
   use Test::Stream;
-  use Test::More;
+  use Test::Stream::More;
   use Encode::Locale;
 
   tap_encoding('console_out');
@@ -626,7 +640,7 @@ unscrambling fails the original name will be used.
 This filename unscrambling is necessary for example on linux systems when you
 use utf8 encoding and a utf8 filename. Perl will read the bytes of the name,
 and treat them as bytes. if you then try to print the name to a utf8 handle it
-will treat each byte as a different character. Test::More attempts to fix this
+will treat each byte as a different character. Test::Stream::More attempts to fix this
 scrambling for you.
 
 =back
@@ -958,7 +972,7 @@ result of the whole subtest to determine if its ok or not ok.
 
 For example...
 
-  use Test::More tests => 3;
+  use Test::Stream::More tests => 3;
 
   pass("First test");
 
@@ -1017,10 +1031,10 @@ Sometimes you want to run a file as a subtest:
 
 where foo.pl;
 
-    use Test::More skip_all => "won't work";
+    use Test::Stream::More skip_all => "won't work";
 
 This will work fine, but will issue a warning. The issue is that the normal
-flow control method will now work inside a BEGIN block. The C<use Test::More>
+flow control method will now work inside a BEGIN block. The C<use Test::Stream::More>
 statement is run in a BEGIN block. As a result an exception is thrown instead
 of the normal flow control. In most cases this works fine.
 
@@ -1037,7 +1051,7 @@ A case like this however will have issues:
 
 You can work around this by cheking the return from C<do>, along with C<$@>, or you can alter foo.pl so that it does this:
 
-    use Test::More;
+    use Test::Stream::More;
     plan skip_all => 'broken';
 
 When the plan is issues outside of the BEGIN block it works just fine.
@@ -1064,7 +1078,7 @@ Use these very, very, very sparingly.
 Want a stack trace when a test failure occurs? Have some other hook in mind?
 Easy!
 
-    use Test::More;
+    use Test::Stream::More;
     use Carp qw/confess/;
 
     Test::Stream->shared->listen(sub {
@@ -1206,7 +1220,7 @@ import anything, use C<require_ok>.
 
 Not everything is a simple eq check or regex.  There are times you
 need to see if two data structures are equivalent.  For these
-instances Test::More provides a handful of useful functions.
+instances Test::Stream::More provides a handful of useful functions.
 
 B<NOTE> I'm not quite sure what will happen with filehandles.
 
@@ -1317,7 +1331,7 @@ but will work in the future (a todo test).
 For more details on the mechanics of skip and todo tests see
 L<Test::Harness>.
 
-The way Test::More handles this is with a named block.  Basically, a
+The way Test::Stream::More handles this is with a named block.  Basically, a
 block of tests which can be skipped over or made todo.  It's best if I
 just show you...
 
@@ -1348,7 +1362,7 @@ the easiest way to illustrate:
     }
 
 If the user does not have HTML::Lint installed, the whole block of
-code I<won't be run at all>.  Test::More will output special ok's
+code I<won't be run at all>.  Test::Stream::More will output special ok's
 which Test::Harness interprets as skipped, but passing, tests.
 
 It's important that $how_many accurately reflects the number of tests
@@ -1356,7 +1370,7 @@ in the SKIP block so the # of tests run will match up with your plan.
 If your plan is C<no_plan> $how_many is optional and will default to 1.
 
 It's perfectly safe to nest SKIP blocks.  Each SKIP block must have
-the label C<SKIP>, or Test::More can't work its magic.
+the label C<SKIP>, or Test::Stream::More can't work its magic.
 
 You don't skip tests which are failing because there's a bug in your
 program, or for which you don't yet have code written.  For that you
@@ -1384,7 +1398,7 @@ because you haven't fixed a bug or haven't finished a new feature:
         is( $spoon, 'bent',    "Spoon bending, that's original" );
     }
 
-With a todo block, the tests inside are expected to fail.  Test::More
+With a todo block, the tests inside are expected to fail.  Test::Stream::More
 will run the tests normally, but print out special flags indicating
 they are "todo".  L<Test::Harness> will interpret failures as being ok.
 Should anything succeed, it will report it as an unexpected success.
@@ -1517,10 +1531,10 @@ L<Test::Deep> contains much better set comparison functions.
 =back
 
 
-=head2 Extending and Embedding Test::More
+=head2 Extending and Embedding Test::Stream::More
 
-Sometimes the Test::More interface isn't quite enough.  Fortunately,
-Test::More is built on top of L<Test::Stream> which provides a single,
+Sometimes the Test::Stream::More interface isn't quite enough.  Fortunately,
+Test::Stream::More is built on top of L<Test::Stream> which provides a single,
 unified backend for any test library to use.  This means two test
 libraries which both use <Test::Stream> B<can> be used together in the
 same program>.
@@ -1548,18 +1562,18 @@ B<NOTE>  This behavior may go away in future versions.
 
 =head1 COMPATIBILITY
 
-Test::More works with Perls as old as 5.8.1.
+Test::Stream::More works with Perls as old as 5.8.1.
 
 Thread support is not very reliable before 5.10.1, but that's
 because threads are not very reliable before 5.10.1.
 
-Although Test::More has been a core module in versions of Perl since 5.6.2,
-Test::More has evolved since then, and not all of the features you're used to
-will be present in the shipped version of Test::More. If you are writing a
+Although Test::Stream::More has been a core module in versions of Perl since 5.6.2,
+Test::Stream::More has evolved since then, and not all of the features you're used to
+will be present in the shipped version of Test::Stream::More. If you are writing a
 module, don't forget to indicate in your package metadata the minimum version
-of Test::More that you require. For instance, if you want to use
+of Test::Stream::More that you require. For instance, if you want to use
 C<done_testing()> but want your test script to run on Perl 5.10.0, you will
-need to explicitly require Test::More > 0.88.
+need to explicitly require Test::Stream::More > 0.88.
 
 Key feature milestones include:
 
@@ -1571,37 +1585,37 @@ Key feature milestones include:
 
 =item tap encoding
 
-Test::Builder and Test::More version 1.301001 introduce these major
+Test::Builder and Test::Stream::More version 1.301001 introduce these major
 modernizations.
 
 =item subtests
 
-Subtests were released in Test::More 0.94, which came with Perl 5.12.0.
+Subtests were released in Test::Stream::More 0.94, which came with Perl 5.12.0.
 Subtests did not implicitly call C<done_testing()> until 0.96; the first Perl
 with that fix was Perl 5.14.0 with 0.98.
 
 =item C<done_testing()>
 
-This was released in Test::More 0.88 and first shipped with Perl in 5.10.1 as
-part of Test::More 0.92.
+This was released in Test::Stream::More 0.88 and first shipped with Perl in 5.10.1 as
+part of Test::Stream::More 0.92.
 
 =item C<cmp_ok()>
 
 Although C<cmp_ok()> was introduced in 0.40, 0.86 fixed an important bug to
 make it safe for overloaded objects; the fixed first shipped with Perl in
-5.10.1 as part of Test::More 0.92.
+5.10.1 as part of Test::Stream::More 0.92.
 
 =item C<new_ok()> C<note()> and C<explain()>
 
-These were was released in Test::More 0.82, and first shipped with Perl in
-5.10.1 as part of Test::More 0.92.
+These were was released in Test::Stream::More 0.82, and first shipped with Perl in
+5.10.1 as part of Test::Stream::More 0.92.
 
 =back
 
-There is a full version history in the Changes file, and the Test::More
+There is a full version history in the Changes file, and the Test::Stream::More
 versions included as core can be found using L<Module::CoreList>:
 
-    $ corelist -a Test::More
+    $ corelist -a Test::Stream::More
 
 
 =head1 CAVEATS and NOTES
@@ -1610,7 +1624,7 @@ versions included as core can be found using L<Module::CoreList>:
 
 =item utf8 / "Wide character in print"
 
-If you use utf8 or other non-ASCII characters with Test::More you
+If you use utf8 or other non-ASCII characters with Test::Stream::More you
 might get a "Wide character in print" warning.
 Using C<< binmode STDOUT, ":utf8" >> will not fix it.
 
@@ -1618,27 +1632,27 @@ Use the C<tap_encoding> function to configure the TAP hub encoding.
 
     use utf8;
     use Test::Stream; # imports tap_encoding
-    use Test::More;
+    use Test::Stream::More;
     tap_encoding 'utf8';
 
-L<Test::Builder> (which powers Test::More) duplicates STDOUT and STDERR.
+L<Test::Builder> (which powers Test::Stream::More) duplicates STDOUT and STDERR.
 So any changes to them, including changing their output disciplines,
-will not be seen by Test::More.
+will not be seen by Test::Stream::More.
 
 B<Note>:deprecated ways to use utf8 or other non-ASCII characters.
 
 In the past it was necessary to alter the filehandle encoding prior to loading
-Test::More. This is no longer necessary thanks to C<tap_encoding()>.
+Test::Stream::More. This is no longer necessary thanks to C<tap_encoding()>.
 
     # *** DEPRECATED WAY ***
     use open ':std', ':encoding(utf8)';
-    use Test::More;
+    use Test::Stream::More;
 
 A more direct work around is to change the filehandles used by
 L<Test::Builder>.
 
     # *** EVEN MORE DEPRECATED WAY ***
-    my $builder = Test::More->builder;
+    my $builder = Test::Stream::More->builder;
     binmode $builder->output,         ":encoding(utf8)";
     binmode $builder->failure_output, ":encoding(utf8)";
     binmode $builder->todo_output,    ":encoding(utf8)";
@@ -1648,7 +1662,7 @@ L<Test::Builder>.
 
 String overloaded objects are compared B<as strings> (or in C<cmp_ok()>'s
 case, strings or numbers as appropriate to the comparison op).  This
-prevents Test::More from piercing an object's interface allowing
+prevents Test::Stream::More from piercing an object's interface allowing
 better blackbox testing.  So if a function starts returning overloaded
 objects instead of bare strings your tests won't notice the
 difference.  This is good.
@@ -1666,15 +1680,15 @@ B<NOTE:> The underlying mechanism to support threads has changed as of version
 use the same mechanism as forking support. The new system writes events to temp
 files which are culled by the main process.
 
-Test::More will only be aware of threads if C<use threads> has been done
-I<before> Test::More is loaded.  This is ok:
+Test::Stream::More will only be aware of threads if C<use threads> has been done
+I<before> Test::Stream::More is loaded.  This is ok:
 
     use threads;
-    use Test::More;
+    use Test::Stream::More;
 
 This may cause problems:
 
-    use Test::More
+    use Test::Stream::More
     use threads;
 
 5.8.1 and above are supported.  Anything below that has too many bugs.
@@ -1702,7 +1716,7 @@ magic side-effects are kept to a minimum.  WYSIWYG.
 =head2 ALTERNATIVES
 
 L<Test::Simple> if all this confuses you and you just want to write
-some tests.  You can upgrade to Test::More later (it's forward
+some tests.  You can upgrade to Test::Stream::More later (it's forward
 compatible).
 
 L<Test::Legacy> tests written with Test.pm, the original testing
@@ -1721,7 +1735,7 @@ L<Fennec::Declare> Provides enhanced (L<Devel::Declare>) syntax for Fennec.
 =head2 ADDITIONAL LIBRARIES
 
 L<Test::Differences> for more ways to test complex data structures.
-And it plays well with Test::More.
+And it plays well with Test::Stream::More.
 
 L<Test::Class> is like xUnit but more perlish.
 
@@ -1748,7 +1762,7 @@ L<Test::Most> Most commonly needed test functions and features.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream::More can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER
@@ -1798,7 +1812,7 @@ See F<http://www.perl.com/perl/misc/Artistic.html>
 
 =item Test::Simple
 
-=item Test::More
+=item Test::Stream::More
 
 =item Test::Builder
 

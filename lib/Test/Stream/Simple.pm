@@ -1,15 +1,9 @@
-package Test::Simple;
-
-use 5.008001;
+package Test::Stream::Simple;
 
 use strict;
 use warnings;
 
-our $VERSION = '1.301001_100';
-$VERSION = eval $VERSION;    ## no critic (BuiltinFunctions::ProhibitStringyEval)
-
-use Test::Builder;
-use Test::Stream 1.301001_100 ();
+use Test::Stream();
 use Test::Stream::Toolset;
 
 use Test::Stream::Exporter;
@@ -68,11 +62,11 @@ __END__
 
 =head1 NAME
 
-Test::Simple - Basic utilities for writing tests.
+Test::Stream::Simple - Basic utilities for writing tests.
 
 =head1 SYNOPSIS
 
-  use Test::Simple tests => 1;
+  use Test::Stream::Simple tests => 1;
 
   ok( $foo eq $bar, 'foo is bar' );
 
@@ -82,7 +76,7 @@ Test::Simple - Basic utilities for writing tests.
 
 This is an extremely simple, extremely basic module for writing tests
 suitable for CPAN modules and other pursuits.  If you wish to do more
-complicated testing, use the Test::More module (a drop-in replacement
+complicated testing, use the Test::Stream::More module (a drop-in replacement
 for this one).
 
 The basic unit of Perl testing is the ok.  For each thing you want to
@@ -94,7 +88,7 @@ plan to run.  This is in case something goes horribly wrong during the
 test and your test program aborts, or skips a test or whatever.  You
 do this like so:
 
-    use Test::Simple tests => 23;
+    use Test::Stream::Simple tests => 23;
 
 You must have a plan.
 
@@ -128,15 +122,15 @@ will do what you mean (fail if stuff is empty)
 
 =back
 
-Test::Simple will start by printing number of tests run in the form
+Test::Stream::Simple will start by printing number of tests run in the form
 "1..M" (so "1..5" means you're going to run 5 tests).  This strange
 format lets L<Test::Harness> know how many tests you plan on running in
 case something goes horribly wrong.
 
-If all your tests passed, Test::Simple will exit with zero (which is
+If all your tests passed, Test::Stream::Simple will exit with zero (which is
 normal).  If anything failed it will exit with how many failed.  If
 you run less (or more) tests than you planned, the missing (or extras)
-will be considered failures.  If no tests were ever run Test::Simple
+will be considered failures.  If no tests were ever run Test::Stream::Simple
 will throw a warning and exit with 255.  If the test died, even after
 having successfully completed all its tests, it will still be
 considered a failure and will exit with 255.
@@ -151,14 +145,14 @@ If you fail more than 254 tests, it will be reported as 254.
 
 This module is by no means trying to be a complete testing system.
 It's just to get you started.  Once you're off the ground its
-recommended you look at L<Test::More>.
+recommended you look at L<Test::Stream::More>.
 
 
 =head1 EXAMPLE
 
 Here's an example of a simple .t file for the fictional Film module.
 
-    use Test::Simple tests => 5;
+    use Test::Stream::Simple tests => 5;
 
     use Film;  # What you're testing.
 
@@ -191,7 +185,7 @@ Indicating the Film::Rating() method is broken.
 
 =head1 CAVEATS
 
-Test::Simple will only report a maximum of 254 failures in its exit
+Test::Stream::Simple will only report a maximum of 254 failures in its exit
 code.  If this is a problem, you probably have a huge test script.
 Split it into multiple files.  (Otherwise blame the Unix folks for
 using an unsigned short integer as the exit status).
@@ -208,9 +202,9 @@ Unfortunately, I can't differentiate any further.
 
 =head1 NOTES
 
-Test::Simple is B<explicitly> tested all the way back to perl 5.6.0.
+Test::Stream::Simple is B<explicitly> tested all the way back to perl 5.6.0.
 
-Test::Simple is thread-safe in perl 5.8.1 and up.
+Test::Stream::Simple is thread-safe in perl 5.8.1 and up.
 
 =head1 HISTORY
 
@@ -228,20 +222,20 @@ he wasn't in Tony's kitchen).  This is it.
 
 =over 4
 
-=item L<Test::More>
+=item L<Test::Stream::More>
 
-More testing functions!  Once you outgrow Test::Simple, look at
-L<Test::More>.  Test::Simple is 100% forward compatible with L<Test::More>
-(i.e. you can just use L<Test::More> instead of Test::Simple in your
+More testing functions!  Once you outgrow Test::Stream::Simple, look at
+L<Test::Stream::More>.  Test::Stream::Simple is 100% forward compatible with L<Test::Stream::More>
+(i.e. you can just use L<Test::Stream::More> instead of Test::Stream::Simple in your
 programs and things will still work).
 
 =back
 
-Look in L<Test::More>'s SEE ALSO for more testing modules.
+Look in L<Test::Stream::More>'s SEE ALSO for more testing modules.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream::More can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER
@@ -289,9 +283,9 @@ modify it under the same terms as Perl itself.
 
 See F<http://www.perl.com/perl/misc/Artistic.html>
 
-=item Test::Simple
+=item Test::Stream::Simple
 
-=item Test::More
+=item Test::Stream::More
 
 =item Test::Builder
 

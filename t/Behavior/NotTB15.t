@@ -2,6 +2,8 @@
 use strict;
 use warnings;
 
+use Test::Stream;
+use Test::Stream::Legacy;
 use Test::More;
 use Test::Builder;
 

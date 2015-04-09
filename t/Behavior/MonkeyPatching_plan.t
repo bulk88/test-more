@@ -3,8 +3,9 @@ use warnings;
 use B;
 
 use Test::Stream;
+use Test::Stream::Legacy;
 use Test::MostlyLike;
-use Test::More tests => 8;
+use Test::Stream::More tests => 8;
 use Test::Builder; # Not loaded by default in modern mode
 my $orig = Test::Builder->can('plan');
 
@@ -36,7 +37,7 @@ events_are(
 
 events_are(
     intercept {
-        Test::More->import('tests' => 2);
+        Test::Stream::More->import('tests' => 2);
         ok(1, "pass");
         ok(0, "fail");
     },
@@ -50,7 +51,7 @@ events_are(
 
 events_are(
     intercept {
-        Test::More->import(skip_all => 'damn');
+        Test::Stream::More->import(skip_all => 'damn');
         ok(1, "pass");
         ok(0, "fail");
     },
@@ -62,7 +63,7 @@ events_are(
 
 events_are(
     intercept {
-        Test::More->import('no_plan');
+        Test::Stream::More->import('no_plan');
         ok(1, "pass");
         ok(0, "fail");
     },

@@ -15,7 +15,8 @@ use Test::Stream qw{
     enable_numbers disable_numbers set_tap_outputs get_tap_outputs
 };
 
-use Test::More;
+use Test::Stream::More;
+use Test::Stream::Legacy;
 use Test::Stream::Tester qw/events_are event directive check intercept/;
 use Test::MostlyLike;
 

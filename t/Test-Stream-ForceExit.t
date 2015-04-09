@@ -5,7 +5,7 @@ use warnings;
 use Test::CanFork;
 
 use Test::Stream qw/enable_fork/;
-use Test::More;
+use Test::Stream::More;
 use Test::Stream::ForceExit;
 
 my ($read, $write);

@@ -1,14 +1,14 @@
 use strict;
 
-package Test::Tester;
+package Test::Stream::Legacy::Tester;
+package
+    Test::Tester;
 
-# Turn this back on later
-#warn "Test::Tester is deprecated, see Test::Stream::Tester\n";
-
-use Test::Stream 1.301001 ();
-use Test::Builder 1.301001;
+use Test::Stream;
+use Test::Stream::Legacy;
+use Test::Builder;
 use Test::Stream::Toolset;
-use Test::More::Tools;
+use Test::Stream::More::Tools;
 use Test::Tester::Capture;
 
 require Exporter;
@@ -165,7 +165,7 @@ sub cmp_field {
 
     my $ctx = context();
     if (defined $expect->{$field}) {
-        my ($ok, @diag) = Test::More::Tools->is_eq(
+        my ($ok, @diag) = Test::Stream::More::Tools->is_eq(
             $result->{$field},
             $expect->{$field},
         );
@@ -266,7 +266,7 @@ sub cmp_results {
 
     my $ctx = context();
 
-    my ($ok, @diag) = Test::More::Tools->is_num(scalar @$results, scalar @$expects, "Test '$name' result count");
+    my ($ok, @diag) = Test::Stream::More::Tools->is_num(scalar @$results, scalar @$expects, "Test '$name' result count");
     $ctx->ok($ok, @diag);
 
     for (my $i = 0; $i < @$expects; $i++) {
@@ -277,7 +277,7 @@ sub cmp_results {
     }
 }
 
-######## nicked from Test::More
+######## nicked from Test::Stream::More
 sub import {
     my $class = shift;
     my @plan = @_;
@@ -352,7 +352,7 @@ or
 
   use Test::Tester;
 
-  use Test::More tests => 3;
+  use Test::Stream::More tests => 3;
   use Test::MyStyle;
 
   my ($premature, @results) = run_tests(
@@ -361,7 +361,7 @@ or
     }
   );
 
-  # now use Test::More::like to check the diagnostic output
+  # now use Test::Stream::More::like to check the diagnostic output
 
   like($results[0]->{diag}, "/^Database ping took \\d+ seconds$"/, "diag");
 
@@ -415,7 +415,7 @@ you can get direct access to the test results:
 
 
 We cannot predict how long the database ping will take so we use
-Test::More's like() test to check that the diagnostic string is of the right
+Test::Stream::More's like() test to check that the diagnostic string is of the right
 form.
 
 =head1 HOW TO USE (THE HARD WAY)
@@ -674,7 +674,7 @@ B<exactly> what your test will output.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream::More can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER
@@ -724,7 +724,7 @@ See F<http://www.perl.com/perl/misc/Artistic.html>
 
 =item Test::Simple
 
-=item Test::More
+=item Test::Stream::More
 
 =item Test::Builder
 

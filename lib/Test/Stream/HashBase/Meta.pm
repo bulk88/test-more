@@ -100,6 +100,12 @@ sub add_accessors {
     }
 }
 
+sub alias {
+    my $class = shift;
+    my ($existing, $new) = @_;
+    my $meta = $class->new($existing);
+    $META{$new} = $meta;
+}
 
 1;
 

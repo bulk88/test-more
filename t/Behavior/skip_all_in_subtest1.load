@@ -5,6 +5,6 @@ use warnings;
 
 use Carp qw/confess/;
 
-use Test::More skip_all => "Cause I feel like it";
+use Test::Stream::More skip_all => "Cause I feel like it";
 
 confess "Should not see this!";

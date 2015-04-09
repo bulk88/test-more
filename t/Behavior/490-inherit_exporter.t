@@ -5,13 +5,13 @@ use warnings;
 BEGIN {
     $INC{'My/Tester.pm'} = __FILE__;
     package My::Tester;
-    use Test::More;
-    use base 'Test::More';
+    use Test::Stream::More;
+    use base 'Test::Stream::More';
 
-    our @EXPORT    = (@Test::More::EXPORT, qw/foo/);
-    our @EXPORT_OK = (@Test::More::EXPORT_OK);
+    our @EXPORT    = (@Test::Stream::More::EXPORT, qw/foo/);
+    our @EXPORT_OK = (@Test::Stream::More::EXPORT_OK);
 
-    sub foo { goto &Test::More::ok }
+    sub foo { goto &Test::Stream::More::ok }
 
     1;
 }

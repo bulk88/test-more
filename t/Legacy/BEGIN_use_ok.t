@@ -1,17 +1,8 @@
 #!/usr/bin/perl -w
-
-# [rt.cpan.org 28345]
-#
-# A use_ok() inside a BEGIN block lacking a plan would be silently ignored.
+use Test::Stream::Legacy;
 
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ('../lib', 'lib');
-    }
-    else {
-        unshift @INC, 't/lib';
-    }
+    unshift @INC, 't/lib';
 }
 
 use Test::More;

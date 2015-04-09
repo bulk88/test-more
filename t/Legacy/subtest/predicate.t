@@ -1,16 +1,11 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 # Test the use of subtest() to define new test predicates that combine
 # multiple existing predicates.
 
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ( '../lib', 'lib' );
-    }
-    else {
-        unshift @INC, 't/lib';
-    }
+    unshift @INC, 't/lib';
 }
 
 use strict;

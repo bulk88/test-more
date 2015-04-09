@@ -1,10 +1,10 @@
-package Test::Builder::Tester::Color;
-
 use strict;
-our $VERSION = '1.301001_100';
-$VERSION = eval $VERSION;    ## no critic (BuiltinFunctions::ProhibitStringyEval)
 
-use Test::Stream 1.301001 ();
+package Test::Stream::Legacy::Builder::Tester::Color;
+package
+    Test::Builder::Tester::Color;
+
+use Test::Stream;
 require Test::Builder::Tester;
 
 =pod

@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-
+use Test::Stream::Legacy;
 use Test::More 'no_diag', tests => 2;
 
 pass('foo');

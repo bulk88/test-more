@@ -3,8 +3,9 @@ use warnings;
 use B;
 
 use Test::Stream;
+use Test::Stream::Legacy;
 use Test::MostlyLike;
-use Test::More tests => 4;
+use Test::Stream::More tests => 4;
 use Test::Builder; # Not loaded by default in modern mode
 my $orig = Test::Builder->can('done_testing');
 

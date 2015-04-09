@@ -1,13 +1,13 @@
-package Test::More::DeepCheck::Tolerant;
+package Test::Stream::More::DeepCheck::Tolerant;
 use strict;
 use warnings;
 
-use Test::More::Tools;
+use Test::Stream::More::Tools;
 use Scalar::Util qw/reftype blessed/;
 use Test::Stream::Util qw/try unoverload_str is_regex/;
 
 use Test::Stream::HashBase(
-    base => 'Test::More::DeepCheck',
+    base => 'Test::Stream::More::DeepCheck',
 );
 
 sub preface { "First mismatch:\n" };
@@ -225,7 +225,7 @@ __END__
 
 =head1 NAME
 
-Test::More::DeepCheck::Tolerant - Under the hood implementation of
+Test::Stream::More::DeepCheck::Tolerant - Under the hood implementation of
 mostly_like()
 
 =head1 DESCRIPTION
@@ -234,7 +234,7 @@ This is where L<Test::MostlyLike> is implemented.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream::More can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER
@@ -284,7 +284,7 @@ See F<http://www.perl.com/perl/misc/Artistic.html>
 
 =item Test::Simple
 
-=item Test::More
+=item Test::Stream::More
 
 =item Test::Builder
 

@@ -1,3 +1,4 @@
+use Test::Stream::Legacy;
 require Test::Simple;
 
 push @INC, 't/lib';

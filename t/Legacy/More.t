@@ -1,11 +1,5 @@
 #!perl -w
-
-BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = qw(../lib ../lib/Test/Simple/t/Legacy/lib);
-    }
-}
+use Test::Stream::Legacy;
 
 use lib 't/Legacy/lib/';
 use Test::More tests => 54;

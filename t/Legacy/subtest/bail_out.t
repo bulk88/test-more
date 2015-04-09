@@ -1,13 +1,8 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = ('../lib', 'lib');
-    }
-    else {
-        unshift @INC, 't/lib';
-    }
+    unshift @INC, 't/lib';
 }
 
 my $Exit_Code;

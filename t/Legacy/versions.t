@@ -1,11 +1,13 @@
 #!/usr/bin/perl -w
+use Test::Stream::Legacy;
 
 # Make sure all the modules have the same version
 #
 # TBT has its own version system.
 
 use strict;
-use Test::More;
+use Test::Stream::Legacy;
+use Test::Stream::More;
 
 {
     local $SIG{__WARN__} = sub { 1 };
@@ -18,11 +20,9 @@ use Test::More;
     require Test::Stream;
     require Test::Stream::Tester;
     require Test::Tester;
-    require Test::use::ok;
-    require ok;
 }
 
-my $dist_version = Test::More->VERSION;
+my $dist_version = '100.001001';
 
 like( $dist_version, qr/^ \d+ \. \d+ $/x, "Version number is sane" );
 
@@ -36,8 +36,6 @@ my @modules = qw(
     Test::Stream
     Test::Stream::Tester
     Test::Tester
-    Test::use::ok
-    ok
 );
 
 for my $module (@modules) {

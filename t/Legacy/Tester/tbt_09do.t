@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use Test::Stream::Legacy;
 
 use strict;
 use warnings;

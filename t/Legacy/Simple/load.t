@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+use Test::Stream::Legacy;
 
 # Because I broke "use Test::Simple", here's a test
 

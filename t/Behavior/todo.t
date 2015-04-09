@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More;
+use Test::Stream::More;
 use Test::Stream::Tester;
 
 my $events = intercept {

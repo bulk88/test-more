@@ -1,11 +1,5 @@
 #!/usr/bin/perl -w
-
-BEGIN {
-    if( $ENV{PERL_CORE} ) {
-        chdir 't';
-        @INC = '../lib';
-    }
-}
+use Test::Stream::Legacy;
 
 use strict;
 use warnings;
