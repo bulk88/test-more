@@ -594,4 +594,4 @@ modify it under the same terms as Perl itself.
 
 See F<http://www.perl.com/perl/misc/Artistic.html>
 
-=back
+=cut
