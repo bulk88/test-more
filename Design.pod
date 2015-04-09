@@ -384,6 +384,103 @@ Cons:
 
 =head2 Problem Statement
 
+Many testing tools add behavior when events (such as ok, diag, note, plan, etc)
+occur. In the legacy code the only ways to accomplish this involve breaking
+encapsulation, either by monkeypatching or replacing the Test::Builder
+singleton. There is enough demand for hooking into these events that we need a
+formal API for doing so, one that preserves encapsulation.
+
+=head2 Specification
+
+Several events will be defined. Each event will be a fully encapsulated object.
+In order to make an assertion or report diagnostics information, you must
+create an event object. All event objects will be handed off to a 'Hub' which
+handles the rest.
+
+The hub has 2 jobs, synchrnization, and event hooks. The hub manages state, and
+directs events to where they need to go. In this system the hub is the only
+component that acts as a singleton. The hub should be as minimal as possible to
+avoid a monolithic singleton.
+
+There should be no restrictions against creating multiple instances of the hub
+object. There should also be a way to get a canonical hub to which events
+should be sent by default. In other words this is where a singleton or similar
+is likely to be necessary.
+
+There should be 3 primary hooks into the stream of events passing through the
+hub:
+
+=over 4
+
+=item munge
+
+This hook allows tools to modify event objects as soon as they enter the hub,
+before they effect test state or become output.
+
+=item listen
+
+This hook allows tools to monitor events. Tools use this hook to see a copy of
+all events after they have been munged, effected state, and been output to TAP
+(if tap is enabled).
+
+=item follow up
+
+This hook is called at the end of testing. This can be seen as a hook into
+C<done_testing()>, but it will also trigger at the end of the tests if
+C<done_testing> is not used. This is called before done_testing determined how
+many tests have run, so it is safe to send additional events in this hook.
+
+=back
+
+=head2 Implementation Proposals
+
+=head3 Hub stack
+
+Test::Builder showed us that having a monolithic singleton is a bad idea. It
+also showed us that making the variable that holds the singleton globally
+accessible is a mistake. We do need something like a singleton though, all
+producers need to send their events somewhere.
+
+The hub stack model looks like this:
+
+    {
+        my @HUB_STACK; # lexical and scoped so that it cannot be directly modified from the outside
+
+        # This is how producers get the canonical hub they should be using
+        sub shared {
+            push @HUB_STACK => Hub->new unless @HUB_STACK;
+            return $HUB_STACK[-1]
+        }
+
+        sub intercept {
+            my $hub = shift;
+            push @HUB_STACK => $hub;
+        }
+
+        sub unintercept {
+            my $hub = shift;
+            die unless $hub == $HUB_STACK[-1];
+            pop @HUB_STACK;
+        }
+    }
+
+Producers:
+
+    my $event = ...;
+    shared()->send($event);
+
+There are valid reasons to replace the hub, this is why it is a stack instead
+of a single scalar. Whatever hub is at the top of the stack will recieve all
+events. The primary reason to push a hub on the stack is test validation. Using
+this system you can replace the hub temporarily to intercept all events and
+validate that they are what you expect.
+
+
+
+=head1 Tool Authoring API
+
+=head2 Problem Statement
+
 =head2 Specification
 
 =head2 Implementation Proposals
