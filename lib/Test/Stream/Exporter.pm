@@ -49,9 +49,12 @@ sub export_to {
 
     my $meta = Test::Stream::Exporter::Meta->new($class);
 
-    my (@include, %exclude);
+    my (@include, %exclude, $override);
     for my $import (@imports) {
-        if (substr($import, 0, 1) eq '!') {
+        if ($import eq '-override') {
+            $override = 1;
+        }
+        elsif (substr($import, 0, 1) eq '!') {
             $import =~ s/^!//g;
             $exclude{$import}++;
         }
@@ -71,7 +74,13 @@ sub export_to {
 
         no strict 'refs';
         $name =~ s/^[\$\@\%\&]//;
-        *{"$dest\::$name"} = $ref;
+        if ($override) {
+            no warnings 'redefine', 'prototype';
+            *{"$dest\::$name"} = $ref if $dest->can($name);
+        }
+        else {
+            *{"$dest\::$name"} = $ref;
+        }
     }
 }
 

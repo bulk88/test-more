@@ -17,8 +17,6 @@ use Scalar::Util qw/blessed reftype/;
 
 use Test::Stream::More::Tools;
 
-#push @Test::Builder::ISA => 'Test::Builder';
-
 BEGIN {
     my $meta = Test::Stream::Meta->is_tester('main');
     Test::Stream->shared->set_use_legacy(1)
@@ -26,7 +24,7 @@ BEGIN {
 }
 
 # The mostly-singleton, and other package vars.
-our $Test  = Test::Builder->new;
+our $Test ||= Test::Builder->new;
 our $_ORIG_Test = $Test;
 our $Level = 1;
 

@@ -133,17 +133,24 @@ sub unimport {
 
 sub takeover {
     if ($INC{'Test/Builder.pm'} && $INC{'Test/Builder.pm'} !~ m(/\Q$ALT_FILES{'Test/Builder.pm'}\E$)) {
-        warn "Test/Builder.pm is already loaded, attempting to take over.\n";
-        my $tb = {%{Test::Builder->new}};
+        warn "Test/Builder.pm is already loaded, attempting to replace it.\n";
+
+        my $tb = Test::Builder->new;
+        my $tb_data = {%$tb};
+        %$tb = ();
+
         wipe_namespace($PACKAGE_MAP{'Test/Builder.pm'});
+
+        $Test::Builder::Test = $tb;
+
         load_alt('Test/Builder.pm');
-        upgrade_to_stream($tb);
+        upgrade_to_stream($tb_data);
     }
 
     for my $file (keys %ALT_FILES) {
         next if $file eq 'Test/Builder.pm';    # Already Handled
         next unless $INC{$file};               # Not Loaded
-        next if $INC{$file} !~ m(/\Q$ALT_FILES{$file}\E$);    # Loaded the right one
+        next if $INC{$file} =~ m(/\Q$ALT_FILES{$file}\E$);    # Loaded the right one
         warn "$file is already loaded, attempting to replace it.\n";
 
         wipe_namespace($PACKAGE_MAP{$file});
@@ -221,6 +228,18 @@ sub upgrade_to_stream {
     $ntb->{Start_Todo} = $tb->{Start_Todo};
     $ntb->{Todo_Stack} = $tb->{Todo_Stack};
     $ntb->{Todo}       = $tb->{Todo};
+
+    $Test::Builder::Test->reset(shared_hub => 1, init => 1);
+
+    if (my $pkg = $tb->{Exported_To}) {
+        require Test::Stream::More;
+
+        Test::Stream::Exporter::export_to(
+            'Test::Stream::More',
+            $pkg,
+            '-override',
+        );
+    }
 }
 
 1;

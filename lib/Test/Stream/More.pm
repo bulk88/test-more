@@ -133,6 +133,7 @@ sub isnt ($$;$) {
 
 {
     no warnings 'once';
+    no warnings 'redefine';
     *isn't = \&isnt;
     # ' to unconfuse syntax higlighters
 }
