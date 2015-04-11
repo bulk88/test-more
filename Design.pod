@@ -148,14 +148,47 @@ when it validates the attributes you specify.
 
 
 
-=head1 The 'Context' Model
+=head1 Diagnostics Information
+
+(This needs a better title)
 
 =head2 Problem Statement
 
-When an assertion such as C<ok(1)> is written in a test file, the immediate
-context should be captured and conveyed to anything further along in the stack.
-Any information that needs to be captured at the time of assertion to be used
-later should be part of the context object. Some examples:
+When an assertion such as C<ok(1)> is written in a test file, there is state
+and context information that is important for diagnostics.
+
+Standalone tools usually do not have a problem, they can get the immediate
+caller, and any additionl info without any hurdles. This is normally
+convenient, but problematic when you attempt to wrap the tool. Legacy
+Test::Builder used the C<$Level> variable for situations like this.
+Unfortunately most people did not know about the level variable, or how to use
+it properly. There are also some situations where C<$Level> is not sufficient.
+
+
+=head2 Specification
+
+This is a simple example to demonstrate the problem:
+
+    10: sub my_ok {
+    11:     my ($x, $y) = @_;
+    12:     ok($x, 'x is good');
+    13:     ok($y, 'y is good');
+    14: }
+    15:
+    16: my_ok(1, 0);
+    17: my_ok(0, 1);
+
+In this example, the failure on line 16 would report to line 13. The failure on
+line 17 would report to line 12. We need a simple way to have the outermost
+tool find and lock-in the diagnostics information for all inner-tools to find
+and use. In this case we want C<my_ok()> to get the caller and lock it in,
+C<ok()> would then find this locked-in information instead of using caller.
+
+C<my_ok()> would aneed to clear the information when it is done, inner tools
+would have to avoid clearing the information. This is where the use of C<local>
+on C<$Level> was useful in legacy code.
+
+State that may be useful to capture and convey:
 
 =over 4
 
@@ -169,39 +202,24 @@ later should be part of the context object. Some examples:
 
 =back
 
-Unfortunately it is not always possible to pass the context object directly
-from call to call. The main example is when wrapping other tools in a helper:
 
-    sub my_ok {
-        my ($x, $y) = @_;
-        ok($x, 'x is good');
-        ok($y, 'y is good');
-    }
+=head2 Implementation Proposals
 
-C<ok()> does not accept a context argument, and altering it at this point is
-unlikely. We could write a replacement function that does accept a context, but
-it is unlikely to be adopted, if it is even noticed. Legacy Test::Builder used
-the C<$Level> variable for situations like this. Unfortunately most people did
-not know about the level variable, or how to use it properly. There are also
-some situations where C<$Level> is not sufficient.
+=head3 Context Object
 
-=head2 Specification
-
-The context should be a structure that holds a snapshot of the important data.
-This structure should be obtainable at any point by any tool that needs it. If
+The context object is a structure that holds a snapshot of the important data.
+This structure can be obtained at any point by any tool that needs it. If
 an existing snapshot is present it should be returned. If no snapshot is
 present one should be generated. Consumers of the snapshot must not be required
 to take a stack trace of their own as they do with C<$Level>.
 
 For simplicity context should be obtained using a function called C<context()>
-that does not require any parameters. When a context already exists it should
-be returned. When none exists a new one will be generated and returned. To
-establish the context, the entry sub for any tool should obtain the context
-first thing.
+that does not require any parameters (Though it can have optional parameters).
+When a context already exists it should be returned. When none exists a new one
+will be generated and returned. To establish the context, the entry sub for any
+tool should obtain the context first thing.
 
-=head2 Implementation Proposals
-
-=head3 Weak reference
+=head3 Context Object: Weak reference
 
 B<Note:> This is the implementation Test::Stream currently uses.
 
@@ -259,7 +277,7 @@ context perminently.
 
 =back
 
-=head3 Manual release
+=head3 Context Object: Manual release
 
 Psuedo-perl:
 
@@ -318,7 +336,7 @@ Cons:
 
 =back
 
-=head3 Scoped
+=head3 Context Object: Scoped
 
 Psuedo-perl:
 
@@ -380,7 +398,7 @@ Cons:
 
 
 
-=head1 The 'Event Hub' Model
+=head1 Events and Event Processing
 
 =head2 Problem Statement
 
@@ -394,21 +412,21 @@ formal API for doing so, one that preserves encapsulation.
 
 Several events will be defined. Each event will be a fully encapsulated object.
 In order to make an assertion or report diagnostics information, you must
-create an event object. All event objects will be handed off to a 'Hub' which
-handles the rest.
+create an event object. All event objects will be handed off to a processor
+which handles the rest.
 
-The hub has 2 jobs, synchrnization, and event hooks. The hub manages state, and
-directs events to where they need to go. In this system the hub is the only
-component that acts as a singleton. The hub should be as minimal as possible to
-avoid a monolithic singleton.
+The processor has 2 jobs, synchrnization, and hooks. The process manages state,
+and directs events to where they need to go. In this system the processor is
+the only component that acts as a singleton. The processor should be as minimal
+as possible to avoid a monolithic singleton.
 
-There should be no restrictions against creating multiple instances of the hub
-object. There should also be a way to get a canonical hub to which events
-should be sent by default. In other words this is where a singleton or similar
-is likely to be necessary.
+There should be no restrictions against creating multiple instances of the
+processor object. There should also be a way to get a canonical processor to
+which events should be sent by default. In other words this is where a
+singleton or similar is likely to be necessary.
 
 There should be 3 primary hooks into the stream of events passing through the
-hub:
+processor:
 
 =over 4
 
@@ -434,7 +452,7 @@ many tests have run, so it is safe to send additional events in this hook.
 
 =head2 Implementation Proposals
 
-=head3 Hub stack
+=head3 Hub and Stack
 
 Test::Builder showed us that having a monolithic singleton is a bad idea. It
 also showed us that making the variable that holds the singleton globally
@@ -475,11 +493,69 @@ events. The primary reason to push a hub on the stack is test validation. Using
 this system you can replace the hub temporarily to intercept all events and
 validate that they are what you expect.
 
+The hub itself is pretty minimal. Get objects via C<< $hub->send($e) >>, each
+hook has a chance to do something with the event, and TAP is optionally output.
+Hooks will accept coderefs, and any number of coderefs can be given to a hook.
+
+    $hub->munge(sub {
+        my ($e) = @_;
+        ...
+    });
 
 
-=head1 Tool Authoring API
+
+
+
+=head1 Event Generation API
 
 =head2 Problem Statement
+
+For most tools the only thing they need is the ability to fire off events.
+Test::Builder actually got this right with a single object and methods for each
+event. This API is hard to improve upon, so we need to focus on not making it
+harder.
+
+=head2 Specification
+
+A single easy to obtain object with methods to quickly fire off events.
+Assuming the use of the context model, the context object can be what we need.
+The context object is necessary for all events anyway, so it can have
+"shortcut" methods that mirror the event methods Test::Builder had.
+
+=head2 Implementation Proposals
+
+=head3 Context object shortcuts
+
+B<Note> Test::Stream uses this design.
+
+This proposal assumes the use of the context model mentioned above.
+
+    my $tx = context();
+    $ctx->ok(1, "an example");
+    $ctx->diag("This is an example");
+
+In the context model, all events will need a copy of, or reference to the
+context. Using the context object that you already have anyway as the API for
+generating events makes sense.
+
+
+
+
+
+=head1 Output Encoding and filehandles
+
+=head2 Problem Statement
+
+Test::Builder clones STDERR and STDOUT as soon as it loads. Once the handles
+are cloned it transforms them and then stores them. All output from
+Test::Builder is sent to these cloned handles. A result of this is that setting
+an encoding on STDERR and STDOUT has no effect. Setting the encoding involves
+jumping through hoops to modify the handles before loading Test::Builder, or
+altering Test::Builders copies of the filehandles.
+
+We need to preserve backwards compatability, and doing so means preserving the
+default behavior listed above. However we need an easy way to switch encodings
+as needed.
 
 =head2 Specification
 
@@ -489,7 +565,7 @@ validate that they are what you expect.
 
 
 
-=head1 Managing TAP encoding
+=head1 Managing Limited Scope Metadata
 
 =head2 Problem Statement
 
