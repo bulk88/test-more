@@ -132,30 +132,42 @@ sub unimport {
 }
 
 sub takeover {
-    if ($INC{'Test/Builder.pm'} && $INC{'Test/Builder.pm'} !~ m(/\Q$ALT_FILES{'Test/Builder.pm'}\E$)) {
-        warn "Test/Builder.pm is already loaded, attempting to replace it.\n";
+    return unless $INC{'Test/Builder.pm'}
+               && $INC{'Test/Builder.pm'} !~ m(/\Q$ALT_FILES{'Test/Builder.pm'}\E$);
 
-        my $tb = Test::Builder->new;
-        my $tb_data = {%$tb};
-        %$tb = ();
+    my $list = "  Test::Builder\n";
 
-        wipe_namespace($PACKAGE_MAP{'Test/Builder.pm'});
+    my $tb = Test::Builder->new;
+    my $tb_data = {%$tb};
+    %$tb = ();
 
-        $Test::Builder::Test = $tb;
+    wipe_namespace($PACKAGE_MAP{'Test/Builder.pm'});
 
-        load_alt('Test/Builder.pm');
-        upgrade_to_stream($tb_data);
-    }
+    $Test::Builder::Test = $tb;
 
-    for my $file (keys %ALT_FILES) {
+    load_alt('Test/Builder.pm');
+    upgrade_to_stream($tb_data);
+
+    for my $file (sort keys %ALT_FILES) {
         next if $file eq 'Test/Builder.pm';    # Already Handled
         next unless $INC{$file};               # Not Loaded
         next if $INC{$file} =~ m(/\Q$ALT_FILES{$file}\E$);    # Loaded the right one
-        warn "$file is already loaded, attempting to replace it.\n";
+        my $package = $PACKAGE_MAP{$file};
+        $list .= "  $package\n";
 
-        wipe_namespace($PACKAGE_MAP{$file});
+        wipe_namespace($package);
         load_alt($file);
     }
+
+    warn <<"    EOT";
+Something loaded Test::Stream, but Test::Builder is already loaded.
+Attempting to unload the follwing modules and upgrade them with Test::Stream
+alternatives:
+$list
+In most cases this will work fine, but it will generate this annoying warning.
+To make this message go away you should use Test::Stream::Legacy near the start
+of your test file, before loading any other testing tools.
+    EOT
 }
 
 sub wipe_namespace {

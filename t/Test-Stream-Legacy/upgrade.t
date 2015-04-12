@@ -26,12 +26,19 @@ my @warnings;
 is(Test::Stream->shared->count, 3, "Inherited state");
 
 is_deeply(
-    [ sort @warnings ],
-    [
-        "Test/Builder.pm is already loaded, attempting to replace it.\n",
-        "Test/Builder/Module.pm is already loaded, attempting to replace it.\n",
-        "Test/More.pm is already loaded, attempting to replace it.\n",
-    ],
+    [ @warnings ],
+    [ <<"    EOT" ],
+Something loaded Test::Stream, but Test::Builder is already loaded.
+Attempting to unload the follwing modules and upgrade them with Test::Stream
+alternatives:
+  Test::Builder
+  Test::Builder::Module
+  Test::More
+
+In most cases this will work fine, but it will generate this annoying warning.
+To make this message go away you should use Test::Stream::Legacy near the start
+of your test file, before loading any other testing tools.
+    EOT
     "Got upgrade warnings"
 );
 
