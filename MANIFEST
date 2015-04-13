@@ -4,11 +4,13 @@ Changes
 lib/Test/CanFork.pm
 lib/Test/CanThread.pm
 lib/Test/MostlyLike.pm
+lib/Test/SkipWithout.pm
 lib/Test/Stream.pm
 lib/Test/Stream/Architecture.pod
 lib/Test/Stream/Block.pm
 lib/Test/Stream/Carp.pm
 lib/Test/Stream/Context.pm
+lib/Test/Stream/Design.pod
 lib/Test/Stream/Event.pm
 lib/Test/Stream/Event/Bail.pm
 lib/Test/Stream/Event/Diag.pm
@@ -54,12 +56,14 @@ lib/Test/Stream/Tester/Events/Event.pm
 lib/Test/Stream/Tester/Grab.pm
 lib/Test/Stream/Threads.pm
 lib/Test/Stream/Toolset.pm
+lib/Test/Stream/Transition.pod
 lib/Test/Stream/Util.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
 profiling/compile.pl
 profiling/long-run.pl
+profiling/ok.pl
 profiling/run.pl
 README
 t/Behavior/388-threadedsubtest.load
@@ -87,6 +91,13 @@ t/Behavior/subtest_die.t
 t/Behavior/Tester2_subtest.t
 t/Behavior/threads_with_taint_mode.t
 t/Behavior/todo.t
+t/Downstream/Fennec.t
+t/Downstream/Test-Class.t
+t/Downstream/Test-Fatal.t
+t/Downstream/Test-NoWarnings.t
+t/Downstream/Test-Trap.t
+t/Downstream/Test-Warn.t
+t/Downstream/Test-Warnings.t
 t/Legacy/bad_plan.t
 t/Legacy/bail_out.t
 t/Legacy/BEGIN_require_ok.t
@@ -230,6 +241,10 @@ t/Legacy/undef.t
 t/Legacy/useing.t
 t/Legacy/utf8.t
 t/Legacy/versions.t
+t/SkipWithout/no_module.t
+t/SkipWithout/no_skip.t
+t/SkipWithout/no_version.t
+t/SkipWithout/stream.t
 t/Test-More-DeepCheck.t
 t/Test-More.t
 t/Test-MostlyLike.t
@@ -251,6 +266,9 @@ t/Test-Stream-ForceExit.t
 t/Test-Stream-HashBase-Meta.t
 t/Test-Stream-HashBase.t
 t/Test-Stream-IOSets.t
+t/Test-Stream-Legacy/load.t
+t/Test-Stream-Legacy/unused.t
+t/Test-Stream-Legacy/upgrade.t
 t/Test-Stream-Meta.t
 t/Test-Stream-PackageUtil.t
 t/Test-Stream-Tester-Grab.t
