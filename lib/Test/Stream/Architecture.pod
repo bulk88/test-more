@@ -17,23 +17,28 @@ critical ones will have more details in later sections.
 
 =over 4
 
-=item Test::More
+=item Test::Stream::More
 
-=item Test::Simple
+=item Test::Stream::Simple
 
 These contain the public subroutines for anyone who wishes to write tests.
 
-=item Test::More::Tools
+=item Test::Stream::More::Tools
 
-All of the tools that L<Test::More> provided have been relocated into
-L<Test::More::Tools> and refactored to make them generic and reusable.
+All of the tools that L<Test::Stream::More> provided have been relocated into
+L<Test::Stream::More::Tools> and refactored to make them generic and reusable.
 
 This means you can use them without inadvertently firing off events. In many
 cases this is what tool builders actually want but instead they settle for
 bumping C<$Level> and calling is(), like(), or ok() and producing extra
 events.
 
-=item Test::Builder
+=item Test::Stream::Legacy
+
+This is a compatability shim that lets tools based on L<Test::Builder> work
+with tools that use L<Test::Stream>.
+
+=item Test::Stream::Legacy::Builder
 
 This was the B<old> under-the-hood module for anyone who wished to write
 a L<Test::More>-compatible test library. It still works and should be fully
@@ -42,10 +47,18 @@ mostly a compatibility wrapper.
 
 =item Test::Stream
 
-This is the B<new> heart and soul of the Test::* architecture. It is not the
-primary interface that a unit-test author will use. This module is responsible
-for collecting all events from all threads and processes and then forwarding
-them to TAP and any other added listeners.
+This is the primary interface into L<Test::Stream>. This is what most authors
+of testing tools should use to build new libraries.
+
+=item Test::Stream::Hub
+
+This module is responsible for collecting all events from all threads and
+processes and then forwarding them to TAP and any other added listeners.
+
+=item Test::Stream::State
+
+This module represents a test state. This includes tests run, tests failed, the
+plan, etc.
 
 =item Test::Stream::IOSets
 
@@ -108,7 +121,7 @@ This module can validate testing tools and their events.
 
 =over 4
 
-=item L<Test::Stream>
+=item L<Test::Stream::Hub>
 
 =back
 

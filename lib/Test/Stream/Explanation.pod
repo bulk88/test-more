@@ -370,7 +370,7 @@ happens.
 
 =over 4
 
-=item Test::Stream::API
+=item Test::Stream
 
 This is sugar-coating. This is the go-to place when people wish to know the
 easiest way to accomplish something fancy.
