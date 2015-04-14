@@ -414,15 +414,10 @@ __END__
 
 =head1 NAME
 
-Test::Stream::More - The defacto standard in unit testing tools.
+Test::Stream::More - Drop in replacement for L<Test::More>.
 
 =head1 SYNOPSIS
 
-    # Using Test::Stream BEFORE using Test::Stream::More removes expensive legacy
-    # support. This Also provides context(), cull(), and tap_encoding()
-    use Test::Stream;
-
-    # Load after Test::Stream to get the benefits of removed legacy
     use Test::Stream::More;
 
     use ok 'Some::Module';
@@ -482,15 +477,8 @@ Test::Stream::More - The defacto standard in unit testing tools.
 
 =head1 DESCRIPTION
 
-B<STOP!> If you're just getting started writing tests, have a look at
-L<Test::Simple> first.  This is a drop in replacement for Test::Simple
-which you can switch to once you get the hang of basic testing.
-
-The purpose of this module is to provide a wide range of testing
-utilities.  Various ways to say "ok" with better diagnostics,
-facilities to skip tests, test future features and compare complicated
-data structures.  While you can do almost anything with a simple
-C<ok()> function, it doesn't provide good diagnostic output.
+L<Test::Stream::More> is a drop-in replacement for L<Test::More>. It is
+compatible in every way, but uses L<Test::Stream> instead of L<Test::Builder.
 
 =head2 I love it when a plan comes together
 
@@ -581,7 +569,7 @@ You can also use it to make forking work:
 
 You can now control the encoding of your TAP output using Test::Stream.
 
-    use Test::Stream; # imports tap_encoding
+    use Test::Stream qw/tap_encoding/; # imports tap_encoding
     use Test::Stream::More;
 
     tap_encoding 'utf8';
@@ -1470,68 +1458,6 @@ For even better control look at L<Test::Most>.
 
 =back
 
-=head2 Discouraged comparison functions
-
-The use of the following functions is discouraged as they are not
-actually testing functions and produce no diagnostics to help figure
-out what went wrong.  They were written before C<is_deeply()> existed
-because I couldn't figure out how to display a useful diff of two
-arbitrary data structures.
-
-These functions are usually used inside an C<ok()>.
-
-    ok( eq_array(\@got, \@expected) );
-
-C<is_deeply()> can do that better and with diagnostics.
-
-    is_deeply( \@got, \@expected );
-
-They may be deprecated in future versions.
-
-=over 4
-
-=item B<eq_array>
-
-  my $is_eq = eq_array(\@got, \@expected);
-
-Checks if two arrays are equivalent.  This is a deep check, so
-multi-level structures are handled correctly.
-
-=item B<eq_hash>
-
-  my $is_eq = eq_hash(\%got, \%expected);
-
-Determines if the two hashes contain the same keys and values.  This
-is a deep check.
-
-
-=item B<eq_set>
-
-  my $is_eq = eq_set(\@got, \@expected);
-
-Similar to C<eq_array()>, except the order of the elements is B<not>
-important.  This is a deep check, but the irrelevancy of order only
-applies to the top level.
-
-    ok( eq_set(\@got, \@expected) );
-
-Is better written:
-
-    is_deeply( [sort @got], [sort @expected] );
-
-B<NOTE> By historical accident, this is not a true set comparison.
-While the order of elements does not matter, duplicate elements do.
-
-B<NOTE> C<eq_set()> does not know how to deal with references at the top
-level.  The following is an example of a comparison which might not work:
-
-    eq_set([\1, \2], [\2, \1]);
-
-L<Test::Deep> contains much better set comparison functions.
-
-=back
-
-
 =head2 Extending and Embedding Test::Stream::More
 
 Sometimes the Test::Stream::More interface isn't quite enough.  Fortunately,
@@ -1568,112 +1494,6 @@ Test::Stream::More works with Perls as old as 5.8.1.
 Thread support is not very reliable before 5.10.1, but that's
 because threads are not very reliable before 5.10.1.
 
-Although Test::Stream::More has been a core module in versions of Perl since 5.6.2,
-Test::Stream::More has evolved since then, and not all of the features you're used to
-will be present in the shipped version of Test::Stream::More. If you are writing a
-module, don't forget to indicate in your package metadata the minimum version
-of Test::Stream::More that you require. For instance, if you want to use
-C<done_testing()> but want your test script to run on Perl 5.10.0, you will
-need to explicitly require Test::Stream::More > 0.88.
-
-Key feature milestones include:
-
-=over 4
-
-=item event hub
-
-=item forking support
-
-=item tap encoding
-
-Test::Builder and Test::Stream::More version 1.301001 introduce these major
-modernizations.
-
-=item subtests
-
-Subtests were released in Test::Stream::More 0.94, which came with Perl 5.12.0.
-Subtests did not implicitly call C<done_testing()> until 0.96; the first Perl
-with that fix was Perl 5.14.0 with 0.98.
-
-=item C<done_testing()>
-
-This was released in Test::Stream::More 0.88 and first shipped with Perl in 5.10.1 as
-part of Test::Stream::More 0.92.
-
-=item C<cmp_ok()>
-
-Although C<cmp_ok()> was introduced in 0.40, 0.86 fixed an important bug to
-make it safe for overloaded objects; the fixed first shipped with Perl in
-5.10.1 as part of Test::Stream::More 0.92.
-
-=item C<new_ok()> C<note()> and C<explain()>
-
-These were was released in Test::Stream::More 0.82, and first shipped with Perl in
-5.10.1 as part of Test::Stream::More 0.92.
-
-=back
-
-There is a full version history in the Changes file, and the Test::Stream::More
-versions included as core can be found using L<Module::CoreList>:
-
-    $ corelist -a Test::Stream::More
-
-
-=head1 CAVEATS and NOTES
-
-=over 4
-
-=item utf8 / "Wide character in print"
-
-If you use utf8 or other non-ASCII characters with Test::Stream::More you
-might get a "Wide character in print" warning.
-Using C<< binmode STDOUT, ":utf8" >> will not fix it.
-
-Use the C<tap_encoding> function to configure the TAP hub encoding.
-
-    use utf8;
-    use Test::Stream; # imports tap_encoding
-    use Test::Stream::More;
-    tap_encoding 'utf8';
-
-L<Test::Builder> (which powers Test::Stream::More) duplicates STDOUT and STDERR.
-So any changes to them, including changing their output disciplines,
-will not be seen by Test::Stream::More.
-
-B<Note>:deprecated ways to use utf8 or other non-ASCII characters.
-
-In the past it was necessary to alter the filehandle encoding prior to loading
-Test::Stream::More. This is no longer necessary thanks to C<tap_encoding()>.
-
-    # *** DEPRECATED WAY ***
-    use open ':std', ':encoding(utf8)';
-    use Test::Stream::More;
-
-A more direct work around is to change the filehandles used by
-L<Test::Builder>.
-
-    # *** EVEN MORE DEPRECATED WAY ***
-    my $builder = Test::Stream::More->builder;
-    binmode $builder->output,         ":encoding(utf8)";
-    binmode $builder->failure_output, ":encoding(utf8)";
-    binmode $builder->todo_output,    ":encoding(utf8)";
-
-
-=item Overloaded objects
-
-String overloaded objects are compared B<as strings> (or in C<cmp_ok()>'s
-case, strings or numbers as appropriate to the comparison op).  This
-prevents Test::Stream::More from piercing an object's interface allowing
-better blackbox testing.  So if a function starts returning overloaded
-objects instead of bare strings your tests won't notice the
-difference.  This is good.
-
-However, it does mean that functions like C<is_deeply()> cannot be used to
-test the internals of string overloaded objects.  In this case I would
-suggest L<Test::Deep> which contains more flexible testing functions for
-complex data structures.
-
-
 =item Threads
 
 B<NOTE:> The underlying mechanism to support threads has changed as of version
@@ -1696,33 +1516,7 @@ This may cause problems:
 
 =back
 
-
-=head1 HISTORY
-
-This is a case of convergent evolution with Joshua Pritikin's L<Test>
-module.  I was largely unaware of its existence when I'd first
-written my own C<ok()> routines.  This module exists because I can't
-figure out how to easily wedge test names into Test's interface (along
-with a few other problems).
-
-The goal here is to have a testing utility that's simple to learn,
-quick to use and difficult to trip yourself up with while still
-providing more flexibility than the existing Test.pm.  As such, the
-names of the most common routines are kept tiny, special cases and
-magic side-effects are kept to a minimum.  WYSIWYG.
-
-
 =head1 SEE ALSO
-
-=head2 ALTERNATIVES
-
-L<Test::Simple> if all this confuses you and you just want to write
-some tests.  You can upgrade to Test::Stream::More later (it's forward
-compatible).
-
-L<Test::Legacy> tests written with Test.pm, the original testing
-module, do not play well with other testing libraries.  Test::Legacy
-emulates the Test.pm interface and does play well with others.
 
 =head2 TESTING FRAMEWORKS
 
@@ -1732,34 +1526,6 @@ mocking. Fennec enhances several modules to work better together than they
 would if you loaded them individually on your own.
 
 L<Fennec::Declare> Provides enhanced (L<Devel::Declare>) syntax for Fennec.
-
-=head2 ADDITIONAL LIBRARIES
-
-L<Test::Differences> for more ways to test complex data structures.
-And it plays well with Test::Stream::More.
-
-L<Test::Class> is like xUnit but more perlish.
-
-L<Test::Deep> gives you more powerful complex data structure testing.
-
-L<Test::Inline> shows the idea of embedded testing.
-
-L<Mock::Quick> The ultimate mocking library. Easily spawn objects defined on
-the fly. Can also override, block, or reimplement packages as needed.
-
-L<Test::FixtureBuilder> Quickly define fixture data for unit tests.
-
-=head2 OTHER COMPONENTS
-
-L<Test::Harness> is the test runner and output interpreter for Perl.
-It's the thing that powers C<make test> and where the C<prove> utility
-comes from.
-
-=head2 BUNDLES
-
-L<Bundle::Test> installs a whole bunch of useful test modules.
-
-L<Test::Most> Most commonly needed test functions and features.
 
 =head1 SOURCE
 
