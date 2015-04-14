@@ -62,7 +62,7 @@ __END__
 
 =head1 NAME
 
-Test::Stream::Simple - Basic utilities for writing tests.
+Test::Stream::Simple - Drop in replacement for Test::Simple..
 
 =head1 SYNOPSIS
 
@@ -225,9 +225,9 @@ he wasn't in Tony's kitchen).  This is it.
 =item L<Test::Stream::More>
 
 More testing functions!  Once you outgrow Test::Stream::Simple, look at
-L<Test::Stream::More>.  Test::Stream::Simple is 100% forward compatible with L<Test::Stream::More>
-(i.e. you can just use L<Test::Stream::More> instead of Test::Stream::Simple in your
-programs and things will still work).
+L<Test::Stream::More>.  Test::Stream::Simple is 100% forward compatible with
+L<Test::Stream::More> (i.e. you can just use L<Test::Stream::More> instead of
+Test::Stream::Simple in your programs and things will still work).
 
 =back
 

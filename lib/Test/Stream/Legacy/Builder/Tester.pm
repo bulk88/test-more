@@ -10,52 +10,6 @@ use Symbol;
 use Test::Stream::Carp qw/croak/;
 use Test::Stream::Context qw/context/;
 
-=pod
-
-=encoding UTF-8
-
-=head1 NAME
-
-Test::Builder::Tester - *DEPRECATED* test testsuites that have been built with
-Test::Builder
-
-=head1 DEPRECATED
-
-B<This module is deprecated.> Please see L<Test::Stream::Tester> for a
-better alternative that does not involve dealing with TAP/string output.
-
-=head1 SYNOPSIS
-
-    use Test::Builder::Tester tests => 1;
-    use Test::More;
-
-    test_out("not ok 1 - foo");
-    test_fail(+1);
-    fail("foo");
-    test_test("fail works");
-
-=head1 DESCRIPTION
-
-A module that helps you test testing modules that are built with
-L<Test::Builder>.
-
-The testing system is designed to be used by performing a three step
-process for each test you wish to test.  This process starts with using
-C<test_out> and C<test_err> in advance to declare what the testsuite you
-are testing will output with L<Test::Builder> to stdout and stderr.
-
-You then can run the test(s) from your test suite that call
-L<Test::Builder>.  At this point the output of L<Test::Builder> is
-safely captured by L<Test::Builder::Tester> rather than being
-interpreted as real test output.
-
-The final stage is to call C<test_test> that will simply compare what you
-predeclared to what L<Test::Builder> actually outputted, and report the
-results back with a "ok" or "not ok" (with debugging) to the normal
-output.
-
-=cut
-
 ####
 # set up testing
 ####
@@ -175,40 +129,6 @@ sub _start_testing {
     builder()->no_ending(1);
 }
 
-=head2 Functions
-
-These are the six methods that are exported as default.
-
-=over 4
-
-=item test_out
-
-=item test_err
-
-Procedures for predeclaring the output that your test suite is
-expected to produce until C<test_test> is called.  These procedures
-automatically assume that each line terminates with "\n".  So
-
-   test_out("ok 1","ok 2");
-
-is the same as
-
-   test_out("ok 1\nok 2");
-
-which is even the same as
-
-   test_out("ok 1");
-   test_out("ok 2");
-
-Once C<test_out> or C<test_err> (or C<test_fail> or C<test_diag>) have
-been called, all further output from L<Test::Builder> will be
-captured by L<Test::Builder::Tester>.  This means that you will not
-be able perform further tests to the normal output in the normal way
-until you call C<test_test> (well, unless you manually meddle with the
-output filehandles)
-
-=cut
-
 sub test_out {
     my $ctx = context;
     # do we need to do any setup?
@@ -225,32 +145,6 @@ sub test_err {
     $err->expect(@_);
 }
 
-=item test_fail
-
-Because the standard failure message that L<Test::Builder> produces
-whenever a test fails will be a common occurrence in your test error
-output, and because it has changed between Test::Builder versions, rather
-than forcing you to call C<test_err> with the string all the time like
-so
-
-    test_err("# Failed test ($0 at line ".line_num(+1).")");
-
-C<test_fail> exists as a convenience function that can be called
-instead.  It takes one argument, the offset from the current line that
-the line that causes the fail is on.
-
-    test_fail(+1);
-
-This means that the example in the synopsis could be rewritten
-more simply as:
-
-   test_out("not ok 1 - foo");
-   test_fail(+1);
-   fail("foo");
-   test_test("fail works");
-
-=cut
-
 sub test_fail {
     my $ctx = context;
     # do we need to do any setup?
@@ -264,36 +158,6 @@ sub test_fail {
     $err->expect("#     Failed test ($filename at line $line)");
 }
 
-=item test_diag
-
-As most of the remaining expected output to the error hub will be
-created by L<Test::Builder>'s C<diag> function, L<Test::Builder::Tester>
-provides a convenience function C<test_diag> that you can use instead of
-C<test_err>.
-
-The C<test_diag> function prepends comment hashes and spacing to the
-start and newlines to the end of the expected output passed to it and
-adds it to the list of expected error output.  So, instead of writing
-
-   test_err("# Couldn't open file");
-
-you can write
-
-   test_diag("Couldn't open file");
-
-Remember that L<Test::Builder>'s diag function will not add newlines to
-the end of output and test_diag will. So to check
-
-   Test::Builder->new->diag("foo\n","bar\n");
-
-You would do
-
-  test_diag("foo","bar")
-
-without the newlines.
-
-=cut
-
 sub test_diag {
     my $ctx = context;
     # do we need to do any setup?
@@ -303,45 +167,6 @@ sub test_diag {
     local $_;
     $err->expect( map { m/\S/ ? "# $_" : "" } @_ );
 }
-
-=item test_test
-
-Actually performs the output check testing the tests, comparing the
-data (with C<eq>) that we have captured from L<Test::Builder> against
-what was declared with C<test_out> and C<test_err>.
-
-This takes name/value pairs that effect how the test is run.
-
-=over
-
-=item title (synonym 'name', 'label')
-
-The name of the test that will be displayed after the C<ok> or C<not
-ok>.
-
-=item skip_out
-
-Setting this to a true value will cause the test to ignore if the
-output sent by the test to the output hub does not match that
-declared with C<test_out>.
-
-=item skip_err
-
-Setting this to a true value will cause the test to ignore if the
-output sent by the test to the error hub does not match that
-declared with C<test_err>.
-
-=back
-
-As a convenience, if only one argument is passed then this argument
-is assumed to be the name of the test (as in the above examples.)
-
-Once C<test_test> has been run test output will be redirected back to
-the original filehandles that L<Test::Builder> was connected to
-(probably STDOUT and STDERR,) meaning any further tests you run
-will function normally and cause success/errors for L<Test::Harness>.
-
-=cut
 
 sub test_test {
     my $ctx = context;
@@ -395,62 +220,11 @@ sub test_test {
     }
 }
 
-=item line_num
-
-A utility function that returns the line number that the function was
-called on.  You can pass it an offset which will be added to the
-result.  This is very useful for working out the correct text of
-diagnostic functions that contain line numbers.
-
-Essentially this is the same as the C<__LINE__> macro, but the
-C<line_num(+3)> idiom is arguably nicer.
-
-=cut
 
 sub line_num {
     my( $package, $filename, $line ) = caller;
     return $line + ( shift() || 0 );    # prevent warnings
 }
-
-=back
-
-In addition to the six exported functions there exists one
-function that can only be accessed with a fully qualified function
-call.
-
-=over 4
-
-=item color
-
-When C<test_test> is called and the output that your tests generate
-does not match that which you declared, C<test_test> will print out
-debug information showing the two conflicting versions.  As this
-output itself is debug information it can be confusing which part of
-the output is from C<test_test> and which was the original output from
-your original tests.  Also, it may be hard to spot things like
-extraneous whitespace at the end of lines that may cause your test to
-fail even though the output looks similar.
-
-To assist you C<test_test> can colour the background of the debug
-information to disambiguate the different types of output. The debug
-output will have its background coloured green and red.  The green
-part represents the text which is the same between the executed and
-actual output, the red shows which part differs.
-
-The C<color> function determines if colouring should occur or not.
-Passing it a true or false value will enable or disable colouring
-respectively, and the function called with no argument will return the
-current setting.
-
-To enable colouring from the command line, you can use the
-L<Text::Builder::Tester::Color> module like so:
-
-   perl -Mlib=Text::Builder::Tester::Color test.t
-
-Or by including the L<Test::Builder::Tester::Color> module directly in
-the PERL5LIB.
-
-=cut
 
 my $color;
 
@@ -458,117 +232,6 @@ sub color {
     $color = shift if @_;
     $color;
 }
-
-=back
-
-=head1 NOTES
-
-Thanks to Richard Clamp E<lt>richardc@unixbeard.netE<gt> for letting
-me use his testing system to try this module out on.
-
-=head1 SEE ALSO
-
-L<Test::Builder>, L<Test::Builder::Tester::Color>, L<Test::More>.
-
-=head1 SOURCE
-
-The source code repository for Test::More can be found at
-F<http://github.com/Test-More/test-more/>.
-
-=head1 MAINTAINER
-
-=over 4
-
-=item Chad Granum E<lt>exodist@cpan.orgE<gt>
-
-=back
-
-=head1 AUTHORS
-
-The following people have all contributed to the Test-More dist (sorted using
-VIM's sort function).
-
-=over 4
-
-=item Chad Granum E<lt>exodist@cpan.orgE<gt>
-
-=item Fergal Daly E<lt>fergal@esatclear.ie>E<gt>
-
-=item Mark Fowler E<lt>mark@twoshortplanks.comE<gt>
-
-=item Michael G Schwern E<lt>schwern@pobox.comE<gt>
-
-=item 唐鳳
-
-=back
-
-=head1 COPYRIGHT
-
-There has been a lot of code migration between modules,
-here are all the original copyrights together:
-
-=over 4
-
-=item Test::Stream
-
-=item Test::Stream::Tester
-
-Copyright 2015 Chad Granum E<lt>exodist7@gmail.comE<gt>.
-
-This program is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself.
-
-See F<http://www.perl.com/perl/misc/Artistic.html>
-
-=item Test::Simple
-
-=item Test::More
-
-=item Test::Builder
-
-Originally authored by Michael G Schwern E<lt>schwern@pobox.comE<gt> with much
-inspiration from Joshua Pritikin's Test module and lots of help from Barrie
-Slaymaker, Tony Bowden, blackstar.co.uk, chromatic, Fergal Daly and the perl-qa
-gang.
-
-Idea by Tony Bowden and Paul Johnson, code by Michael G Schwern
-E<lt>schwern@pobox.comE<gt>, wardrobe by Calvin Klein.
-
-Copyright 2001-2008 by Michael G Schwern E<lt>schwern@pobox.comE<gt>.
-
-This program is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself.
-
-See F<http://www.perl.com/perl/misc/Artistic.html>
-
-=item Test::use::ok
-
-To the extent possible under law, 唐鳳 has waived all copyright and related
-or neighboring rights to L<Test-use-ok>.
-
-This work is published from Taiwan.
-
-L<http://creativecommons.org/publicdomain/zero/1.0>
-
-=item Test::Tester
-
-This module is copyright 2005 Fergal Daly <fergal@esatclear.ie>, some parts
-are based on other people's work.
-
-Under the same license as Perl itself
-
-See http://www.perl.com/perl/misc/Artistic.html
-
-=item Test::Builder::Tester
-
-Copyright Mark Fowler E<lt>mark@twoshortplanks.comE<gt> 2002, 2004.
-
-This program is free software; you can redistribute it
-and/or modify it under the same terms as Perl itself.
-
-=back
-
-=cut
 
 1;
 
@@ -729,3 +392,123 @@ sub GETC     { }
 sub FILENO   { }
 
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Test::Stream::Legacy::Builder::Tester - Compatability fork of
+Test::Builder::Tester.
+
+=head1 DESCRIPTION
+
+This is a compatability fork of L<Test::Builder::Tester>. This module fully
+implements the L<Test::Builder::Tester> API. This module exists to support
+legacy modules, please do not use it to write new things.
+
+=head1 SEE ALSO
+
+See L<Test::Builder::Tester> for the actual documentation for using this
+module.
+
+=head1 SOURCE
+
+The source code repository for Test::Stream can be found at
+F<http://github.com/Test-More/test-more/>.
+
+=head1 MAINTAINER
+
+=over 4
+
+=item Chad Granum E<lt>exodist@cpan.orgE<gt>
+
+=back
+
+=head1 AUTHORS
+
+The following people have all contributed to the Test-More dist (sorted using
+VIM's sort function).
+
+=over 4
+
+=item Chad Granum E<lt>exodist@cpan.orgE<gt>
+
+=item Fergal Daly E<lt>fergal@esatclear.ie>E<gt>
+
+=item Mark Fowler E<lt>mark@twoshortplanks.comE<gt>
+
+=item Michael G Schwern E<lt>schwern@pobox.comE<gt>
+
+=item 唐鳳
+
+=back
+
+=head1 COPYRIGHT
+
+There has been a lot of code migration between modules,
+here are all the original copyrights together:
+
+=over 4
+
+=item Test::Stream
+
+=item Test::Stream::Tester
+
+Copyright 2015 Chad Granum E<lt>exodist7@gmail.comE<gt>.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+See F<http://www.perl.com/perl/misc/Artistic.html>
+
+=item Test::Simple
+
+=item Test::Stream::More
+
+=item Test::Builder
+
+Originally authored by Michael G Schwern E<lt>schwern@pobox.comE<gt> with much
+inspiration from Joshua Pritikin's Test module and lots of help from Barrie
+Slaymaker, Tony Bowden, blackstar.co.uk, chromatic, Fergal Daly and the perl-qa
+gang.
+
+Idea by Tony Bowden and Paul Johnson, code by Michael G Schwern
+E<lt>schwern@pobox.comE<gt>, wardrobe by Calvin Klein.
+
+Copyright 2001-2008 by Michael G Schwern E<lt>schwern@pobox.comE<gt>.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+See F<http://www.perl.com/perl/misc/Artistic.html>
+
+=item Test::use::ok
+
+To the extent possible under law, 唐鳳 has waived all copyright and related
+or neighboring rights to L<Test-use-ok>.
+
+This work is published from Taiwan.
+
+L<http://creativecommons.org/publicdomain/zero/1.0>
+
+=item Test::Tester
+
+This module is copyright 2005 Fergal Daly <fergal@esatclear.ie>, some parts
+are based on other people's work.
+
+Under the same license as Perl itself
+
+See http://www.perl.com/perl/misc/Artistic.html
+
+=item Test::Builder::Tester
+
+Copyright Mark Fowler E<lt>mark@twoshortplanks.comE<gt> 2002, 2004.
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.
+
+=back

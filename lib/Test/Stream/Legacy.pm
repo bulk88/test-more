@@ -255,3 +255,193 @@ sub upgrade_to_stream {
 }
 
 1;
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Test::Stream::Legacy - Legacy support for Test::Builder based tools while using
+Test::Stream.
+
+=head1 SYNOPSIS
+
+=head2 IN CODE
+
+    use Test::Stream::Legacy;
+    use Legacy::Test::Tool;
+    ...
+
+Using Test::Stream automatically loads Test::Stream::Legacy for you. So does
+loading any tool that loads Test::Stream.
+
+    use Test::Stream;
+
+You can also unload Test::Stream::Legacy, this will not unload any legacy
+namespaces (like Test::Builder) but it will prevent the legacy tools from
+loading in the future.
+
+    use Test::Stream;        # This loads legacy support for you.
+    no Test::Stream::Legacy; # Turn off legacy support.
+    use Test::Builder;       # Will load the original Test::Builder
+
+=head2 AT THE SHELL
+
+You can have Test::Stream::Legacy load automatically before tests run using the
+C<PERL5OPTS> environment variable. Doing this will force the tests to run
+through Test::Stream even if no tool requests it. This is a good way to check
+if your testing tool still works under Test::Stream.
+
+    $ PERL5OPTS="-MTest::Stream::Legacy" prove -r ./t
+
+=head1 DESCRIPTION
+
+This module inserts a value into the front of C<@INC> that redirects some
+module loads. Instead of loading the modules you ask for, it loads some
+Test::Stream specific ones that are bundled with Test::Stream. These
+implementations make it possible to use legacy Test::* modules in tests that
+load Test::Stream.
+
+=head1 MODULE REDIRECTS
+
+=over 4
+
+=item Test/Builder.pm -> Test/Stream/Legacy/Builder.pm
+
+L<Test::Stream::Legacy::Builder> is an implementation of L<Test::Builder> that
+wraps around L<Test::Stream> so that L<Test::Builder> based tools will play
+nicely with L<Test::Stream> based tools.
+
+=item Test/More.pm -> Test/Stream/More.pm
+
+L<Test::Stream::More> is a drop-in fully compatible replacement for
+L<Test::More>. The original L<Test::More> would actually work just fine under
+L<Test::Stream> so long as L<Test::Stream::Legacy::Builder> was loaded, however
+this implementation is significantly more efficient.
+
+=item Test/Simple.pm -> Test/Stream/Simple.pm
+
+L<Test::Stream::Simple> is a drop-in fully compatible replacement for
+L<Test::Simple>. The original L<Test::Simple> would actually work just fine
+under L<Test::Stream> so long as L<Test::Stream::Legacy::Builder> was loaded,
+however this implementation is significantly more efficient.
+
+=item Test/Tester.pm -> Test/Stream/Legacy/Tester.pm
+
+This is modified L<Test::Tester> code to make it support L<Test::Stream>. Using
+this is actually discouraged in favor of L<Test::Stream::Tester>.
+
+=item Test/Builder/Tester.pm -> Test/Stream/Legacy/Builder/Tester.pm
+
+This is modified L<Test::Builder::Tester> code to make it support
+L<Test::Stream>. Using this is actually discouraged in favor of
+L<Test::Stream::Tester>.
+
+=item (And a couple other minor ones)
+
+Support modules for L<Test::Tester> and L<Test::Builder::Tester>.
+
+=back
+
+=head1 SOURCE
+
+The source code repository for Test::More can be found at
+F<http://github.com/Test-More/test-more/>.
+
+=head1 MAINTAINER
+
+=over 4
+
+=item Chad Granum E<lt>exodist@cpan.orgE<gt>
+
+=back
+
+=head1 AUTHORS
+
+The following people have all contributed to the Test-More dist (sorted using
+VIM's sort function).
+
+=over 4
+
+=item Chad Granum E<lt>exodist@cpan.orgE<gt>
+
+=item Fergal Daly E<lt>fergal@esatclear.ie>E<gt>
+
+=item Mark Fowler E<lt>mark@twoshortplanks.comE<gt>
+
+=item Michael G Schwern E<lt>schwern@pobox.comE<gt>
+
+=item 唐鳳
+
+=back
+
+=head1 COPYRIGHT
+
+There has been a lot of code migration between modules,
+here are all the original copyrights together:
+
+=over 4
+
+=item Test::Stream
+
+=item Test::Stream::Tester
+
+Copyright 2015 Chad Granum E<lt>exodist7@gmail.comE<gt>.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+See F<http://www.perl.com/perl/misc/Artistic.html>
+
+=item Test::Simple
+
+=item Test::More
+
+=item Test::Builder
+
+Originally authored by Michael G Schwern E<lt>schwern@pobox.comE<gt> with much
+inspiration from Joshua Pritikin's Test module and lots of help from Barrie
+Slaymaker, Tony Bowden, blackstar.co.uk, chromatic, Fergal Daly and the perl-qa
+gang.
+
+Idea by Tony Bowden and Paul Johnson, code by Michael G Schwern
+E<lt>schwern@pobox.comE<gt>, wardrobe by Calvin Klein.
+
+Copyright 2001-2008 by Michael G Schwern E<lt>schwern@pobox.comE<gt>.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+See F<http://www.perl.com/perl/misc/Artistic.html>
+
+=item Test::use::ok
+
+To the extent possible under law, 唐鳳 has waived all copyright and related
+or neighboring rights to L<Test-use-ok>.
+
+This work is published from Taiwan.
+
+L<http://creativecommons.org/publicdomain/zero/1.0>
+
+=item Test::Tester
+
+This module is copyright 2005 Fergal Daly <fergal@esatclear.ie>, some parts
+are based on other people's work.
+
+Under the same license as Perl itself
+
+See http://www.perl.com/perl/misc/Artistic.html
+
+=item Test::Builder::Tester
+
+Copyright Mark Fowler E<lt>mark@twoshortplanks.comE<gt> 2002, 2004.
+
+This program is free software; you can redistribute it
+and/or modify it under the same terms as Perl itself.
+
+=back
+
+=cut

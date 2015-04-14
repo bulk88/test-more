@@ -58,15 +58,23 @@ __END__
 
 =head1 NAME
 
-Test::Tester::Capture - Capture module for Test::Tester
+Test::Stream::Legacy::Tester::Capture - Compatability fork of
+Test::Tester::Capture.
 
 =head1 DESCRIPTION
 
-Legacy support for Test::Tester.
+This is a compatability fork of L<Test::Tester::Capture>. This module fully
+implements the L<Test::Tester::Capture> API. This module exists to support
+legacy modules, please do not use it to write new things.
+
+=head1 SEE ALSO
+
+See L<Test::Tester::Capture> for the actual documentation for using this
+module.
 
 =head1 SOURCE
 
-The source code repository for Test::More can be found at
+The source code repository for Test::Stream can be found at
 F<http://github.com/Test-More/test-more/>.
 
 =head1 MAINTAINER
@@ -116,7 +124,7 @@ See F<http://www.perl.com/perl/misc/Artistic.html>
 
 =item Test::Simple
 
-=item Test::More
+=item Test::Stream::More
 
 =item Test::Builder
 
