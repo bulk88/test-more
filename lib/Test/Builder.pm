@@ -72,6 +72,55 @@ BEGIN {
 
 Test::Builder - Backend for building test libraries
 
+=head1 NOT UNDER ACTIVE DEVELOPMENT
+
+Test::Builder is no longer under active development. This module has been
+locked against all but critical maintenance. New features will no longer be
+added, and some known bugs will never be fixed.
+
+=head2 WHY?
+
+Test::Builder has been around for a very long time, and in recent years has
+seen very little code churn. At this point there are a lot of modules that
+depend on Test::Builder working the way it does, bugs and all. Many cpan
+modules, and even more darkpan code, break encapsulation to do their jobs.
+
+There have been several attempts to rewrite, refactor, or otherwise improve
+Test::Builder. Several of these efforts failed simply because there is too much
+at stake. Even fixing some bugs has the potential to break large chunks of
+cpan, or darkpan code.
+
+At this point updating Test::Builder is not a viable option.
+
+=head2 ALTERNATIVES
+
+=over 4
+
+=item Test::Stream
+
+L<Test::Stream> is a refactor of Test::Builder. L<Test::Stream> maintains very
+good backwords compatability with Test::Builder, and will even play nicely with
+Test::Builder based tools. L<Test::Stream> was written to bring Test::Builder
+into the modern era with better encapsulation, and many new fetures.
+
+=item Test::Stream::More
+
+A drop-in replacement for L<Test::More> that uses L<Test::Stream> under the
+hood. L<Test::Stream::More> plays nicely with any module written for
+L<Test::Stream> or L<Test::Builder>.
+
+=item Test::Tiny
+
+L<Test::Tiny> was written to be small and fast. It provides very few features,
+and doe not play nicely with other tools, such as those that rely on
+Test::Builder.
+
+If you are looking or speed, and do not need many features, this may be an
+option for you.
+
+=back
+
+
 =head1 SYNOPSIS
 
   package My::Test::Module;
@@ -85,7 +134,6 @@ Test::Builder - Backend for building test libraries
 
       $tb->ok($test, $name);
   }
-
 
 =head1 DESCRIPTION
 
