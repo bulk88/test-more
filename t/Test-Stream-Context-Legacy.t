@@ -3,6 +3,8 @@ use warnings;
 
 use Test::Stream::More;
 use Test::Stream::Meta qw/init_tester/;
+use Test::Stream::Legacy;
+use Test::Builder;
 my $META;
 BEGIN { $META = init_tester('main') }
 
@@ -101,25 +103,28 @@ can_ok(__PACKAGE__, qw/inspect_todo/);
 
 is_deeply(
     inspect_todo(__PACKAGE__),
-    { TODO => [], PKG => undef, META => undef },
+    { TODO => [], TB => undef, PKG => undef, META => undef },
     "Nothing TODO"
 );
 
 {
     'Test::Stream::Context'->push_todo('TODO Context');
     local $TODO = 'TODO var';
+    Test::Builder->new->todo_start('TODO TB');
     $META->set_todo('TODO Meta');
 
     my $todo_data = inspect_todo(__PACKAGE__);
 
     $TODO = undef;
     $META->set_todo(undef);
+    Test::Builder->new->todo_end;
     'Test::Stream::Context'->pop_todo();
 
     is_deeply(
         $todo_data,
         {
             TODO => [ 'TODO Context' ],
+            TB   => 'TODO TB',
             META => 'TODO Meta',
             PKG  => 'TODO var',
         },
@@ -129,7 +134,7 @@ is_deeply(
 
 is_deeply(
     inspect_todo(__PACKAGE__),
-    { TODO => [], PKG => undef, META => undef },
+    { TODO => [], TB => undef, PKG => undef, META => undef },
     "Nothing TODO"
 );
 
@@ -178,6 +183,9 @@ sub run_todo {
 
     push @CTX => a_provider()->snapshot();
 
+    Test::Builder->new->todo_start('TODO TB');
+    push @CTX => a_provider()->snapshot();
+
     {
         no warnings 'once';
         local $main::TODO = 'TODO tester';
@@ -198,6 +206,7 @@ sub run_todo {
 
     # Cleanup
     $META->set_todo(undef);
+    Test::Builder->new->todo_end;
     'Test::Stream::Context'->pop_todo();
 
     return @CTX;
@@ -210,17 +219,21 @@ ok(!$CTX[0]->todo, "no todo message");
 # This validates _find_tester
 ok(!$CTX[0]->meta, "FOO is not a tester (main pkg meta was used to find todo)");
 
-ok($CTX[1]->in_todo, "in todo (Tester)");
-is($CTX[1]->todo, "TODO tester", "todo message (Tester)");
+ok($CTX[1]->in_todo, "in todo (TB)");
+is($CTX[1]->todo, "TODO TB", "todo message (TB)");
 
-ok($CTX[2]->in_todo, "in todo (Package)");
-is($CTX[2]->todo, "TODO var", "todo message (Package)");
+ok($CTX[2]->in_todo, "in todo (Tester)");
+is($CTX[2]->todo, "TODO tester", "todo message (Tester)");
 
-ok($CTX[3]->in_todo, "in todo (Meta)");
-is($CTX[3]->todo, "TODO Meta", "todo message (Meta)");
+ok($CTX[3]->in_todo, "in todo (Package)");
+is($CTX[3]->todo, "TODO var", "todo message (Package)");
 
-ok($CTX[4]->in_todo, "in todo (Context)");
-is($CTX[4]->todo, "TODO Context", "todo message (Context)");
+ok($CTX[4]->in_todo, "in todo (Meta)");
+is($CTX[4]->todo, "TODO Meta", "todo message (Meta)");
+
+ok($CTX[5]->in_todo, "in todo (Context)");
+is($CTX[5]->todo, "TODO Context", "todo message (Context)");
+
 
 
 # Hard reset;
@@ -232,5 +245,42 @@ is_deeply($ctx->frame, $frame, "Got reasonable context when not called from tool
 
 $ctx = a_provider()->snapshot; $frame = [ __PACKAGE__, __FILE__, __LINE__, 'main::a_provider' ];
 is_deeply($ctx->frame, $frame, "Got reasonable context when not called from tool (expected usage)");
+
+{
+    $Test::Builder::Level = $Test::Builder::Level + 1;
+    $ctx = not_a_provider()->snapshot; $frame = [ __PACKAGE__, __FILE__, __LINE__, 'main::not_a_provider' ];
+    is_deeply($ctx->frame, $frame, "Honor Test::Builder::Level");
+}
+
+my $ran_harder = 0;
+{
+    package Test::Builder;
+    my $orig = Test::Stream::Context->can('_find_context_harder');
+    no warnings 'redefine';
+    local *Test::Stream::Context::_find_context_harder = sub { $ran_harder++; goto &$orig };
+    sub provide { Test::Stream::Context::context()->snapshot }
+    sub provide_2 { provide() };
+    $ctx = provide_2();
+}
+is($ran_harder, 1, "Took a hard look");
+is_deeply(
+    $ctx->frame,
+    ['<UNKNOWN>', '<UNKNOWN>', 0, '<UNKNOWN>'],
+    "Could not find a context, Test::Builder nonsense (This never happens in practice)"
+);
+
+{ # Simulate an END block...
+    package Test::Builder;
+    local *END = sub { local *__ANON__ = 'END'; provide_2() };
+    $ctx = END(); $frame = [ __PACKAGE__, __FILE__, __LINE__, 'Test::Builder::END' ];
+}
+is_deeply( $ctx->frame, $frame, 'Test::Builder context is ok in an end block');
+
+sub deep_bad_level {
+    local $Test::Builder::Level = 10;
+    return Test::Stream::Context::context()->snapshot;
+}
+$ctx = deep_bad_level(); $frame = [ __PACKAGE__, __FILE__, __LINE__, 'main::deep_bad_level' ];
+is_deeply($ctx->frame, $frame, "Legacy support, just find something sane");
 
 done_testing;

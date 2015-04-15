@@ -373,8 +373,6 @@ sub _preprocess_event {
         $cache->{no_out} = 1 if $directive && $directive eq 'NO PLAN';
     }
 
-    $state->push_legacy($e) if $self->{+USE_LEGACY};
-
     $cache->{number} = $state->count;
 
     return $cache;
@@ -388,6 +386,7 @@ sub _process_event {
     }
 
     $self->_render_tap($cache) unless $cache->{no_out};
+    $cache->{state}->push_legacy($e) if $self->{+USE_LEGACY};
 
     if ($self->{+LISTENERS}) {
         $_->($self, $e) for @{$self->{+LISTENERS}};

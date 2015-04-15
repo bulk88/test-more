@@ -6,7 +6,7 @@ use Scalar::Util();
 use Test::Stream::Util qw/protect/;
 
 use Test::Stream::HashBase(
-    accessors => [qw/package encoding modern todo hub/],
+    accessors => [qw/package encoding modern todo/],
 );
 
 use Test::Stream::PackageUtil;
