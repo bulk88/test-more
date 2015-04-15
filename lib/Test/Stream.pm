@@ -314,6 +314,17 @@ __END__
 
 Test::Stream - A modern infrastructure for writing test tools.
 
+=head1 EARLY DEVELOPMENT WARNING
+
+Test::Stream is still under active development. Test::Stream has been released
+on cpan to encourage people to use it and report issues. It is possible that it
+still contains some warts that may get redesigned as they are discovered. It is
+possible that some API elements will change.
+
+After the module has been released for some time, and given an adequate trial,
+it may be merged into the Test-Simple dist. For this to happen we need people
+to try it out.
+
 =head1 SYNOPSIS
 
     use Test::Stream qw/context/;
