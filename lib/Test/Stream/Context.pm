@@ -19,11 +19,6 @@ default_exports qw/context/;
 exports qw/inspect_todo/;
 Test::Stream::Exporter->cleanup();
 
-{
-    no warnings 'once';
-    $Test::Builder::Level ||= 1;
-}
-
 my @TODO;
 my $CURRENT;
 
@@ -101,7 +96,8 @@ sub context {
         ($ppkg, $pname) = ($provider[3] =~ m/^(.*)::([^:]+)$/);
     }
 
-    $hub ||= $meta->{Test::Stream::Meta::HUB} || Test::Stream->shared;
+    $hub ||= Test::Stream->shared;
+
     # Uh-Oh! someone has replaced the singleton, that means they probably want
     # everything to go through them... We can't do a whole lot about that, but
     # we will use the singletons hub which should catch most use-cases.
@@ -164,18 +160,22 @@ sub context {
 
 sub _find_context {
     my ($add) = @_;
-
     $add ||= 0;
-    my $tb = $Test::Builder::Level - 1;
 
     # 0 - call to find_context
     # 1 - call to context/new
     # 2 - call to tool
-    my $level = 2 + $add + $tb;
+    my $level = 2 + $add;
+
+    if ($INC{'Test/Stream/Legacy.pm'}) {
+        my $tb = $Test::Builder::Level - 1;
+        $level += $tb;
+    }
+
     my ($package, $file, $line, $subname) = caller($level);
 
     if ($package) {
-        while ($package && $package eq 'Test::Builder') {
+        while ($package && $INC{'Test/Stream/Legacy.pm'} && $package eq 'Test::Builder') {
             ($package, $file, $line, $subname) = caller(++$level);
         }
     }
@@ -197,7 +197,7 @@ sub _find_context_harder {
         my ($pkg, $file, $line, $subname) = caller($level++);
         last unless $pkg;
         $fallback ||= [$pkg, $file, $line, $subname] if $subname && $subname =~ m/::END$/;
-        next if $pkg =~ m/^Test::(Stream|Builder|More|Simple)(::.*)?$/;
+        next if $INC{'Test/Stream/Legacy.pm'} && $pkg =~ m/^Test::(Stream|Builder|More|Simple)(::.*)?$/;
         return [$pkg, $file, $line, $subname];
     }
 
