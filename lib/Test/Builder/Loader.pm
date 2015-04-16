@@ -2,15 +2,10 @@ package Test::Builder::Loader;
 use strict;
 use warnings;
 
-package
-    Test::Builder;
+use Test::Stream::PackageUtil;
 
-our $AUTOLOAD;
-
-no warnings 'redefine';
-
-sub AUTOLOAD {
-    $AUTOLOAD =~ m/^(.*)::([^:]+)$/;
+*Test::Builder::AUTOLOAD = sub {
+    $Test::Builder::AUTOLOAD =~ m/^(.*)::([^:]+)$/;
     my ($package, $sub) = ($1, $2);
 
     require Test::Builder;
@@ -19,6 +14,6 @@ sub AUTOLOAD {
 
     my @caller = CORE::caller();
     die qq{Can't locate object method "$sub" via package "$package" at $caller[1] line $caller[2].\n};
-}
+} unless $INC{'Test/Builder.pm'};
 
 1;
