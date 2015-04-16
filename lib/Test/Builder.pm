@@ -67,7 +67,7 @@ sub _ending {
 sub new {
     my $class  = shift;
     my %params = @_;
-    $Test ||= $class->create(shared_hub => 1);
+    $Test ||= $class->create(shared_hub => 1, init => 1);
 
     return $Test;
 }
@@ -609,7 +609,7 @@ sub reset {
     $self->{use_shared} = 1 if $params{shared_hub};
 
     if ($self->{use_shared}) {
-        Test::Stream->shared->_reset;
+        Test::Stream->shared->_reset unless $params{init};
         Test::Stream->shared->state->set_legacy([]);
     }
     else {

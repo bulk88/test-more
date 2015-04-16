@@ -4,8 +4,10 @@ use warnings;
 
 use Test::Stream::PackageUtil;
 
+$Test::Builder::Level = 1;
+
 *Test::Builder::AUTOLOAD = sub {
-    $Test::Builder::AUTOLOAD =~ m/^(.*)::([^:]+)$/;
+    $Test::Builder::Loader::AUTOLOAD =~ m/^(.*)::([^:]+)$/;
     my ($package, $sub) = ($1, $2);
 
     require Test::Builder;
