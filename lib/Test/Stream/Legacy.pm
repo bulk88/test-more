@@ -56,6 +56,8 @@ our %PACKAGE_MAP = (
 
 my $FAKE_VER = '100.001001';
 
+BEGIN { $Test::Builder::Level = 1 }
+
 sub load_alt {
     my ($real) = @_;
 

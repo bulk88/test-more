@@ -167,15 +167,13 @@ sub _find_context {
     # 2 - call to tool
     my $level = 2 + $add;
 
-    if ($INC{'Test/Stream/Legacy.pm'}) {
-        my $tb = $Test::Builder::Level - 1;
-        $level += $tb;
-    }
+    my $tb = $Test::Builder::Level - 1;
+    $level += $tb;
 
     my ($package, $file, $line, $subname) = caller($level);
 
     if ($package) {
-        while ($package && $INC{'Test/Stream/Legacy.pm'} && $package eq 'Test::Builder') {
+        while ($package && $package eq 'Test::Builder') {
             ($package, $file, $line, $subname) = caller(++$level);
         }
     }
@@ -197,7 +195,7 @@ sub _find_context_harder {
         my ($pkg, $file, $line, $subname) = caller($level++);
         last unless $pkg;
         $fallback ||= [$pkg, $file, $line, $subname] if $subname && $subname =~ m/::END$/;
-        next if $INC{'Test/Stream/Legacy.pm'} && $pkg =~ m/^Test::(Stream|Builder|More|Simple)(::.*)?$/;
+        next if $pkg =~ m/^Test::(Stream|Builder|More|Simple)(::.*)?$/;
         return [$pkg, $file, $line, $subname];
     }
 
