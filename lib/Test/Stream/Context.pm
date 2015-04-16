@@ -175,7 +175,8 @@ sub _find_context {
     my ($package, $file, $line, $subname) = caller($level);
 
     if ($package) {
-        while ($package && $package eq 'Test::Builder') {
+        no warnings 'uninitialized';
+        while ($package eq 'Test::Builder') {
             ($package, $file, $line, $subname) = caller(++$level);
         }
     }
