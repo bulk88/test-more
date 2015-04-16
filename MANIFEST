@@ -93,6 +93,8 @@ t/Behavior/threads_with_taint_mode.t
 t/Behavior/todo.t
 t/Downstream/Fennec.t
 t/Downstream/Test-Class.t
+t/Downstream/Test-Deep.t
+t/Downstream/Test-Differences.t
 t/Downstream/Test-Fatal.t
 t/Downstream/Test-NoWarnings.t
 t/Downstream/Test-Trap.t
@@ -251,6 +253,7 @@ t/Test-MostlyLike.t
 t/Test-Simple.t
 t/Test-Stream-Block.t
 t/Test-Stream-Carp.t
+t/Test-Stream-Context-Legacy.t
 t/Test-Stream-Context.t
 t/Test-Stream-Event-Bail.t
 t/Test-Stream-Event-Diag.t
