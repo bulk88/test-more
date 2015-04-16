@@ -924,28 +924,33 @@ my %TB15_METHODS = map { $_ => 1 } qw{
     test_exit_code test_start test_state
 };
 
-our $AUTOLOAD;
 
-sub AUTOLOAD {
-    $AUTOLOAD =~ m/^(.*)::([^:]+)$/;
-    my ($package, $sub) = ($1, $2);
+{
+    our $AUTOLOAD;
 
-    my @caller = CORE::caller();
-    my $msg    = qq{Can't locate object method "$sub" via package "$package" at $caller[1] line $caller[2].\n};
+    no warnings 'redefine';
 
-    $msg .= <<"    EOT" if $TB15_METHODS{$sub};
+    sub AUTOLOAD {
+        $AUTOLOAD =~ m/^(.*)::([^:]+)$/;
+        my ($package, $sub) = ($1, $2);
 
-    *************************************************************************
-    '$sub' is a Test::Builder 1.5 method. Test::Builder 1.5 is a dead branch.
-    You need to update your code so that it no longer treats Test::Builders
-    over a specific version number as anything special.
+        my @caller = CORE::caller();
+        my $msg    = qq{Can't locate object method "$sub" via package "$package" at $caller[1] line $caller[2].\n};
 
-    See: http://blogs.perl.org/users/chad_exodist_granum/2014/03/testmore---new-maintainer-also-stop-version-checking.html
-    *************************************************************************
-    EOT
+        $msg .= <<"        EOT" if $TB15_METHODS{$sub};
 
-    die $msg;
-}
+        *************************************************************************
+        '$sub' is a Test::Builder 1.5 method. Test::Builder 1.5 is a dead branch.
+        You need to update your code so that it no longer treats Test::Builders
+        over a specific version number as anything special.
+
+        See: http://blogs.perl.org/users/chad_exodist_granum/2014/03/testmore---new-maintainer-also-stop-version-checking.html
+        *************************************************************************
+        EOT
+
+        die $msg;
+    }
+{
 
 ####################
 # }}} TB1.5 stuff  #
