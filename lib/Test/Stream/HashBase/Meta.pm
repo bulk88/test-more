@@ -72,32 +72,29 @@ sub add_accessors {
     confess "Cannot add accessor, metadata is locked due to a subclass being initialized ($self->{parent}).\n"
         if $self->{locked};
 
-    my $ex_meta = Test::Stream::Exporter::Meta->get($self->{package});
+    my $package = $self->{package};
+    my $eval = "package $package;";
+    my $ex_meta = Test::Stream::Exporter::Meta->get($package);
 
     for my $name (@_) {
+        no strict 'refs';
+        #note post-increment
         confess "field '$name' already defined!"
-            if exists $self->{fields}->{$name};
+            if $self->{fields}->{$name}++;
 
-        $self->{fields}->{$name} = 1;
         push @{$self->{order}} => $name;
 
         my $const = uc $name;
         my $gname = lc $name;
         my $sname = "set_$gname";
 
-        my $cname = $name;
-        my $csub = sub() { $cname };
+        #1 eval string concept from Object::Tiny
+        $eval .= "sub $const(){'$name'}sub $gname\{\$_[0]->{$name}}sub $sname\{\$_[0]->{$name}=\$_[1]}";
 
-        {
-            no strict 'refs';
-            *{"$self->{package}\::$const"} = $csub;
-            *{"$self->{package}\::$gname"} = sub { $_[0]->{$name} };
-            *{"$self->{package}\::$sname"} = sub { $_[0]->{$name} = $_[1] };
-        }
-
-        $ex_meta->{exports}->{$const} = $csub;
+        $ex_meta->{exports}->{$const} = *{"$package\::$const"};
         push @{$ex_meta->{polist}} => $const;
     }
+    eval $eval;
 }
 
 

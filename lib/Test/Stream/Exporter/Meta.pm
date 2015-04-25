@@ -113,13 +113,10 @@ sub new {
 }
 
 sub get {
-    my $class = shift;
-    my ($pkg) = @_;
-
     confess "Package is required!"
-        unless $pkg;
+        unless $_[1];
 
-    return $EXPORT_META{$pkg};
+    return $EXPORT_META{$_[1]};
 }
 
 1;
