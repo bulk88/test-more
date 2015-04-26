@@ -70,6 +70,9 @@ WriteMakefile(
 
     INSTALLDIRS => $install_dir,
     test => { TESTS => 't/*.t t/*/*.t t/*/*/*.t' },
+    XS		=> {'Meta.xs' => 'Meta.c'},
+    OBJECT	=> ['Meta$(OBJ_EXT)'],
+    XS_VERSION	=> eval(MM->parse_version("lib/$PACKAGE_FILE.pm",)),
 
     ($mm_ver < 6.48 ? () : (MIN_PERL_VERSION => 5.008001)),
 

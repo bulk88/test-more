@@ -2,8 +2,11 @@ package Test::Stream;
 use strict;
 use warnings;
 
-our $VERSION = '1.301001_107';
-$VERSION = eval $VERSION;    ## no critic (BuiltinFunctions::ProhibitStringyEval)
+# child .pm loaded in use'es down below may need to know the version
+BEGIN {
+    our $VERSION = '1.301001_107';
+    $VERSION = eval $VERSION;    ## no critic (BuiltinFunctions::ProhibitStringyEval)
+}
 
 use Test::Stream::Carp qw/croak confess carp/;
 use Test::Stream::Util qw/try/;

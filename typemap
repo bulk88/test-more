@@ -1,0 +1,30 @@
+PVSV *			T_PVSV
+#define our own to skip SvGETMAGIC on $self
+HV *			T_TS_HVREF
+
+#############################################################################
+INPUT
+
+#code inject extra C autos into xsubpp
+T_PVSV
+    ".(unshift(@{$ExtUtils::ParseXS::VERSION >= 3.22 ? eval('$_pxs->{line}') : $ExtUtils::ParseXS::VERSION >= 3.01 ? eval('$self->{line}') : eval('\@line')}, (
+    'PREINIT:',
+    '	SV * '.$var.'SV;',
+    '	STRLEN '.$var.'Len;',
+    'INPUT:')),'').
+    "{
+    ${\$var}SV  = $arg;
+    $var = ($type) SvPV(${\$var}SV, ${\$var}Len);}
+
+T_TS_HVREF
+	STMT_START {
+		SV* const xsub_tmp_sv = $arg;
+		if (SvROK(xsub_tmp_sv) && SvTYPE(SvRV(xsub_tmp_sv)) == SVt_PVHV){
+		    $var = (HV*)SvRV(xsub_tmp_sv);
+		}
+		else{
+		    Perl_croak_nocontext(\"%s: %s is not a HASH reference\",
+				${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]},
+				\"$var\");
+		}
+	} STMT_END

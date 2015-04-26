@@ -3,6 +3,9 @@ use strict;
 use warnings;
 
 use Test::Stream::Carp qw/confess/;
+require XSLoader;
+
+XSLoader::load('Test::Simple', $Test::Stream::VERSION);
 
 my %META;
 
@@ -67,12 +70,14 @@ sub subclass {
 }
 
 sub add_accessors {
+    no strict 'refs';
     my $self = shift;
 
     confess "Cannot add accessor, metadata is locked due to a subclass being initialized ($self->{parent}).\n"
         if $self->{locked};
 
     my $ex_meta = Test::Stream::Exporter::Meta->get($self->{package});
+    my $stash =  \%{"$self->{package}\::"};
 
     for my $name (@_) {
         confess "field '$name' already defined!"
@@ -85,17 +90,7 @@ sub add_accessors {
         my $gname = lc $name;
         my $sname = "set_$gname";
 
-        my $cname = $name;
-        my $csub = sub() { $cname };
-
-        {
-            no strict 'refs';
-            *{"$self->{package}\::$const"} = $csub;
-            *{"$self->{package}\::$gname"} = sub { $_[0]->{$name} };
-            *{"$self->{package}\::$sname"} = sub { $_[0]->{$name} = $_[1] };
-        }
-
-        $ex_meta->{exports}->{$const} = $csub;
+        $ex_meta->{exports}->{$const} = mk_accessor($stash, $const, $name, "$self->{package}\::$gname", "$self->{package}\::$sname", $name );
         push @{$ex_meta->{polist}} => $const;
     }
 }

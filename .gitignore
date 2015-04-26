@@ -2,6 +2,16 @@
 *~
 *.old
 *.tar.gz
+*.o
+*.obj
+*.pdb
+*.def
+*.exp
+*.base
+*.c
+*.bs
+*.out
+.*.swp
 Makefile
 blib/
 pm_to_blib
