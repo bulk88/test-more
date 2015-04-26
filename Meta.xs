@@ -44,10 +44,9 @@ XS(XS_Test__Stream__HashBase__Meta__XS_get)
     {
         HV *    self;
         HE *    he;
-        SV *    RETVAL;
 
         {
-            SV* const xsub_tmp_sv = ST(0);
+            SV* const xsub_tmp_sv = *SP;
             if (SvROK(xsub_tmp_sv) && SvTYPE(SvRV(xsub_tmp_sv)) == SVt_PVHV){
                 self = (HV*)SvRV(xsub_tmp_sv);
             }
@@ -59,17 +58,13 @@ XS(XS_Test__Stream__HashBase__Meta__XS_get)
         }
         /* lval=1 (create if doesn't exist) or else we would have to throw exceptions or SEGV */
         he = hv_fetch_ent(self, (SV*)XSANY.any_ptr, 1, 0);
-        RETVAL = HeVAL(he);
         /* Note we return the live SV* in the hash key, not a copy like PP code does,
            In the very rare case of
            my $ref = \$self->getsomething();
            $$ref = "unauthorized write";
            you can write to inside the obj, but nobody writes perl code like that */
-        SvREFCNT_inc_simple_NN(RETVAL);
-        RETVAL = sv_2mortal(RETVAL);
-        ST(0) = RETVAL;
+        *SP = HeVAL(he); /* SP never moved, got 1, ret 1 */
     }
-    XSRETURN(1);
 }
 
 
