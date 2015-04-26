@@ -31,54 +31,85 @@ const static struct {
 };
 #endif
 
-/*  egh, there is a legit get() that isn't an accessor in Test::Stream::HashBase::Meta
-    maybe one day set it up so XS_Test__Stream__HashBase__Meta__XS_get and
-    XS_Test__Stream__HashBase__Meta__XS_set never appear in boot and never have
-    CV *s associated with them
- */
+
+/* egh, there is a legit get() that isn't an accessor in Test::Stream::HashBase::Meta,
+   use non-real (not in PP land) class Test::Stream::HashBase::Meta::XS
+*/
+XS(XS_Test__Stream__HashBase__Meta__XS_get); /* prototype to pass -Wmissing-prototypes */
+XS(XS_Test__Stream__HashBase__Meta__XS_get)
+{
+    dVAR; dXSARGS;
+    if (items != 1)
+       croak_xs_usage(cv,  "self");
+    {
+        HV *    self;
+        HE *    he;
+        SV *    RETVAL;
+
+        {
+            SV* const xsub_tmp_sv = ST(0);
+            if (SvROK(xsub_tmp_sv) && SvTYPE(SvRV(xsub_tmp_sv)) == SVt_PVHV){
+                self = (HV*)SvRV(xsub_tmp_sv);
+            }
+            else{
+                Perl_croak_nocontext("%s: %s is not a HASH reference",
+                            "Test::Stream::HashBase::Meta::XS::get",
+                            "self");
+            }
+        }
+        /* lval=1 (create if doesn't exist) or else we would have to throw exceptions or SEGV */
+        he = hv_fetch_ent(self, (SV*)XSANY.any_ptr, 1, 0);
+        RETVAL = HeVAL(he);
+        /* Note we return the live SV* in the hash key, not a copy like PP code does,
+           In the very rare case of
+           my $ref = \$self->getsomething();
+           $$ref = "unauthorized write";
+           you can write to inside the obj, but nobody writes perl code like that */
+        SvREFCNT_inc_simple_NN(RETVAL);
+        RETVAL = sv_2mortal(RETVAL);
+        ST(0) = RETVAL;
+    }
+    XSRETURN(1);
+}
 
 
-MODULE = Test::Simple		PACKAGE = Test::Stream::HashBase::Meta::XS
-
-PROTOTYPES: DISABLE
-
-SV *
-get(self)
-    HV * self
-PREINIT:
-    HE * he;
-CODE:
-    /* lval=1 (create if doesn't exist) or else we would have to throw exceptions or SEGV */
-    he = hv_fetch_ent(self, (SV*)XSANY.any_ptr, 1, 0);
-    RETVAL = HeVAL(he);
-    /* Note we return the live SV* in the hash key, not a copy like PP code does,
-       In the very rare case of
-       my $ref = \$self->getsomething();
-       $$ref = "unauthorized write";
-       you can write to inside the obj, but nobody writes perl code like that */
-    SvREFCNT_inc_simple_NN(RETVAL);
-OUTPUT:
-    RETVAL
-
-void
-set(self, val)
-    HV * self
-    SV * val
-PREINIT:
-    HE * he;
-    SV * keyval;
-PPCODE:
+XS(XS_Test__Stream__HashBase__Meta__XS_set); /* prototype to pass -Wmissing-prototypes */
+XS(XS_Test__Stream__HashBase__Meta__XS_set)
+{
+    dVAR; dXSARGS;
+    SP -= items;
     /* smaller machine code, finish using perl stack ASAP *, frees up registers */
-    PUTBACK; /* move this before the items croak when this is copy pasted into
-               raw C and not XS during the remove the useless CV *s optimization */
-    /* dont use newSVsv and hv_store_ent that causes pointless newSV()
-    and later a SvREFCNT_dec to swap SV *s in the HE * */
-    he = hv_fetch_ent(self, (SV*)XSANY.any_ptr, 1, 0);
-    keyval = HeVAL(he);
-    sv_setsv(keyval, val);
-    return; /* skip implicit putback */
+    PUTBACK;
+    if (items != 2)
+       croak_xs_usage(cv,  "self, val");
+    PERL_UNUSED_VAR(ax); /* -Wall */
+    {
+        HV *    self;
+        SV *    val = ST(1);
+        HE * he;
+        SV * keyval;
+        {
+            SV* const xsub_tmp_sv = ST(0);
+            if (SvROK(xsub_tmp_sv) && SvTYPE(SvRV(xsub_tmp_sv)) == SVt_PVHV){
+                self = (HV*)SvRV(xsub_tmp_sv);
+            }
+            else{
+                Perl_croak_nocontext("%s: %s is not a HASH reference",
+                            "Test::Stream::HashBase::Meta::XS::set",
+                            "self");
+            }
+        }
+        /* dont use newSVsv and hv_store_ent that causes pointless newSV()
+        and later a SvREFCNT_dec to swap SV *s in the HE * */
+        he = hv_fetch_ent(self, (SV*)XSANY.any_ptr, 1, 0);
+        keyval = HeVAL(he);
+        sv_setsv(keyval, val);
+    }
+}
 
 MODULE = Test::Simple		PACKAGE = Test::Stream::HashBase::Meta
+
+PROTOTYPES: DISABLE
 
 # returns a ref to the const sub
 CV *
